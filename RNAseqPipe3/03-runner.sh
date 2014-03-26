@@ -12,12 +12,12 @@ fi
 
 #user defined variables that could be changed:
 workingdir=./
-script=$scriptdir/03-seqtk.sh
-outdir=reads_scythe_seqtk
+script=$scriptdir/03-sickle.sh
+outdir=reads_noadapt_trimmed
 ###
 
 function findSamples () {
-find reads_scythe/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find reads_noadapt/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 mkdir $outdir

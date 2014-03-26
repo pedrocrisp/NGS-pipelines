@@ -21,11 +21,11 @@ refdir=$scriptdir/subread_refdir
 #
 
 sample=$1
-sample_dir=reads_scythe_seqtk/$sample
+sample_dir=reads_noadapt_trimmed/$sample
 outdir="align/${sample}"
 mkdir ${outdir}
  
-fastqs="$(ls $sample_dir/*.fq)"
+fastqs="$(ls $sample_dir/*trimmed.fq)"
 numFqFiles=$(echo $fastqs | wc -w)
 
 outsam="${outdir}/${sample}.sam"

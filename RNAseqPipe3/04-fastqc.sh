@@ -8,10 +8,10 @@ echo "USAGE: fastqc.sh SAMPLENAME"
 fi
  
 sample=$1
-sample_dir=reads_scythe_seqtk/$sample
+sample_dir=reads_noadapt_trimmed/$sample
  
-fastqs="$(ls $sample_dir/*.fq)"
+fastqs="$(ls $sample_dir/*trimmed.fq)"
  
-mkdir reads_scythe_seqtk_fastqc/$sample
+mkdir reads_noadapt_trimmed_fastqc/$sample
  
-fastqc -o reads_scythe_seqtk_fastqc/$sample $fastqs
+fastqc -o reads_noadapt_trimmed_fastqc/$sample $fastqs

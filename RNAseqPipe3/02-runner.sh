@@ -13,7 +13,7 @@ fi
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/02-scythe.sh
-outdir=reads_scythe
+outdir=reads_noadapt
 ###
 
 function findSamples () {
