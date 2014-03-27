@@ -1,10 +1,14 @@
-#pipe3 README
+#RNAseqPipe3 README
 
-pipeline to process RNAseq data
+Pipeline to process RNAseq data
 
-Reads must be in a folder called reads and the scripts must be called from the parent directory of the reads folder
+Reads must be in a folder called reads, with subdirectories for each sample 
 
-Each step has to be called in order and run in bash eg 
+Scripts are called from the parent directory of the reads folder
+
+Each script and std error is printed to the logs dircetory
+
+Each step is called in order and run in bash eg 
 
 ```
 bash ~/path_to_01.runner.sh
@@ -20,7 +24,7 @@ for script in ~/<path_to_pipe3>/0*runner.sh ; do echo $script ; bash $script ; d
 
 Steps 02-scythe.sh requires the file "truseq_adapters.fasta" to be in the script directory or a symbolic link to it
 
-Steps 05-subread.sh and 06-featureCounts.sh require a symbolic link called "subread_refdir" to the folder containing the index files, those files must have the prefix "TAIR10_gen_chrc"
+Steps 05-subread.sh and 06-featureCounts.sh require a symbolic link called "subread\_refdir" to the folder containing the index files, those files must have the prefix "TAIR10\_gen\_chrc"
 
 On the server:
 
