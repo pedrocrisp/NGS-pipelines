@@ -20,9 +20,9 @@ def parse_log(infn='-', dct=None):
             fq = re.search(r'(\S+\.f(q|astq)(\.gz)?)', line).groups()[0]
             sample = path.basename(path.dirname(fq))
             z = next(infh) # gap
-            pe_keep = re.search(r'paired.+ \((\S+ pairs)\)', next(infh)).groups()[0]
+            pe_keep = re.search(r'paired.+ \((\S+) pairs\)', next(infh)).groups()[0]
             se_keep = re.search(r'single.+: (\S+) \(', next(infh)).groups()[0]
-            pe_shit = re.search(r'paired.+ \((\S+ pairs)\)', next(infh)).groups()[0]
+            pe_shit = re.search(r'paired.+ \((\S+) pairs\)', next(infh)).groups()[0]
             se_shit = re.search(r'single.+: (\S+) \(', next(infh)).groups()[0]
             results[sample] = {'sample': sample, 'pe_keep': pe_keep,
                     'se_keep': se_keep,  'pe_shit': pe_shit,
