@@ -1,13 +1,18 @@
+from __future__ import print_function
 import re
 import sys
 
-def parse_log(infn='-'):
+
+def parse_log(infn='-', dct=None):
     # input and output files, accept stdin for both.
     if infn in {"-", "stdin"}:
         infh = sys.stdin
     else:
         infh = open(infn)
-    results = {}
+    if dct is not None:
+        results = dct
+    else:
+        results = {}
     for line in infh:
         fq = None
         if line.startswith("+ scythe"):
@@ -24,26 +29,17 @@ def parse_log(infn='-'):
                     'total': total, 'rate':rate}
     return results
 
-def print_dict(dct, outfn='-', sep=','):
-    if outfn in {"-", "stdout"}:
-        outfh = sys.stdout
-    else:
-        outfh = open(outfn)
+
+def print_dict(dct, sep=','):
     header = ['fq', 'cont', 'uncont', 'total', 'rate']
-    outfh.write(sep.join(header) + '\n')
+    print(sep.join(header))
     for fq, stats in dct.items():
         line_cells = [stats[st] for st in header]
-        outfh.write(sep.join(line_cells) + '\n')
+        print(sep.join(line_cells))
+
 
 if __name__ == "__main__":
-    res = parse_log(sys.argv[1])
-    try:
-        print_dict(res, sys.argv[2], sys.argv[3])
-    except IndexError:
-        try:
-            print_dict(res, sys.argv[2])
-        except IndexError:
-            try:
-                print_dict(res)
-            except:
-                pass
+    res = {}
+    for fle in sys.argv[1:]:
+        res = parse_log(fle, dct=res)
+    print_dict(res)
