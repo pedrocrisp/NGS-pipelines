@@ -41,7 +41,7 @@ bash $getSubreadResults >> "${logdir}/$(basename $getSubreadResults)" 2>&1
 #featureCounts
 getfeatureCountsResults=$scriptdir/08-getfeatureCountsResults.sh
 cat $getfeatureCountsResults > "${logdir}/$(basename $getfeatureCountsResults)"
-bash $getfeatureCountsResults > ${outdir}/featureCountsResults.txt
+bash $getfeatureCountsResults >> "${logdir}/$(basename $getfeatureCountsResults)" 2>&1
 
 
 #findSamples | parallel bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
