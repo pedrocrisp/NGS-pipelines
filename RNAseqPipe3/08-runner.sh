@@ -15,7 +15,7 @@ workingdir=./
 outdir=results_summaries
 ###
 
-mkdir ${outdir}
+mkdir -p ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
 logdir="./logs/${outdir}.${timestamp}"
