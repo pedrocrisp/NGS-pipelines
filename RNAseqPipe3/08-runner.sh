@@ -36,7 +36,7 @@ bash $getSickleResults >> "${logdir}/$(basename $getSickleResults)" 2>&1
 #subread
 getSubreadResults=$scriptdir/08-getSubreadResults.sh
 cat $getSubreadResults > "${logdir}/$(basename $getSubreadResults)"
-bash $getSubreadResults > ${outdir}/subreadResults.txt
+bash $getSubreadResults >> "${logdir}/$(basename $getSubreadResults)" 2>&1
 
 #featureCounts
 getfeatureCountsResults=$scriptdir/08-getfeatureCountsResults.sh
