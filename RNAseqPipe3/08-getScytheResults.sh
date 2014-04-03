@@ -8,5 +8,4 @@ set -e
 set -x
 
 logscript=$(dirname $(readlink -f $0))/../tools/scythe_log.py
-
-find logs/reads_noadapt.*/  -mindepth 1 -maxdepth 1 -type f -name Sample* | xargs python $logscript >results_summaries/reads_noadapt.csv
+find logs/reads_noadapt.*/  -mindepth 1 -maxdepth 1 -type f -name Sample* | xargs python $logscript >results_summaries/scythe.csv
