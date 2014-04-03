@@ -26,12 +26,12 @@ cat $0 > "$logdir/$(basename $0)"
 #scythe
 getScytheResults=$scriptdir/08-getScytheResults.sh
 cat $getScytheResults > "${logdir}/$(basename $getScytheResults)"
-bash $getScytheResults > ${outdir}/scytheResults.txt
+bash $getScytheResults >> "${logdir}/$(basename $getScytheResults)" 2>&1
 
 #sickle
 getSickleResults=$scriptdir/08-getSickleResults.sh
 cat $getSickleResults > "${logdir}/$(basename $getSickleResults)"
-bash $getSickleResults > ${outdir}/sickleResults.txt
+bash $getSickleResults >> "${logdir}/$(basename $getSickleResults)" 2>&1
 
 #subread
 getSubreadResults=$scriptdir/08-getSubreadResults.sh
