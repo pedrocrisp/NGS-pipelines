@@ -40,7 +40,7 @@ Per Base N Content: When the sequencer cannot call a base with a high enough con
 
 Sequence length distribution: produces a graph showing the distribution in read lengths in the analysed file. Some NGS sequencers generate uniform read length, whilst others do not. A warning will automatically be raised for this module if the reads in a file are of unequal length. 
 
-
+Duplicate sequences: Highlights the level of sequence duplication in the sample file, by producing a plot showing the relative number of reads that have varying degrees of duplication. Note well, any sequence with more than 10 duplicates is automatically placed into the '10 duplicate' category and only the first 200, 000 reads in the file are analysed. A
 
 
 
