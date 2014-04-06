@@ -32,8 +32,11 @@ Per sequence quality scores: enables you to see if a subset of your reads have o
 
 Per base sequence content: provides a plot of the percantage of each base called (A, T, G, C) at each base pair position in the file. In theory, in a random library, the proportion of the four bases for a given base pair position should be approximately equal, thus the lines for A, T, G, C percentages should be in parallel. An imbalance in these equal proportions may suggest that there is an overrepresented sequence in your sample. 
 
-Per base GC content:
-Per sequence GC content:
+Per base GC content: provides a plot of the GC content (%) over each base position in the file. In a random sample, the GC content would generally remain the same across the base pairs (so run horizontally). In theory, the overall CG content would represent the GC content of the genome. A GC bias in a region of your base positions may suggest your data contains an overrepresented sequence. An overall bias in GC content may suggest that there was a systematic issue during sequencing, or the sample library has a sequence bias. 
+
+Per sequence GC content: compares the GC content across the entire length of every sequence in the file to a modeled normal distribution of GC content for the genome (model is created by using the observed data to create a reference genome). If you have a random library, one would expect the GC content to roughly follow a normal distribution, having the central peak corresponding to this modeled genome. A non-normal distribution shape could indicate contamination of the sample/ biased subset, and a shifted distribution could suggest that there's a systematic bias independent of the base positions (the latte will not be flagged as orange/red by the program).
+
+
 
 
 
