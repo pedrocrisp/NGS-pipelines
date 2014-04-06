@@ -26,14 +26,16 @@ Evaluation of results:
 
 Basic statistics module: Provides a summary of the data, including filename/type, total sequences (actual or estimate??? ASK KEV), sequence length (provides the range of read lengths, if all reads are the same length, only one number will appear) and overall GC content expressed as a percentage. N.b: basic statistics will always appear to have a green tick (never flags a warning/error), so you should always further analyse the data. 
 
-Per base sequence quality: Shows the variation in sequence quality at each base position for all reads in the file. The y axis represents the quality scores and the x axis is the base position in the reads. The information is presented as a boxplot for each read position, with the red line representing the median and the blue line representing the mean values. As quality of the bases increases with quality number, the graph has been divided into 
-Per sequence quality scores:
-Per base sequence content:
+Per base sequence quality: Shows the variation in sequence quality at each base position for all reads in the file. The y axis represents the quality scores and the x axis is the base position in the reads. The information is presented as a boxplot for each read position, with the red line representing the median and the blue line representing the mean values. As base calling quality increases with quality number, the graph has been divided into green, orange and red sections, respectively representing good, satisfactory and poor quality base calls. In a good quality run, one would want their boxplots to be in the green section and have little variation. 
+
+Per sequence quality scores: enables you to see if a subset of your reads have overall poor quality base recall. Often a small percentage of your reads will be universally poor quality, generally because they have been poorly imaged (eg. may be on edge of the field of view). If there is a significant percentage of reads that have poor quality in a region of base pairs, this may suggest a systematic problem. 
+
+Per base sequence content: provides a plot of the percantage of each base called (A, T, G, C) at each base pair position in the file. In theory, in a random library, the proportion of the four bases for a given base pair position should be approximately equal, thus the lines for A, T, G, C percentages should be in parallel. An imbalance in these equal proportions may suggest that there is an overrepresented sequence in your sample. 
+
 Per base GC content:
 Per sequence GC content:
 
 
-read, note the 'per base sequence quality' has very low variation and across the reads it has a high quality score. 
 
 References:
 
