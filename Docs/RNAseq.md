@@ -40,18 +40,18 @@ Per Base N Content: When the sequencer cannot call a base with a high enough con
 
 Sequence length distribution: produces a graph showing the distribution in read lengths in the analysed file. Some NGS sequencers generate uniform read length, whilst others do not. A warning will automatically be raised for this module if the reads in a file are of unequal length. 
 
-Duplicate sequences: Highlights the level of sequence duplication in the sample file, by producing a plot showing the relative number of reads that have varying degrees of duplication. Note well, any sequence with more than 10 duplicates is automatically placed into the '10 duplicate' category and only the first 200, 000 reads in the file are analysed. A
+Duplicate sequences: Highlights the level of sequence duplication in the sample file, by producing a plot showing the relative number of sequences that have varying degrees of duplication. Note well, any sequence with more than 10 duplicates is automatically placed into the '10 duplicate' category and only the first 200, 000 reads in the file are analysed. A low level of duplication may suggest a sequence has high coverage, whereas a high level of duplication could indicate a sequence has been enriched eg. overamplification of PCR. 
 
+Overrepresented sequences: This section lists any sequence that accounts for more than 0.1% of the total number of sequences. In a random library there is generally a diversity in sequences. If a sequence represents a higher than expected fraction of the whole (here greater than 0.1%), it may suggest that the sequence is extremely biologically relevant, the library is contaminated, or not as random as thought. If a sequence is overrepresented, the program will try to match the sequence to a contaminants database. 
 
-
+Overrepresented Kmers: 
+I need some help to understand what this means. 
 
 
 References:
 
 Babraham Bioinformatics. (2014) FastQC. Babraham Institute, Cambridgeshire, UK. Obtained from <http://www.bioinformatics.babraham.ac.uk/projects/fastqc/> on the 06/04/2014. 
 Wageningen University Bioinformatics Department. (2012) FastQC Manual. Wageningen University, Netherlands. Obtained from <http://www.bioinformatics.nl/courses/RNAseq/FastQC_Manual.pdf> on the 06/04/2014. 
-
-
 
 
 Scythe
