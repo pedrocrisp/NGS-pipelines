@@ -36,6 +36,12 @@ Per base GC content: provides a plot of the GC content (%) over each base positi
 
 Per sequence GC content: compares the GC content across the entire length of every sequence in the file to a modeled normal distribution of GC content for the genome (model is created by using the observed data to create a reference genome). If you have a random library, one would expect the GC content to roughly follow a normal distribution, having the central peak corresponding to this modeled genome. A non-normal distribution shape could indicate contamination of the sample/ biased subset, and a shifted distribution could suggest that there's a systematic bias independent of the base positions (the latte will not be flagged as orange/red by the program).
 
+Per Base N Content: When the sequencer cannot call a base with a high enough confidence, the base 'N' is called. This module represents the percentage of 'N' bases called for each base pair read position. 'N' calls often occur at the end of the read lengths, however, if the percentage of N is greater than a few percent, you should question the validity of your base calls. 
+
+Sequence length distribution: produces a graph showing the distribution in read lengths in the analysed file. Some NGS sequencers generate uniform read length, whilst others do not. A warning will automatically be raised for this module if the reads in a file are of unequal length. 
+
+
+
 
 
 
