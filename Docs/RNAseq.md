@@ -57,10 +57,24 @@ Wageningen University Bioinformatics Department. (2012) FastQC Manual. Wageninge
 Scythe
 ------
 
-- What? Removes adaptors
-- How? Does a simple match, and if it finds mis-matches it uses a basian calculation to calculate the probability of a match to an adaptor and trims if it is a match. 
-- Have to set a prior (aka: prediction of the contamination rate). Probability of it matching influences how many it says will match. Aim to set to what you think. Calculate vague contamination ratio. Adaptor is contamination.  
--
+Function: 
+
+Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of their being these sequence matches given contamination or ii) the chance of these sequence matches being random. If the Bayesian probability model determines the read is contaminated due to high matching because it is likely an adaptor, that region of sequence will be removed. This model is possible because you have to set the rate of contamination in your sample (known as a prior), therefore this predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
+
+
+Use: 
+
+To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to 
+
+ It considers quality information, which can make it robust in picking out 3′-end adapters, which often include poor quality bases.
+
+The Bayesian approach Scythe uses compares two likelihood models: the probability of seeing the matches in a sequence given contamination, and not given contamination. Given that the read is contaminated, the probability of seeing a certain number of matches and mismatches is a function of the quality of the sequence. Given the read is not contaminated (and is thus assumed to be random sequence), the probability of seeing a certain number of matches and mismatches is chance. The posterior is calculated across both these likelihood models, and the class (contaminated or not contaminated) with the maximum posterior probability is the class selected.
+
+Requirements:
+
+You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, you TEXT HELP TEXT HELP. 
+
+
 
 Sickle
 ------
