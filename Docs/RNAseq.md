@@ -116,7 +116,7 @@ Feature counts
 
 Function:
 
-Use:
+Use: A read-summarisation program to identify and then quantify reads for any genomic feature eg. exons.  
 
 Requirements:
 
