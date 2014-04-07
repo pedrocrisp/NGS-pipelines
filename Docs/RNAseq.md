@@ -102,10 +102,26 @@ https://bioinformatics.ucdavis.edu/software/
 Subread
 -------
 
-Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (hence the name) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. 
+Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (hence the name) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Between the subreads that won the vote and have therefore determined the read location on the genome, conventional algorithims fill in any in/del and mismatch information. This tool is fast as mapping of the read onto the genome is performed prior to filling in detail of missing reads. Being flexible to let individual subreads map to their optimum location, and then determine the greatest voting block also means it is sensitive, as it does not require the subreads to map close to eachother or subreads to map exactly to the genome. This tool is also accurate, as the final location for the read must correspond to several subreads. 
+
+Use: to accurately and with great sensitivity align reads back to a reference genome. 
+
+Requirements:
+
+References:
+The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote
 
 Feature counts
 --------------
+
+Function:
+
+Use:
+
+Requirements:
+
+References:
+http://bioinformatics.oxfordjournals.org/content/30/7/923.long
 
 ---
 
