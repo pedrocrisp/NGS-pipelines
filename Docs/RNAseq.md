@@ -64,20 +64,38 @@ Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contamina
 
 Use: 
 
-To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to 
-
- It considers quality information, which can make it robust in picking out 3′-end adapters, which often include poor quality bases.
-
-The Bayesian approach Scythe uses compares two likelihood models: the probability of seeing the matches in a sequence given contamination, and not given contamination. Given that the read is contaminated, the probability of seeing a certain number of matches and mismatches is a function of the quality of the sequence. Given the read is not contaminated (and is thus assumed to be random sequence), the probability of seeing a certain number of matches and mismatches is chance. The posterior is calculated across both these likelihood models, and the class (contaminated or not contaminated) with the maximum posterior probability is the class selected.
+To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to account for the quality of your sequence, which generally decreases towards the 3' end where the adaptors are located. 
 
 Requirements:
 
 You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, you TEXT HELP TEXT HELP. 
 
 
+References:
+
+https://bioinformatics.ucdavis.edu/software/
 
 Sickle
 ------
+
+Function: 
+
+Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. Sickle also trims reads based upon read length, 
+
+
+Don't comprehened:
+"It takes the quality values and slides a window across them whose length is 0.1 times the length of the read. If this length is less than 1, then the window is set to be equal to the length of the read. Otherwise, the window slides along the quality values until the average quality in the window rises above the threshold, at which point the algorithm determines where within the window the rise occurs and cuts the read and quality there for the 5′-end cut. Then when the average quality in the window drops below the threshold, the algorithm determines where in the window the drop occurs and cuts both the read and quality strings there for the 3′-end cut. However, if the length of the remaining sequence is less than the minimum length threshold, then the read is discarded entirely."
+
+Use:
+
+Most highthroughput NGS sequencing technologies produce reads with poor quality base calling at the 3' and sometimes 5' ends, which can be deleterious for downstream data analysis (assembly, mapping etc.). Thus, Sickle is used to remove poor quality 3' and 5' ends and reads that do not reach a specific length threshold.
+
+Requirements:
+
+What do I require? 
+
+References:
+https://bioinformatics.ucdavis.edu/software/
 
 *To show the difference in read quality, fastqc can be run again*
 
