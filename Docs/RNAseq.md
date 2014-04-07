@@ -102,6 +102,8 @@ https://bioinformatics.ucdavis.edu/software/
 Subread
 -------
 
+Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (hence the name) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. 
+
 Feature counts
 --------------
 
