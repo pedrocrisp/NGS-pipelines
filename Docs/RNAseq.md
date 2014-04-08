@@ -77,36 +77,34 @@ You must set a prior (denoted as 'p'), which is your prediction of the adaptor c
 
 
 References:
-
-https://bioinformatics.ucdavis.edu/software/
+UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
 Sickle
 ------
 
 Function: 
 
-Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. Sickle also trims reads based upon read length, FINISH THIS AND DRAW A DIAGRAM!
-
-
-Don't comprehened:
-"It takes the quality values and slides a window across them whose length is 0.1 times the length of the read. If this length is less than 1, then the window is set to be equal to the length of the read. Otherwise, the window slides along the quality values until the average quality in the window rises above the threshold, at which point the algorithm determines where within the window the rise occurs and cuts the read and quality there for the 5′-end cut. Then when the average quality in the window drops below the threshold, the algorithm determines where in the window the drop occurs and cuts both the read and quality strings there for the 3′-end cut. However, if the length of the remaining sequence is less than the minimum length threshold, then the read is discarded entirely."
+Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. *Please refer to this figure to see a basic diagram of this process.*
 
 Use:
 
 Most highthroughput NGS sequencing technologies produce reads with poor quality base calling at the 3' and sometimes 5' ends, which can be deleterious for downstream data analysis (assembly, mapping etc.). Thus, Sickle is used to remove poor quality 3' and 5' ends and reads that do not reach a specific length threshold.
 
+*To show the difference in read quality, fastqc can then be run again*
+
 Requirements:
 
-What do I require? 
-q= quality score limit
-l= length score limit
-n= you can remove all sequences with n - wouldn't recommend for RNAseq. 
-t= sanger quality score and coding (33+). Solexa (64+), Illumina (pre 2011 33+, after 64+)
+Sickle requires you to set the following variables:
+q: the quality score limit (eg. average quality score of 20)
+l: the minimum length threshold (eg. you would discard reads below 20 bps)
+n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
+t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, 33 is added to each quality score, whereas 64 is added to Solexa. Pre 2011, 33 is added to each quality score for Illumina, and thereafter 64. 
 
 References:
-https://bioinformatics.ucdavis.edu/software/
+UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
-*To show the difference in read quality, fastqc can be run again*
+McElroy, K. (2013) Sickle. Obtained from <https://github.com/KerensaMcElroy/sickle/blob/master/av_window_quality.py> on the 08/04/2014. 
+
 
 Subread
 -------
