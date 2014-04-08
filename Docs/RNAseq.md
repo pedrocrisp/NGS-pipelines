@@ -6,8 +6,7 @@ Fast-QC
 
 Function: 
 
-Quality control of raw/altered data from high throughput sequencing. 
-FastQC is a java based program designed to perform a quality control analysis on your reads to identify any issues in the sequencing tool (eg. read quality decreases at the end of every read) / or in your starting library material. 
+FastQC is a java based program designed to perform a quality control analysis on your reads to identify any issues that occurred during high throughput sequencing (eg. read quality decreases at the end of every read) / or in your starting library material. 
 
 Use: 
 
@@ -44,10 +43,9 @@ Duplicate sequences: Highlights the level of sequence duplication in the sample 
 
 Overrepresented sequences: This section lists any sequence that accounts for more than 0.1% of the total number of sequences. In a random library there is generally a diversity in sequences. If a sequence represents a higher than expected fraction of the whole (here greater than 0.1%), it may suggest that the sequence is extremely biologically relevant, the library is contaminated, or not as random as thought. If a sequence is overrepresented, the program will try to match the sequence to a contaminants database. 
 
-Overrepresented Kmers: 
-I need some help to understand what this means. 
-5mer= sequence of 5. example 20 bp read that's all a's. Essentially cut up, lots of 5mers, compares 5mers across all reads, and if greater than set threshold= will show warning. 
-Overrepresented sequence - adaptors. 
+Overrepresented Kmers: Kmer analysis provides an indication of the levels of exactly repeated sequences within your sequence library. FasQC performs Kmer analysis by breaking up the first 20% of reads in your sequence library into 5-mers and then extrapolating the remaining portion of your library. It calculates an observed/expected ratio for each Kmer by determinng the expected level for each Kmer based upon the base content of the whole library and comparing this to the observed Kmer counts. Any Kmer showing an overall 3 fold observed/expected ratio or a 5 fold ratio at a specific base position is reported by the module (these are the threshold conditions). It also draws a graph for the 6 Kmers with the highest number of hits, showing their pattern of enrichment across the length of your reads. This graph can be used to determine if you have general enrichment or bias within your read length (eg. due to adaptors)
+
+*To understand the concept of Kmers and how the Kmer counts are generated, refer to this figure.* *INSERT FIG*
 
 References:
 
