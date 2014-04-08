@@ -67,9 +67,9 @@ To accurately remove 3' adaptors from each of your reads. Scythe is an accurate 
 
 Requirements:
 
-You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, you TEXT HELP TEXT HELP. 
+You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
 
-    # say your adapter stars with ACCAGT
+    # Example: given you adapter stars with ACCAGT
     adapt="ACCAGT"
     reads=100000
     fqfile=reads.fq
