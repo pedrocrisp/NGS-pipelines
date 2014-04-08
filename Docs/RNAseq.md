@@ -46,7 +46,8 @@ Overrepresented sequences: This section lists any sequence that accounts for mor
 
 Overrepresented Kmers: 
 I need some help to understand what this means. 
-
+5mer= sequence of 5. example 20 bp read that's all a's. Essentially cut up, lots of 5mers, compares 5mers across all reads, and if greater than set threshold= will show warning. 
+Overrepresented sequence - adaptors. 
 
 References:
 
@@ -70,6 +71,12 @@ Requirements:
 
 You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, you TEXT HELP TEXT HELP. 
 
+    # say your adapter stars with ACCAGT
+    adapt="ACCAGT"
+    reads=100000
+    fqfile=reads.fq
+    echo "Contamination percent esitmate is: $(python -c print\ $(zcat $fqfile |head -n $reads| grep $adapt |wc -l)/${reads}.0*100)%"
+
 
 References:
 
@@ -80,7 +87,7 @@ Sickle
 
 Function: 
 
-Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. Sickle also trims reads based upon read length, 
+Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. Sickle also trims reads based upon read length, FINISH THIS AND DRAW A DIAGRAM!
 
 
 Don't comprehened:
@@ -93,6 +100,10 @@ Most highthroughput NGS sequencing technologies produce reads with poor quality 
 Requirements:
 
 What do I require? 
+q= quality score limit
+l= length score limit
+n= you can remove all sequences with n - wouldn't recommend for RNAseq. 
+t= sanger quality score and coding (33+). Solexa (64+), Illumina (pre 2011 33+, after 64+)
 
 References:
 https://bioinformatics.ucdavis.edu/software/
