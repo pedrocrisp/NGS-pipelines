@@ -103,7 +103,8 @@ t: the type of sequencer you used, either Sanger, Solexa or Illumina. This varia
 References:
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
-McElroy, K. (2013) Sickle. Obtained from <https://github.com/KerensaMcElroy/sickle/blob/master/av_window_quality.py> on the 08/04/2014. 
+Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based trimming tool for FastQ files 
+(Version 1.21) [Software].  Obtained from <https://github.com/najoshi/sickle> on the 08/04/2014. 
 
 
 Subread
