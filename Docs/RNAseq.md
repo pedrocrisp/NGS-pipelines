@@ -91,7 +91,7 @@ Sickle
 Function: 
 
 Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. *Please refer to this figure to see a basic diagram of this process.*
-*IF ONE OF A PAIR FAILS= GOES TO A SEPERATE FILE called singles*
+
 
 Use:
 
@@ -107,7 +107,8 @@ q: the quality score limit (eg. average quality score of 20)
 l: the minimum length threshold (eg. you would discard reads below 20 bps)
 n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
 t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
-
+*IF ONE OF A PAIR FAILS= GOES TO A SEPERATE FILE called singles*
+*ADD OTHERS HERE*
 
 References:
 
