@@ -98,7 +98,7 @@ Sickle requires you to set the following variables:
 q: the quality score limit (eg. average quality score of 20)
 l: the minimum length threshold (eg. you would discard reads below 20 bps)
 n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
-t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, 33 is added to each quality score, whereas 64 is added to Solexa. Pre 2011, 33 is added to each quality score for Illumina, and thereafter 64. 
+t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
 
 References:
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
@@ -110,14 +110,18 @@ Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based tri
 Subread
 -------
 
-Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (hence the name) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Between the subreads that won the vote and have therefore determined the read location on the genome, conventional algorithims fill in any in/del and mismatch information. This tool is fast as mapping of the read onto the genome is performed prior to filling in detail of missing reads. Being flexible to let individual subreads map to their optimum location, and then determine the greatest voting block also means it is sensitive, as it does not require the subreads to map close to eachother or subreads to map exactly to the genome. This tool is also accurate, as the final location for the read must correspond to several subreads. 
+Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
 
 Use: to accurately and with great sensitivity align reads back to a reference genome. 
 
 Requirements:
 
 References:
-The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote
+Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res.* 41 (10): e108. 
+
+Questions: 
+1) If the match has to be perfect, how can they say that the reads do not have to map exactly back to the genome?
+*ASK KEVIN*
 
 Feature counts
 --------------
