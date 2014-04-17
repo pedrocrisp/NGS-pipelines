@@ -1,9 +1,11 @@
 #!/bin/bash
+#Set -e as an option, it tells the command line to exit the script immediately if it registers an error.
 set -e
-set -x
+
+#Set -x as an option, it tells the computer to echo back each step before it is completed and the output is produced. 
 
 ###
-#code to make it work on osx and linux
+#code to make script work on both osx and linux. Essentially, it creates a file path to the script directory and saves this path as $0. In detail: 'if the operating system type is darwin (a mac), then use the greadlink function when the readlink function is called. Then use the greadlink function to find the script file named. In doing so, find the path of the script files directory and save as 'scriptdir'. This change is made for Macs because readlink doesn't run properly, but greadlink does. If the OS is not mac (eg. Linux), find the script file using the readlink function and save the path to the script file directory as 'scriptdir.' By using readlink to find where the scripts are, it means if this pipeline is copied onto another computer, the files can still be found.
 if
 [[ $OSTYPE == darwin* ]]
 then
@@ -14,14 +16,32 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 #
 
+###User to ensure correct file path#
+
+#Scythe relies upon knowing the reference directory for the adaptors used, so that it can recognise these sequences. 
+#This code is defining the file path to the adaptor sequences, located within the script directory. 
 adapterfile="$scriptdir/truseq_adapters.fasta"
 
+#Defines the sample that we are working with to the command line as the first token.
 sample=$1
+
+#Specifies the directory that the sample will be opened from.
 sample_dir=reads/$sample
- 
+
+#Lists all of the files in the particular sample directory with the ending '.fastq.gz' and saves these files as 'fastqs.'
 fastqs="$(ls $sample_dir/*.fastq.gz)"
- 
+
+#Creates a new directory called 'reads_noadapt' and puts the sample names into there. This creates the directory to put the output from scythe into (next step).
 mkdir reads_noadapt/$sample
+
+#This command runs scythe. It says 'for the fastqs listed within the sample directory do the following:
+#1) keep the file names but remove the file extensions
+#2) Store the output files in the specified sample folder within the reads_noadapt directory. Store the file name as 'samplename.noadapt.fq.gz' 
+#3) Run the scythe function
+#4) -p: Change the prior from the default (0.3) to 0.1
+#5) -a: The adaptor sequence is located in the script directory, and is called 'truseq_adapters.fasta'
+#6) run scythe on this given fastq file.
+#7) move the output of scythe to the output file (reads_noadapt/given sample name)
 
 for fq in $fastqs
 do
@@ -33,8 +53,3 @@ scythe \
 $fq \
 >$outputFile
 done
-
-# -p set prior to 0.1 default 0.3
-# -a adapter file
-# -o output file
-#input
