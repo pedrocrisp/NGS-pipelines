@@ -65,9 +65,10 @@ Use:
 
 To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to account for the quality of your sequence, which generally decreases towards the 3' end where the adaptors are located. 
 
+
 Requirements:
 
-You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
+- You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
 
     # Example: given you adapter stars with ACCAGT
     adapt="ACCAGT"
@@ -76,7 +77,11 @@ You must set a prior (denoted as 'p'), which is your prediction of the adaptor c
     echo "Contamination percent esitmate is: $(python -c print\ $(zcat $fqfile |head -n $reads| grep $adapt |wc -l)/${reads}.0*100)%"
 
 
+- You must provide an adaptor sequence file so that the program knows what the contaminant sequences are. 
+
+
 References:
+
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
 Sickle
@@ -86,11 +91,13 @@ Function:
 
 Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. *Please refer to this figure to see a basic diagram of this process.*
 
+
 Use:
 
 Most highthroughput NGS sequencing technologies produce reads with poor quality base calling at the 3' and sometimes 5' ends, which can be deleterious for downstream data analysis (assembly, mapping etc.). Thus, Sickle is used to remove poor quality 3' and 5' ends and reads that do not reach a specific length threshold.
 
-*To show the difference in read quality, fastqc can then be run again*
+*To show the difference in read quality before and after processing, you can run fastqc again*
+
 
 Requirements:
 
@@ -100,7 +107,9 @@ l: the minimum length threshold (eg. you would discard reads below 20 bps)
 n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
 t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
 
+
 References:
+
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
 Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based trimming tool for FastQ files 
@@ -110,13 +119,23 @@ Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based tri
 Subread
 -------
 
-Function: Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
+Function: 
 
-Use: to accurately and with great sensitivity align reads back to a reference genome. 
+Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
+
+
+Use: 
+
+To accurately and with great sensitivity align reads back to a reference genome. 
+
 
 Requirements:
 
+You must provide a reference genome that subread can use to map the reads onto. 
+
+
 References:
+
 Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res.* 41 (10): e108. 
 
 Questions: 
