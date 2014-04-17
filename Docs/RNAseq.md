@@ -70,12 +70,13 @@ Requirements:
 
 - You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
 
-    # Example: given you adapter stars with ACCAGT
+```
+    Example: given you adapter stars with ACCAGT
     adapt="ACCAGT"
     reads=100000
     fqfile=reads.fq
     echo "Contamination percent esitmate is: $(python -c print\ $(zcat $fqfile |head -n $reads| grep $adapt |wc -l)/${reads}.0*100)%"
-
+```
 
 - You must provide an adaptor sequence file so that the program knows what the contaminant sequences are. 
 
