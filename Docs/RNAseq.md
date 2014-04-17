@@ -109,6 +109,7 @@ n: allows you to remove all sequences containing an n base. This feature is not 
 t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
 *IF ONE OF A PAIR FAILS= GOES TO A SEPERATE FILE called singles*
 *ADD OTHERS HERE*
+*Windoe size is 0.1 times the length of the read*
 
 References:
 
