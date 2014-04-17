@@ -149,29 +149,34 @@ subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
 
 References:
 
-Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res.* 41 (10): e108. 
+Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res*, 41(10):e108. 
 
 Questions: 
 1) If the match has to be perfect, how can they say that the reads do not have to map exactly back to the genome?
 *ASK KEVIN*
 
-Feature counts
+FeatureCounts
 --------------
 
 Function:
 
- Our results showed a high concordance between alternative methods in summarization accuracy. However, there was a large difference observed in their computational cost. The featureCounts method was found to be an order of magnitude faster on average and far more memory efficient than other methods. The high computational efficiency of featureCounts is due to its ultrafast feature search algorithm and its highly efficient implementation entirely using the C programming language.
+FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing, that identifies and quantifies the overall coverage for a specified genomic feature eg. genes, exons. FeatureCounts comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less computational memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
 
-Expression level of genes, transposons etc. 
 
-Use: A read-summarisation program to identify and then quantify reads for any genomic feature eg. exons.  
+Use: 
+
+To identify and then quantify reads for any genomic feature eg. determine expression level of genes, exons, transposons etc.  
+
 
 Requirements:
-- Give genome- has to be same genome given in subread. Using annotated genome.  
-- standard format: gff3, saf file (more basic). 
+
+-You must provide the same genomic library used in subread for analysis, however, you need to provide the annotated genome version. 
+-The standard format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
+
 
 References:
-http://bioinformatics.oxfordjournals.org/content/30/7/923.long
+
+Liao Y, Smyth GK, Shi W. (2014). featureCounts: an efficient general purpose program for assigning sequence reads to genomic features. *Bioinformatics*, 30(7):923-930.
 
 ---
 
@@ -180,6 +185,14 @@ Miscellaneous
 
 ###Concatenate###
 
+You can use this script when sequencing returns two forward reads and two reverse reads files for each sample. Essentially, the script merges the two forward reads files to create one forward reads file, and does likewise for the reverse reads. This produces single forward and reverse files for a sample that can then be modified in the rest of the pipeline prior to analysis. 
+
+When used:
+
+This script is used prior to the 01-runner.sh for fastqc. It is used when you have two forward reads files and two reverse reads files for a given sample. 
+
 ###BAM to TDF###
+
+
 
 ###Results logs scraper###
