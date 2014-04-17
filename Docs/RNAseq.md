@@ -90,7 +90,7 @@ Sickle
 
 Function: 
 
-Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. *Please refer to this figure to see a basic diagram of this process.*
+Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x, equal to 0.1 times read length) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. If only one read within a pair is discarded, it is denoted as a 'single' read and the output placed into a seperate file. *Please refer to this figure to see a basic diagram of this window process.*
 
 
 Use:
@@ -103,13 +103,16 @@ Most highthroughput NGS sequencing technologies produce reads with poor quality 
 Requirements:
 
 Sickle requires you to set the following variables:
-q: the quality score limit (eg. average quality score of 20)
-l: the minimum length threshold (eg. you would discard reads below 20 bps)
-n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
-t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
-*IF ONE OF A PAIR FAILS= GOES TO A SEPERATE FILE called singles*
-*ADD OTHERS HERE*
-*Windoe size is 0.1 times the length of the read*
+-f: specify forward read file input.
+-r: specify reverse read file input.
+-q: the quality score limit (eg. if 20, the window must have an average quality score of 20 otherwise it will be discarded).
+-l: the minimum length threshold (eg. if 20, you would discard reads below 20 bps).
+-n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
+-t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
+-o: specify output file for forward reads. 
+-p: specify output file for reverse reads.
+-s: specify output file for non-paired reads. 
+
 
 References:
 
