@@ -132,8 +132,15 @@ To accurately and with great sensitivity align reads back to a reference genome.
 
 Requirements:
 
-You must provide a reference genome that subread can use to map the reads onto. 
+You must provide a reference genome that subread can use to map the reads onto. You need to use the subread built genome index, as subread relies upon the genome already been indexed. If you do not already have your genome indexed, please use the program 'subread-buildindex' so that subread can run. 
 
+``` 
+subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
+
+#-o <basename>: name of index eg. TAIR10 
+#int: how much memory the program uses, default 8GBs
+#FASTA FILE: You must supply at least one file for the genome, additional files can be supplied using square brackets [file 2] etc. 
+```
 
 References:
 
