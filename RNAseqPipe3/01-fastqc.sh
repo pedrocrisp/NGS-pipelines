@@ -22,7 +22,7 @@ sample_dir=reads/$sample
 #Lists all of the files in the particular sample directory with the ending '.fastq.gz' and saves these files as 'fastqs.'
 fastqs="$(ls $sample_dir/*.fastq.gz)"
 
-#Creates a new directory called 'reads_qc' and puts the sample names into there. This creates the directory to put the output from fastqc into (next step).
+#Creates a new directory called 'reads_fastqc' and puts the sample names into there. This creates the directory to put the output from fastqc into (next step).
 mkdir reads_fastqc/$sample
 
 #Runs the fastq program. This states that the input directory is the fastq files listed in the sample directory (fastqs)and that the output from fastqc goes into the 'reads_fastqc' directory, in a new folder with the sample name. 
