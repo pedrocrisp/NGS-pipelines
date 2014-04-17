@@ -160,9 +160,15 @@ Feature counts
 
 Function:
 
+ Our results showed a high concordance between alternative methods in summarization accuracy. However, there was a large difference observed in their computational cost. The featureCounts method was found to be an order of magnitude faster on average and far more memory efficient than other methods. The high computational efficiency of featureCounts is due to its ultrafast feature search algorithm and its highly efficient implementation entirely using the C programming language.
+
+Expression level of genes, transposons etc. 
+
 Use: A read-summarisation program to identify and then quantify reads for any genomic feature eg. exons.  
 
 Requirements:
+- Give genome- has to be same genome given in subread. Using annotated genome.  
+- standard format: gff3, saf file (more basic). 
 
 References:
 http://bioinformatics.oxfordjournals.org/content/30/7/923.long
