@@ -29,7 +29,7 @@ sample=$1
 #Specifies the directory that the sample will be opened from.
 sample_dir=reads/$sample
 
-#List all of the files in the particular sample directory with the ending '.fastq.gz' and recall these files as the denoted term 'fastqs'.
+#List all files ending with '.fastq.gz' that are located within the specified sample directory and save these as the variable 'fastqs.'
 fastqs="$(ls $sample_dir/*.fastq.gz)"
 
 #Creates a new directory called 'reads_noadapt' and within this a folder for the sample. This creates the directory to put the output from scythe into (next step).
