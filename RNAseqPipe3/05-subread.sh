@@ -19,7 +19,7 @@ fi
 #
 
 ###
-#User defined reference sequence directory variable.
+#User defined reference sequence directory.
 #This line defines the reference directory to be located in the script directory in a folder called 'subread_refdir.' The user should create a link for the subread_refdir in the script dir to map to the location of the directory containing their subread indexfiles. These index files can be created by using the 'subread-buildindex' program (refer to RNAseq pipeline user guide) and MUST have the prefix "TAIR10_gen_chrc" (chrc means we included all 7 chromosomes).
 refdir=$scriptdir/subread_refdir
 #
