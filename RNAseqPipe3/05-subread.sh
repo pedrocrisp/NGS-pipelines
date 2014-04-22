@@ -68,7 +68,14 @@ samtools sort -m 2G ${tmpbam} $outbam
 samtools index ${outbam}.bam
 rm -v ${outsam} ${tmpbam}"
 
+#Using samtools view to convert the sam file to bam file.
 samtools view -S -u $outsam > ${tmpbam}
+
+#Sort the temporary bam file by chromosomal position, and save the sorted file.
 samtools sort -m 2G ${tmpbam} $outbam
+
+#Make an index of the sorted bam file
 samtools index ${outbam}.bam
+
+#Delete the temporary bam.
 rm -v ${outsam} ${tmpbam}
