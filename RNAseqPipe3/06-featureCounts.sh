@@ -37,7 +37,7 @@ outdir="featureCounts/${sample}"
 mkdir ${outdir}
 
 #This command runs featureCounts. 
-#-F: specify what type of file you have used for your annotated genome library.
+#-F: specify what format of file you have used for your annotated genome library.
 #-a: specify the filepath to your annotated genome library.
 #-o: Output directory.
 
