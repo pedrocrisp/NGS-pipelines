@@ -170,8 +170,8 @@ To identify and then quantify reads for any genomic feature eg. determine expres
 
 Requirements:
 
--You must provide the same genomic library used in subread for analysis, however, you need to provide the annotated genome version. 
--The standard format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
+ -You must provide the same genomic library used in subread for analysis, however, you need to provide the annotated genome version. 
+ -The standard format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
 
 
 References:
