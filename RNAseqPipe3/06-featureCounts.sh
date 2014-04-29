@@ -36,13 +36,14 @@ outdir="featureCounts/${sample}"
 #Creates an output directory to put the returned files to go into once featureCounts has been run on the sample. In this case, the output from featureCounts for the sample should go into a folder containing the sample's name, located within the 'featureCounts' directory.
 mkdir ${outdir}
 
-#This command runs featureCounts. 
+#This command runs featureCounts.  
 #-F: Specify the format for the annotated genome file you are using.
 #-p: For paired end reads only, specified fragments will be counted as opposed to reads.
 #-C: Specifies that chimeric fragments (those fragments with their two ends aligned to different chromosomes) will NOT be counted.(Used in conjunction with -p).
-#-s: 
+#-s: Specifies if strand specific read counting should be performed. Three values are possible: o =unstranded, 1= stranded, 2= reversely stranded. 
 #-a: specify the filepath to your annotated genome library.
 #-o: Output directory.
+#${sample_dire}/*.bam - specifies that the input for feature counts is located in the named sample directory. 
 
 featureCounts\
     -F SAF\
