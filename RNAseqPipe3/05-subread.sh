@@ -51,7 +51,7 @@ outbam="${outdir}/${sample}" # no .bam, as samtools sort -f has a bug.
 #Specifies that the temporary bam output file will be stored in the output directory with the file name 'random.bam.' A temporary bam file has been created due to samtools having a bug with the bam files (Kevins hackery).
 tmpbam="${outdir}/${RANDOM}.bam"
 
-# Condition statement: If the  
+# Condition statement: Enables you to cope with both paired and single end reads, as subread will run with different settings if you have 1 or 2 files. If single end (# fastqs == 1), it will tell the subread program and so it will not look for a forward and reverse read. If paired (# fastqs == 2), it will describe which file is the forward and reverse read. If the read is not single end (1) or paired (2), it will print an error code.
 if [ ${numFqFiles} -eq 1 ]
 then
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
