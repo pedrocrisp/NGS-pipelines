@@ -37,7 +37,10 @@ outdir="featureCounts/${sample}"
 mkdir ${outdir}
 
 #This command runs featureCounts. 
-#-F: specify what format of file you have used for your annotated genome library.
+#-F: Specify the format for the annotated genome file you are using.
+#-p: For paired end reads only, specified fragments will be counted as opposed to reads.
+#-C: Specifies that chimeric fragments (those fragments with their two ends aligned to different chromosomes) will NOT be counted.(Used in conjunction with -p).
+#-s: 
 #-a: specify the filepath to your annotated genome library.
 #-o: Output directory.
 
