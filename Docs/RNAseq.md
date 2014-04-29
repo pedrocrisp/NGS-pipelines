@@ -45,7 +45,7 @@ Overrepresented sequences: This section lists any sequence that accounts for mor
 
 Overrepresented Kmers: Kmer analysis provides an indication of the levels of exactly repeated sequences within your sequence library. FasQC performs Kmer analysis by breaking up the first 20% of reads in your sequence library into 5-mers and then extrapolating the remaining portion of your library. It calculates an observed/expected ratio for each Kmer by determinng the expected level for each Kmer based upon the base content of the whole library and comparing this to the observed Kmer counts. Any Kmer showing an overall 3 fold observed/expected ratio or a 5 fold ratio at a specific base position is reported by the module (these are the threshold conditions). It also draws a graph for the 6 Kmers with the highest number of hits, showing their pattern of enrichment across the length of your reads. This graph can be used to determine if you have general enrichment or bias within your read length (eg. due to adaptors)
 
-*To understand the concept of Kmers and how the Kmer counts are generated, refer to this figure.* *INSERT FIG*
+*To understand the concept of Kmers and how the Kmer counts are generated, refer to this figure.* ![image label](https://dl.dropboxusercontent.com/u/55789820/Kmer%20count.JPG)
 
 References:
 
