@@ -42,10 +42,16 @@ fastqs="$(ls $sample_dir/*trimmed.fq)"
 
 numFqFiles=$(echo $fastqs | wc -w)
 
+#Specifies that the sam output file will be placed in the output directory, and have the file name 'sample.sam'
 outsam="${outdir}/${sample}.sam"
+
+#Specifies that the bam output file will be stored in the output directory, with the file name 'sample.''.bam' has not been added as samtools sort -f currently (29/4/14) has a bug. 
 outbam="${outdir}/${sample}" # no .bam, as samtools sort -f has a bug.
+
+#Specifies that the temporary bam output file will be stored in the output directory with the file name 'random.bam.' A temporary bam file has been created due to samtools having a bug with the bam files (Kevins hackery).
 tmpbam="${outdir}/${RANDOM}.bam"
 
+# Condition statement: If the  
 if [ ${numFqFiles} -eq 1 ]
 then
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
