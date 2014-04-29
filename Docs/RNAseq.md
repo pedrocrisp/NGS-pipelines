@@ -45,10 +45,9 @@ Overrepresented sequences: This section lists any sequence that accounts for mor
 
 Overrepresented Kmers: Kmer analysis provides an indication of the levels of exactly repeated sequences within your sequence library. FasQC performs Kmer analysis by breaking up the first 20% of reads in your sequence library into 5-mers and then extrapolating the remaining portion of your library. It calculates an observed/expected ratio for each Kmer by determinng the expected level for each Kmer based upon the base content of the whole library and comparing this to the observed Kmer counts. Any Kmer showing an overall 3 fold observed/expected ratio or a 5 fold ratio at a specific base position is reported by the module (these are the threshold conditions). It also draws a graph for the 6 Kmers with the highest number of hits, showing their pattern of enrichment across the length of your reads. This graph can be used to determine if you have general enrichment or bias within your read length (eg. due to adaptors)
 
-*To understand the concept of Kmers and how the Kmer counts are generated, refer to the figure below.* ![image label](https://dl.dropboxusercontent.com/u/55789820/Kmer%20count.JPG)
+*To understand the concept of Kmers and how the Kmer counts are generated, refer to figure 1 below.* ![image label](https://dl.dropboxusercontent.com/u/55789820/Kmer%20count.JPG)
 
-Here, the mechanism by which FastQC analyses the Kmers in a sequence is shown. The fast-qc program analyses the first 20% of the library using this process, with the remainder being extrapolated.
-
+Figure 1: The mechanism by which FastQC analyses the Kmers in a sequence. The fast-qc program analyses the first 20% of the library using this sliding 5-mer process. The remainder of the Kmer count is extrapolated based upon this analyses to produce a list of the highest Kmers in your library. 
 
 References:
 
@@ -130,7 +129,7 @@ Subread
 
 Function: 
 
-Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read. When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
+Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. Subread however does have some limitations, for instance you cannot tell if alternative splicing has occurred, and therefore you should consider which genome mapping program is appropriate for your use. 
 
 
 Use: 
@@ -149,6 +148,9 @@ subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
 #int: how much memory the program uses, default 8GBs
 #FASTA FILE: You must supply at least one file for the genome, additional files can be supplied using square brackets [file 2] etc. 
 ```
+
+![image label](https://dl.dropboxusercontent.com/u/55789820/Seed%20and%20vote%20subread.JPG)
+Figure 2: Artificial example of the subread ‘seed-and-vote’ mapping paradigm. (A) Here, six sub-reads are created from an artificial read each containing 5 continuous bases. The numbers in blue on the LHS denote where these sequences originated from in the read. The base sequence for each subread is encoded by a string of binary (seen in the hash table) as 2-bit binary is used to encode each base. (B) These subreads are then matched to perfectly complimentary regions in the reference genome (no mismatches allowed). Note that each subread may match to more than one location. Mapping identifies four candidate  locations, with 2, 5 1 and 2 votes respectively. The location with the greatest number of votes, in this case 5 votes, is chosen as the final mapping location for the read. (Modified from Liao Y et. al 2013). 
 
 References:
 
@@ -196,6 +198,11 @@ This script is used prior to the 01-runner.sh for fastqc. It is used when you ha
 
 ###BAM to TDF###
 
+This script is used to convert a BAM file to a TDF file following featurecounts being run. It is useful as it reduces the size of the BAM file, making a smaller format file  for viewing gene expression levels in your genome browser.
+
+When used: 
+
+This scrip is used after featurecounts, which produces an output file in BAM format. 
 
 
 ###Results logs scraper###
