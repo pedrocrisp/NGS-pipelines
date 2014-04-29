@@ -205,3 +205,5 @@ This scrip is used after featurecounts, which produces an output file in BAM for
 
 
 ###Results logs scraper###
+
+Kevin's python script to extract key metrics out of the log files to make summary statistics. It is essential to check the metrics produced to ensure that the pipeline has correctly run. 
