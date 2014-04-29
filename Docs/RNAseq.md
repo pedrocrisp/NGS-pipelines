@@ -45,9 +45,9 @@ Overrepresented sequences: This section lists any sequence that accounts for mor
 
 Overrepresented Kmers: Kmer analysis provides an indication of the levels of exactly repeated sequences within your sequence library. FasQC performs Kmer analysis by breaking up the first 20% of reads in your sequence library into 5-mers and then extrapolating the remaining portion of your library. It calculates an observed/expected ratio for each Kmer by determinng the expected level for each Kmer based upon the base content of the whole library and comparing this to the observed Kmer counts. Any Kmer showing an overall 3 fold observed/expected ratio or a 5 fold ratio at a specific base position is reported by the module (these are the threshold conditions). It also draws a graph for the 6 Kmers with the highest number of hits, showing their pattern of enrichment across the length of your reads. This graph can be used to determine if you have general enrichment or bias within your read length (eg. due to adaptors)
 
-*To understand the concept of Kmers and how the Kmer counts are generated, refer to figure 1 below.* ![image label](https://dl.dropboxusercontent.com/u/55789820/Kmer%20count.JPG)
+*To understand the concept of Kmers and how the Kmer counts are generated, refer to figure 1 below.* ![image label](https://github.com/BecWardell/NGS-pipelines/raw/bec_documentation/Docs/img/kmerCount.jpg)
 
-Figure 1: The mechanism by which FastQC analyses the Kmers in a sequence. The fast-qc program analyses the first 20% of the library using this sliding 5-mer process. The remainder of the Kmer count is extrapolated based upon this analyses to produce a list of the highest Kmers in your library. 
+> **Figure 1:** The mechanism by which FastQC analyses the Kmers in a sequence. The fast-qc program analyses the first 20% of the library using this sliding 5-mer process. The remainder of the Kmer count is extrapolated based upon this analyses to produce a list of the highest Kmers in your library. 
 
 References:
 
@@ -105,15 +105,16 @@ Most highthroughput NGS sequencing technologies produce reads with poor quality 
 Requirements:
 
 Sickle requires you to set the following variables:
--f: specify forward read file input.
--r: specify reverse read file input.
--q: the quality score limit (eg. if 20, the window must have an average quality score of 20 otherwise it will be discarded).
--l: the minimum length threshold (eg. if 20, you would discard reads below 20 bps).
--n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
--t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, '33' is added to each quality score, whereas '64' is added to Solexa. Pre 2011, '33' is added to each quality score for Illumina, and post 2011 '64'is added.  
--o: specify output file for forward reads. 
--p: specify output file for reverse reads.
--s: specify output file for non-paired reads. 
+
+* -f: specify forward read file input.
+* -r: specify reverse read file input.
+* -q: the quality score limit (eg. if 20, the window must have an average quality score of 20 otherwise it will be discarded).
+* -l: the minimum length threshold (eg. if 20, you would discard reads below 20 bps).
+* -n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
+* -t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, `33` is added to each quality score, whereas `64` is added to Solexa. Pre 2011, `33` is added to each quality score for Illumina, and post 2011 `64` is added.  
+* -o: specify output file for forward reads. 
+* -p: specify output file for reverse reads.
+* -s: specify output file for non-paired reads. 
 
 
 References:
@@ -149,16 +150,14 @@ subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
 #FASTA FILE: You must supply at least one file for the genome, additional files can be supplied using square brackets [file 2] etc. 
 ```
 
-![image label](https://dl.dropboxusercontent.com/u/55789820/Seed%20and%20vote%20subread.JPG)
-Figure 2: Artificial example of the subread ‘seed-and-vote’ mapping paradigm. (A) Here, six sub-reads are created from an artificial read each containing 5 continuous bases. The numbers in blue on the LHS denote where these sequences originated from in the read. The base sequence for each subread is encoded by a string of binary (seen in the hash table) as 2-bit binary is used to encode each base. (B) These subreads are then matched to perfectly complimentary regions in the reference genome (no mismatches allowed). Note that each subread may match to more than one location. Mapping identifies four candidate  locations, with 2, 5 1 and 2 votes respectively. The location with the greatest number of votes, in this case 5 votes, is chosen as the final mapping location for the read. (Modified from Liao Y et. al 2013). 
+![image label](https://github.com/BecWardell/NGS-pipelines/raw/bec_documentation/Docs/img/seedAndVoteSubread.jpg)
+> **Figure 2:** Artificial example of the subread ‘seed-and-vote’ mapping paradigm. (A) Here, six sub-reads are created from an artificial read each containing 5 continuous bases. The numbers in blue on the LHS denote where these sequences originated from in the read. The base sequence for each subread is encoded by a string of binary (seen in the hash table) as 2-bit binary is used to encode each base. (B) These subreads are then matched to perfectly complimentary regions in the reference genome (no mismatches allowed). Note that each subread may match to more than one location. Mapping identifies four candidate  locations, with 2, 5 1 and 2 votes respectively. The location with the greatest number of votes, in this case 5 votes, is chosen as the final mapping location for the read. (Modified from Liao Y et. al 2013). 
 
 References:
 
 Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res*, 41(10):e108. 
 
-Questions: 
-1) If the match has to be perfect, how can they say that the reads do not have to map exactly back to the genome?
-*ASK KEVIN*
+
 
 FeatureCounts
 --------------
