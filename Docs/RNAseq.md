@@ -144,19 +144,22 @@ Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based tri
 Subread
 -------
 
-Function: 
+**Function:**
 
-Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. Thus, this tool is fast as the read is mapped onto the genome before any detailed filling in of missing regions in the read occurs. This tool is also sensitive, as it allows individual subreads to map to their optimum location meaning the subreads do not have to map close to eachother nor map exactly to the genome. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. Subread however does have some limitations, for instance you cannot tell if alternative splicing has occurred, and therefore you should consider which genome mapping program is appropriate for your use. 
-
-
-Use: 
-
-To accurately and with great sensitivity align reads back to a reference genome. 
+Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. As each read is mapped onto the genome before any detailed filling in occurs, Subread is incredibly fast compared to other read alignment tools, being 4 times faster than Bowtie and nearly 10 times faster than BWA. Subread is also a sensitive tool, as no individual subread is required to map onto the optimum 'voted' read location, nor are subreads forced to map close to eachother. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
 
 
-Requirements:
+**Use:**
 
-You must provide a reference genome that subread can use to map the reads onto. You need to use the subread built genome index, as subread relies upon the genome already been indexed. If you do not already have your genome indexed, please use the program 'subread-buildindex' so that subread can run. 
+Subread uses votes of exactly matching subreads to find the optimum location for each read, even if the read contains in/dels or base pair mismatches. Therefore, Subread is used to quickly align reads back to a reference genome with high accuracy and sensitivity. 
+
+**Limitations:**
+
+The major limitation for Subread is that it cannot accurately align your library to a divergent reference library. In this situation, the Burrows-Wheeler Aligner (BWA) is a better alignment tool. Another important limitation is that Subread cannot tell if alternative splicing has occurred, and so in this case, the 'Subjunc' package would be more appropriate. 
+
+**Requirements:**
+
+You must provide a reference genome that Subread can use to map your reads back onto. You need to use a Subread built genome index, as the Subread package cannot function without an already indexed genome. If you do not already have your genome indexed, please use the program 'subread-buildindex' (function provided below) so that Subread can run. 
 
 ``` 
 subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
@@ -167,9 +170,9 @@ subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
 ```
 
 ![image label](https://github.com/BecWardell/NGS-pipelines/raw/bec_documentation/Docs/img/seedAndVoteSubread.jpg)
-> **Figure 2:** Artificial example of the subread ‘seed-and-vote’ mapping paradigm. (A) Here, six sub-reads are created from an artificial read each containing 5 continuous bases. The numbers in blue on the LHS denote where these sequences originated from in the read. The base sequence for each subread is encoded by a string of binary (seen in the hash table) as 2-bit binary is used to encode each base. (B) These subreads are then matched to perfectly complimentary regions in the reference genome (no mismatches allowed). Note that each subread may match to more than one location. Mapping identifies four candidate  locations, with 2, 5 1 and 2 votes respectively. The location with the greatest number of votes, in this case 5 votes, is chosen as the final mapping location for the read. (Modified from Liao Y et. al 2013). 
+> **Figure 2:** Artificial example of the Subread ‘seed-and-vote’ mapping paradigm. (A) Here, six sub-reads are created from an artificial read each containing 5 continuous bases. The numbers in blue on the LHS denote where these sequences originated from in the read. The base sequence for each subread is encoded by a string of binary (seen in the hash table) as 2-bit binary is used to encode each base. (B) These subreads are then matched to perfectly complimentary regions in the reference genome (no mismatches allowed). Note that each subread may match to more than one location. Mapping identifies four candidate locations, with 2, 5 1 and 2 votes respectively. The location with the greatest number of votes, in this case 5 votes, is chosen as the final mapping location for the read. It should be noted that although each individual subread has to exactly match to locations in the genome, the read as a whole does not have to exactly match. This process allows for in/dels and mismatches to occur. (Modified from Liao Y et. al 2013). 
 
-References:
+**References:**
 
 Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res*, 41(10):e108. 
 
@@ -178,23 +181,23 @@ Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalabl
 FeatureCounts
 --------------
 
-Function:
+**Function:**
 
-FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing, that identifies and quantifies the overall coverage for a specified genomic feature eg. genes, exons. FeatureCounts comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less computational memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
-
-
-Use: 
-
-To identify and then quantify reads for any genomic feature eg. determine expression level of genes, exons, transposons etc.  
+FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing that identifies and quantifies the overall coverage of a specified genomic feature eg. genes, exons. FeatureCounts is comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less computational memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
 
 
-Requirements:
+**Use: **
 
- -You must provide the same genomic library used in subread for analysis, however, you need to provide the annotated genome version. 
- -The standard format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
+To identify and then quantify reads for any genomic feature eg. to determine expression level of genes, exons, transposons etc.  
 
 
-References:
+**Requirements:**
+
+ *For featureCounts analysis, you must provide the same genomic library that you used for Subread, however, you need to supply the annotated genome version of the library. 
+ *The format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
+
+
+**References:**
 
 Liao Y, Smyth GK, Shi W. (2014). featureCounts: an efficient general purpose program for assigning sequence reads to genomic features. *Bioinformatics*, 30(7):923-930.
 
@@ -207,17 +210,17 @@ Miscellaneous
 
 You can use this script when sequencing returns two forward reads and two reverse reads files for each sample. Essentially, the script merges the two forward reads files to create one forward reads file, and does likewise for the reverse reads. This produces single forward and reverse files for a sample that can then be modified in the rest of the pipeline prior to analysis. 
 
-When used:
+**When used:**
 
 This script is used prior to the 01-runner.sh for fastqc. It is used when you have two forward reads files and two reverse reads files for a given sample. 
 
 ###BAM to TDF###
 
-This script is used to convert a BAM file to a TDF file following featurecounts being run. It is useful as it reduces the size of the BAM file, making a smaller format file  for viewing gene expression levels in your genome browser.
+This script is used to convert a BAM file to a TDF file following featureCounts being run. It is useful as it reduces the size of the BAM file, making a smaller format (TDF) file for viewing gene expression levels in your genome browser.
 
-When used: 
+**When used: **
 
-This scrip is used after featurecounts, which produces an output file in BAM format. 
+This scrip is used after featureCounts, which produces an output file in BAM format. 
 
 
 ###Results logs scraper###
