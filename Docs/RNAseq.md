@@ -78,12 +78,12 @@ Scythe
 Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of sequence matches given contamination or ii) the chance of sequence matches being random. If the Bayesian probability model determines that the read is contaminated because it has a high matching region that is likely an adaptor, that region of sequence will be removed. This model is possible because you have to set the rate of contamination in your sample (known as a prior). This prior predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
 
 
-Use: 
+**Use:**
 
 To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to account for the quality of your sequence, which generally decreases towards the 3' end where the adaptors are located. 
 
 
-Requirements:
+**Requirements:**
 
 * You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
 
@@ -98,7 +98,7 @@ Requirements:
 * You must provide an adaptor sequence file so that the program knows what the contaminant sequences are. 
 
 
-References:
+**References:**
 
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
@@ -106,34 +106,34 @@ UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, Californ
 Sickle
 ------
 
-Function: 
+**Function:**
 
-Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x, equal to 0.1 times read length) and finds the average quality score for this window. It then determines if the average quality score for window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). In this way, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. If only one read within a pair is discarded, it is denoted as a 'single' read and the output placed into a seperate file. *Please refer to this figure to see a basic diagram of this window process.*
-
-
-Use:
-
-Most highthroughput NGS sequencing technologies produce reads with poor quality base calling at the 3' and sometimes 5' ends, which can be deleterious for downstream data analysis (assembly, mapping etc.). Thus, Sickle is used to remove poor quality 3' and 5' ends and reads that do not reach a specific length threshold.
-
-*To show the difference in read quality before and after processing, you can run fastqc again*
+Sickle acts to trim regions of reads that have deteriorating quality at the 3' and 5' ends (often a result of NGS sequencing), by using set quality/length thresholds and a sliding windows technique. When each base is called by the sequencer, it is given a quality score. Sickle takes a specified window of bases (say window x, equal to 0.1 times read length) and finds the average quality score for the bases in this window. It then determines if the average quality score for the bases in window x is greater/less than a predetermined quality score threshold that you provide. If the average base calling quality is below the threshold, the sequence will be trimmed before the window (if at 3' end) or after the window (if at 5' end). Using this sliding window technique across the entire read length, Sickle determines when the base calling quality is sufficiently low to trim at the 3' end, and when the base calling quality has become high enough to trim at the 5' end of each read. If the sequence after trimming is below the specified read length threshold, the read will be discarded. If only one read within a pair is discarded, it is denoted as a 'single' read and the output placed into a separate file. 
 
 
-Requirements:
+**Use:**
 
-Sickle requires you to set the following variables:
+Most high-throughput NGS sequencing technologies produce reads with poor quality base calling at the 3' and sometimes 5' ends, which can be deleterious for downstream data analysis (assembly, mapping etc.). Thus, Sickle is used to remove poor quality bases at the 3' and 5' ends, as well as reads that do not reach a specific length threshold.
 
-* -f: specify forward read file input.
-* -r: specify reverse read file input.
+*To show the difference in read quality before and after processing, you can run FastQC again*
+
+
+**Requirements:**
+
+Sickle requires you to specify the following variables:
+
+* -f: forward read file input.
+* -r: reverse read file input.
 * -q: the quality score limit (eg. if 20, the window must have an average quality score of 20 otherwise it will be discarded).
 * -l: the minimum length threshold (eg. if 20, you would discard reads below 20 bps).
 * -n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
 * -t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, `33` is added to each quality score, whereas `64` is added to Solexa. Pre 2011, `33` is added to each quality score for Illumina, and post 2011 `64` is added.  
-* -o: specify output file for forward reads. 
-* -p: specify output file for reverse reads.
-* -s: specify output file for non-paired reads. 
+* -o: output file for forward reads. 
+* -p: output file for reverse reads.
+* -s: output file for single reads. 
 
 
-References:
+**References:**
 
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
 
