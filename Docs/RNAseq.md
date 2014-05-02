@@ -10,7 +10,11 @@ FastQC is a java based program designed to perform a quality control analysis on
 
 **Use:** 
 
-Fast QC can be used to perform simple quality control analysis on your raw data, and can also be used after various steps in this pipeline (eg. removal of adapter sequences) to see if these programs have improved read quality. 
+Fast QC can be used to perform simple quality control analysis on your raw data, and can also be used after various steps in this pipeline (eg. removal of adapter sequences) to see if these programs have improved read quality.
+
+**Limitations:**
+
+The FastQC program is limited by not being overly informative, and also being a relatively slow program to run. 
 
 **Requirements:**
 
@@ -54,7 +58,9 @@ Fast QC can read files ending in:
 
 **Overrepresented Kmers-** Kmer analysis provides an indication of the levels of exactly repeated sequences within your sequence library. FasQC performs Kmer analysis by breaking up the first 20% of reads in your sequence library into 5-mers and then extrapolating the remaining portion of your library (fig.1). It calculates an observed to expected ratio for each Kmer, by first analysing the whole library to determine the expected level of each Kmer, and then comparing this to the observed Kmer counts. Any Kmer showing an overall 3 fold higher observed to expected ratio, or a 5 fold ratio at a specific base position, is reported by the module. This module provides a graph for the 6 Kmers with the highest number of hits, showing their pattern of enrichment across the length of your reads. This graph can be used to determine if you have general enrichment, or a pattern of bias across specific points within your read length (eg. due to adaptors). 
 
-*To understand the concept of Kmers and how the Kmer counts are generated, refer to figure 1 below.* ![image label](https://github.com/BecWardell/NGS-pipelines/raw/bec_documentation/Docs/img/kmerCount.jpg)
+*To understand the concept of Kmers and how the Kmer counts are generated, refer to figure 1 below.* 
+
+![image label](https://github.com/BecWardell/NGS-pipelines/raw/bec_documentation/Docs/img/kmerCount.jpg)
 
 > **Figure 1:** The mechanism by which FastQC analyses Kmers in a sequence. The FastQC program analyses the first 20% of library sequences using this sliding 5-mer process. The remainder of the Kmer count is extrapolated based upon this analysis to produce a list of the highest Kmers in your library. 
 
@@ -67,9 +73,9 @@ Wageningen University Bioinformatics Department. (2012) FastQC Manual. Wageninge
 Scythe
 ------
 
-Function: 
+**Function:**
 
-Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of their being these sequence matches given contamination or ii) the chance of these sequence matches being random. If the Bayesian probability model determines the read is contaminated due to high matching because it is likely an adaptor, that region of sequence will be removed. This model is possible because you have to set the rate of contamination in your sample (known as a prior), therefore this predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
+Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of sequence matches given contamination or ii) the chance of sequence matches being random. If the Bayesian probability model determines that the read is contaminated because it has a high matching region that is likely an adaptor, that region of sequence will be removed. This model is possible because you have to set the rate of contamination in your sample (known as a prior). This prior predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
 
 
 Use: 
@@ -79,22 +85,23 @@ To accurately remove 3' adaptors from each of your reads. Scythe is an accurate 
 
 Requirements:
 
-- You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
+* You must set a prior (denoted as 'p'), which is your prediction of the adaptor contamination rate within your sample. In order to estimate your prior, and therefore set a limit for scythe, you can alter the script below.
 
 ```
-    Example: given you adapter stars with ACCAGT
+    Example: given you adapter starts with ACCAGT
     adapt="ACCAGT"
     reads=100000
     fqfile=reads.fq
     echo "Contamination percent esitmate is: $(python -c print\ $(zcat $fqfile |head -n $reads| grep $adapt |wc -l)/${reads}.0*100)%"
 ```
 
-- You must provide an adaptor sequence file so that the program knows what the contaminant sequences are. 
+* You must provide an adaptor sequence file so that the program knows what the contaminant sequences are. 
 
 
 References:
 
 UC Davis Genome Centre. (2014) Software. UC Davis Genome Center, Davis, California, USA. Obtained from <https://bioinformatics.ucdavis.edu/software/> on the 08/04/2014. 
+
 
 Sickle
 ------
