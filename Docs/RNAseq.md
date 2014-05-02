@@ -4,24 +4,31 @@ RNAseq pipeline user guide
 Fast-QC
 -------
 
-Function: 
+**Function:**
 
-FastQC is a java based program designed to perform a quality control analysis on your reads to identify any issues that occurred during high throughput sequencing (eg. read quality decreases at the end of every read) / or in your starting library material. 
+FastQC is a java based program designed to perform a quality control analysis on your reads. This is an important tool as it enables you to identify any issues that may have occurred during high throughput sequencing (eg. decrease in read quality towards the end of every read) or any issues with your starting library material.  
 
-Use: 
+**Use:** 
 
-Fast QC can be used to perform a simple quality control analysis of your raw data, and also be used after modifications (eg. removal of adapter sequences) to see if any improvement in quality has occurred. 
+Fast QC can be used to perform simple quality control analysis on your raw data, and can also be used after various steps in this pipeline (eg. removal of adapter sequences) to see if these programs have improved read quality. 
 
-Requirements:
+**Requirements:**
 
-Fast QC can read files ending in: FastQ (all quality encoding variants), Casava FastQ files^, Colorspace FastQ, GZip compressed FastQ, SAM, BAM or SAM/BAM Mapped only^. 
-^Indicates that you will need to tell FastQC you are using SAM/BAM or Casava files, as FastQC will not select these automatically. 
+Fast QC can read files ending in: 
+* FastQ (all quality encoding variants), 
+* Casava FastQ files^, Colorspace FastQ, 
+* GZip compressed FastQ, 
+* SAM, 
+* BAM or 
+* SAM/BAM Mapped only^ 
 
-Evaluation of results:
+^Indicates that you will need to tell FastQC you are using SAM/BAM or Casava files, as FastQC will not automatically select these formats. 
 
-- Once you have run Fast-QC, the results report will be available as a http file. When you click on it, the report should open in your browser.
-- You will see that the analysis is segmented into a series of modules, with a summary of the module outcomes provided on the left hand side. Ratings include: normal (green tick), slightly abnormal (orange exclamation mark) and very abnormal (red cross). 
-- Here is an example of a [good quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc/fastqc_report.html) and [poor quality] (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc/fastqc_report.html) read. A brief description of the purpose of each module is provided below. 
+**Evaluation of results:**
+
+* Once you have run Fast-QC, the results report will be available as a http file. The report should open in your browser when you click on the file.
+* You will see that the analysis is segmented into a series of modules, with a summary of the module outcomes provided on the left hand side. Ratings include: normal (green tick), slightly abnormal (orange exclamation mark) and very abnormal (red cross). 
+* Here is an example of a [good quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc/fastqc_report.html) and [poor quality] (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc/fastqc_report.html) read. A brief description of the purpose of each module is provided below. 
 
 Basic statistics module: Provides a summary of the data, including filename/type, total sequences (actual or estimate??? ASK KEV), sequence length (provides the range of read lengths, if all reads are the same length, only one number will appear) and overall GC content expressed as a percentage. N.b: basic statistics will always appear to have a green tick (never flags a warning/error), so you should always further analyse the data. 
 
