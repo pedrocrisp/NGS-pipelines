@@ -186,7 +186,7 @@ FeatureCounts
 FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing that identifies and quantifies the overall coverage of a specified genomic feature eg. genes, exons. FeatureCounts is comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less computational memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
 
 
-**Use: **
+**Use:**
 
 To identify and then quantify reads for any genomic feature eg. to determine expression level of genes, exons, transposons etc.  
 
@@ -218,7 +218,7 @@ This script is used prior to the 01-runner.sh for fastqc. It is used when you ha
 
 This script is used to convert a BAM file to a TDF file following featureCounts being run. It is useful as it reduces the size of the BAM file, making a smaller format (TDF) file for viewing gene expression levels in your genome browser.
 
-**When used: **
+**When used:**
 
 This scrip is used after featureCounts, which produces an output file in BAM format. 
 
