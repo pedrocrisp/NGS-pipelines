@@ -75,12 +75,20 @@ Scythe
 
 **Function:**
 
-Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of sequence matches given contamination or ii) the chance of sequence matches being random. If the Bayesian probability model determines that the read is contaminated because it has a high matching region that is likely an adaptor, that region of sequence will be removed. This model is possible because you have to set the rate of contamination in your sample (known as a prior). This prior predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
+Scythe uses a Naive Bayesian model to remove 3' adaptors (also called 'contaminants') from your reads, which you added when you labelled your samples prior to sequencing. Scythe works by looking at matches between sequences, and uses two probability models to determine if the match is due to contamination (adaptors) or by chance. The probability models are: i) the chance of sequence matches given contamination or ii) the chance of sequence matches being random. If the Bayesian probability model determines that the read is contaminated because it has a high matching region that is likely an adaptor, that region of sequence will be removed. This model requires you to have set the rate of contamination in your sample (known as a prior). This prior predicts the probability of your reads having matching sequences, and will consequently influence the Bayesian probability model. 
 
 
 **Use:**
 
 To accurately remove 3' adaptors from each of your reads. Scythe is an accurate tool as it is able to account for the quality of your sequence, which generally decreases towards the 3' end where the adaptors are located. 
+
+**Limiations:**
+
+The major limitations of Scythe are:
+
+* Cannot handle in/del mutations
+* Relatively slow (program has been improved by Kevin)
+* Naive WRT paired ended-ness
 
 
 **Requirements:**
@@ -146,7 +154,7 @@ Subread
 
 **Function:**
 
-Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. As each read is mapped onto the genome before any detailed filling in occurs, Subread is incredibly fast compared to other read alignment tools, being 4 times faster than Bowtie and nearly 10 times faster than BWA. Subread is also a sensitive tool, as no individual subread is required to map onto the optimum 'voted' read location, nor are subreads forced to map close to eachother. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
+Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. As each read is mapped onto the genome before any detailed filling in occurs, Subread is incredibly fast compared to other read alignment tools, being 4 times faster than Bowtie and nearly 10 times faster than BWA. Subread is also a sensitive tool, because even if a few subreads do not map onto the optimum read location, the true read location can still be identified and any gaps between subreads filled in using a Smith-Waterman alignment. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
 
 
 **Use:**
@@ -176,6 +184,7 @@ subread-buildindex -o <basename> -M <int> {FASTA FILE} [FASTA FILE 2]
 
 Liao Y, Smyth GK, Shi W. (2013). The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote. *Nucl. Acids Res*, 41(10):e108. 
 
+Li, H. (2013). Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM. *Quantitative Biology*,00 (00):1-3.
 
 
 FeatureCounts
