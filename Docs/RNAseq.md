@@ -84,12 +84,7 @@ To accurately remove 3' adaptors from each of your reads. Scythe is an accurate 
 
 **Limiations:**
 
-The major limitations of Scythe are:
-
-* Cannot handle in/del mutations
-* Relatively slow (program has been improved by Kevin)
-* Naive WRT paired ended-ness
-
+The major limitations of Scythe are that it cannot handle indel mutations, is naive with respect to paired endedness and is a relatively slow program (speed has been improved by Kevin). 
 
 **Requirements:**
 
@@ -154,8 +149,7 @@ Subread
 
 **Function:**
 
-Subread uses a 'seed-and-vote' strategy to align reads back to a reference genome. This 'seed-and-vote' strategy essentially involves breaking up each read into several 'subreads' (16 nts long) and allowing each subread to vote on its optimum location in the genome. Thus, the region of the genome with the highest number of subreads theoretically corresponds to the region of the read (refer to fig.2 below). When reads are greater than 160 bp in length, overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any in/del and mismatch information between the subreads. As each read is mapped onto the genome before any detailed filling in occurs, Subread is incredibly fast compared to other read alignment tools, being 4 times faster than Bowtie and nearly 10 times faster than BWA. Subread is also a sensitive tool, because even if a few subreads do not map onto the optimum read location, the true read location can still be identified and any gaps between subreads filled in using a Smith-Waterman alignment. It also has a high level of accuracy, requiring the final read location to correspond to several subreads. 
-
+Subread uses a 'seed-and-vote' strategy to align reads to a reference genome. This 'seed-and-vote' strategy involves breaking up each read into several tiled 'subreads' (16 nts long) and allowing each subread to vote on the read's optimal location in the genome.  Thus, the region of the genome with the highest number of subreads belonging to read X theoretically corresponds to the region that gave rise to read X (refer to fig.2 below). When reads are greater than 160 bp in length, non-overlapping subreads are used. Once the read location has been determined in the genome by having the highest number of subread 'votes', conventional algorithims fill in any indel and mismatch information between the subreads. As each read is mapped onto the genome before any detailed filling in occurs, Subread is incredibly fast compared to other read alignment tools, being 4 times faster than Bowtie and nearly 10 times faster than BWA. Subread is also a sensitive tool, because even if a few subreads do not map onto the optimum read location, the true read location can still be identified and any gaps between subreads filled in using a Smith-Watermann alignment. It also has a high level of accuracy, requiring the final read location to correspond to several subreads.
 
 **Use:**
 
