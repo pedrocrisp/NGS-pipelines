@@ -84,7 +84,7 @@ To accurately remove 3' adaptors from each of your reads. Scythe is an accurate 
 
 **Limiations:**
 
-The major limitations of Scythe are that it cannot handle indel mutations, is naive with respect to paired endedness and is a relatively slow program (speed has been improved by Kevin). 
+The major limitations of Scythe are that it cannot handle indel mutations, nor guarantee paired endedness, and is a relatively slow program (speed has been improved by Kevin). 
 
 **Requirements:**
 
