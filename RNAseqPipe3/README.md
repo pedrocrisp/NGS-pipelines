@@ -1,5 +1,11 @@
 #RNAseqPipe3 README
 
+---
+
+For detailed descriptions of the tools implemented in this pipeline see [documentation by Bec](https://github.com/pedrocrisp/NGS-pipelines/blob/master/Docs/RNAseq.md)
+
+---
+
 Pipeline to process RNAseq data
 
 Reads must be in a folder called reads, with subdirectories for each sample 
