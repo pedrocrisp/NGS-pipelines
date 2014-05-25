@@ -36,6 +36,6 @@ bamname="$(ls $sample_dir/*.bam)"
 
 #make output file name
 outbamname="$(basename $bamname)"
-outputFile="${outdir}/$sample/${outbamname%%.*}_rmdup.bam"
+outputFile="${outdir}/${outbamname%%.*}_rmdup.bam"
 
 samtools rmdup $bamname $outputFile
