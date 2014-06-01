@@ -12,7 +12,7 @@ fi
 
 #user defined variables that could be changed:
 workingdir=./
-script=$scriptdir/16-featureCounts.sh
+script=$scriptdir/16-featureCountsAntisense.sh
 ###
 
 function findSamples () {
