@@ -18,10 +18,10 @@ sample_dir="${inputDir}/$sample"
 outDir=reads_noadapt_trimmed
 
 #List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
-forward_fq="$(ls $sample_dir/*R1.noadapt.fq.gz)"
+forward_fq="$(ls $sample_dir/*R1*.noadapt.fq.gz)"
 
 #List all files ending with R2.noadapt.fq.gz that are located within the specified sample directory and save these as the variable 'reverse_fq.'
-reverse_fq="$(ls $sample_dir/*R2.noadapt.fq.gz)"
+reverse_fq="$(ls $sample_dir/*R2*.noadapt.fq.gz)"
 
 #Create the output directory and within this folder create a directory for the given sample. 
 mkdir "${outDir}/$sample"
