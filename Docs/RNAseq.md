@@ -14,11 +14,11 @@ Fast QC can be used to perform simple quality control analysis on your raw data,
 
 **Limitations:**
 
-The FastQC program is limited by not being overly informative, and also being a relatively slow program to run. 
+The FastQC program provides a useful glimse of the data quality and flags potential issues, ultimately data qualiy should be assessed once reads have been filtered and aligned to a genome.  FastQC is also a relatively slow program to run, although this unlikely to be an issue of a decent server. 
 
 **Requirements:**
 
-Fast QC can read files ending in: 
+Fast QC can read files encoded as: 
 * FastQ (all quality encoding variants), 
 * Casava FastQ files^, Colorspace FastQ, 
 * GZip compressed FastQ, 
@@ -30,9 +30,9 @@ Fast QC can read files ending in:
 
 **Evaluation of results:**
 
-* Once you have run Fast-QC, the results report will be available as a http file. The report should open in your browser when you click on the file.
+* Once you have run Fast-QC, the results report will be available as a html file. The report should open in your browser when you click on the file.
 * You will see that the analysis is segmented into a series of modules, with a summary of the module outcomes provided on the left hand side. Ratings for each module include: normal (green tick), slightly abnormal (orange exclamation mark) and very abnormal (red cross). 
-* Here is an example of a [good quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc/fastqc_report.html) and a [poor quality] (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc/fastqc_report.html) library. A brief description of the purpose of each module included within a FastQC report is provided below. 
+* Here is an example of a [good quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [poor quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) library. A brief description of the purpose of each module included within a FastQC report is provided below. 
 
 **Basic statistics module-** Provides a summary of the data, including; file name/type, total number of sequences processed (actual and estimated), range in sequence length (if all reads are of equal length, only one value will be reported) and overall GC content expressed as a percentage. 
 
@@ -130,7 +130,7 @@ Sickle requires you to specify the following variables:
 * -q: the quality score limit (eg. if 20, the window must have an average quality score of 20 otherwise it will be discarded).
 * -l: the minimum length threshold (eg. if 20, you would discard reads below 20 bps).
 * -n: allows you to remove all sequences containing an n base. This feature is not recommended for RNAseq. 
-* -t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, `33` is added to each quality score, whereas `64` is added to Solexa. Pre 2011, `33` is added to each quality score for Illumina, and post 2011 `64` is added.  
+* -t: the type of sequencer you used, either Sanger, Solexa or Illumina. This variable is extremely important because it is used to determine the quality scores of you bases. For Sanger, `33` is added to each quality score, whereas `64` is added to Solexa. Pre 2011, `64` is added to each quality score for Illumina, and post 2011 `33` is added.  
 * -o: output file for forward reads. 
 * -p: output file for reverse reads.
 * -s: output file for single reads. 
@@ -186,7 +186,7 @@ FeatureCounts
 
 **Function:**
 
-FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing that identifies and quantifies the overall coverage of a specified genomic feature eg. genes, exons. FeatureCounts is comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less computational memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
+FeatureCounts is a general purpose read-summarisation program for RNA and DNA sequencing that identifies and quantifies the overall coverage of a specified genomic feature eg. genes, exons. FeatureCounts is comparable in summarisation accuracy to other read counting programs, but has the major advantage of reduced computational cost. FeatureCounts has been found to be ten times faster on average than other current read counting methods and requires much less memory. This program is also the only one of its kind that can currently be run in parallel (eg. you can run all your files at once provided you have fewer files than cores on your computer). The high efficiency of featureCounts can be attributed to its ultrafast search algorithm for features, as well as the program being implemented in the C programming language. 
 
 
 **Use:**
