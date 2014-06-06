@@ -196,8 +196,9 @@ To identify and then quantify reads for any genomic feature eg. to determine exp
 
 **Requirements:**
 
- *For featureCounts analysis, you must provide the same genomic library that you used for Subread, however, you need to supply the annotated genome version of the library. 
- *The format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
+
+  * For featureCounts analysis, you must provide the same genomic library that you used for Subread, however, you need to supply the annotated genome version of the library. 
+ * The format for the annotated genome may be downloaded from library websites (eg. TAIR) in the standard gff3 format. You can however also use a saf file, which is a more basic condensed version of gff3. 
 
 
 **References:**
