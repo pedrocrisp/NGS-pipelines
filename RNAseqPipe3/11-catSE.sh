@@ -19,9 +19,7 @@ fi
 pushd "$sample_dir"
     fwd_reads=*R1*.fastq.gz
     gunzip -c $fwd_reads>${sample}_R1.fastq
-
     rm *.fastq.gz
-
     gzip *.fastq
 popd 
 
