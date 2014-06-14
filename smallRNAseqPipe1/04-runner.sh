@@ -13,11 +13,11 @@ fi
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/04-fastqc.sh
-outdir=reads_noadapt_trimmed_fastqc
+outdir=reads_noadapt_fastqc
 ###
 
 function findSamples () {
-find reads_noadapt_trimmed/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find reads_noadapt/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 mkdir ${outdir}
