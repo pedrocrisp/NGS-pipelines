@@ -44,7 +44,7 @@ mkdir reads_noadapt/$sample
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
-outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq"
+outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
 cutadapt \
 -a TGGAATTCTCGGGTGCCAAGGAACTCCAGTCAC \
 -m 18 \
