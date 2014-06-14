@@ -53,7 +53,7 @@ tmpbam="${outdir}/${RANDOM}.bam"
 
 
 bowtie2 \
--x "${refDir}/TAIR10_allchr" \
+-x ${refDir}/TAIR10_allchr \
 --phred33 \
 --end-to-end \
 --mm \
