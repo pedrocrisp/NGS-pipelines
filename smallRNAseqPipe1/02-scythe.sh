@@ -49,7 +49,7 @@ do
 fqname="$(basename $fq)"
 outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
 scythe \
--p 0.1 \
+-p 50 \
 -a $adapterfile \
 $fq \
 >$outputFile
