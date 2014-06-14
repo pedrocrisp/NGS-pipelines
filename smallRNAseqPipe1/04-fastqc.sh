@@ -10,7 +10,7 @@ fi
 sample=$1
 sample_dir=reads_noadapt/$sample
  
-fastqs="$(ls $sample_dir/*.fq)"
+fastqs="$(ls $sample_dir/*.fq.gz)"
  
 mkdir reads_noadapt_fastqc/$sample
  
