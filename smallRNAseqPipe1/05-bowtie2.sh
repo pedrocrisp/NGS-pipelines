@@ -65,7 +65,7 @@ bowtie2 \
 -i S,1,0.50 \
 -p 22 \
 --score-min L,0,0 \
--U ${SampleDir}/*.fq \
+-U ${SampleDir}/*.fq* \
 -S "$outsam"
 
 echo "samtools view -S -u $outsam > ${tmpbam}
