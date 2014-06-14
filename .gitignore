@@ -4,3 +4,4 @@
 subread_refdir
 truseq_adapters.fasta
 TAIR10_gen_chrc.chrom.sizes
+bowtie2_refdir
