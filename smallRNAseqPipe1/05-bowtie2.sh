@@ -28,7 +28,7 @@ refdir=$scriptdir/subread_refdir
 sample=$1
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
-sample_dir=reads_noadapt_trimmed/$sample
+sample_dir=reads_noadapt/$sample
 
 #Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory. 
 outdir="align/${sample}"
