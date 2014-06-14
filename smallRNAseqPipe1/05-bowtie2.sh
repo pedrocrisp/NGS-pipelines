@@ -21,7 +21,7 @@ fi
 ###
 #User defined reference sequence directory.
 #This line specifies that the reference directory is located in the script directory in a folder called 'subread_refdir.' The user should create a link for the subread_refdir in the script dir to map to the location of the directory containing their subread indexfiles. These index files can be created by using the 'subread-buildindex' program (refer to RNAseq pipeline user guide) and MUST have the prefix "TAIR10_gen_chrc" (chrc means we included all 7 chromosomes).
-refdir=$scriptdir/subread_refdir
+refdir=$scriptdir/bowtie2_refdir
 #
 
 #Defines the sample that we are working with to the command line as the first token.
@@ -37,7 +37,7 @@ outdir="align/${sample}"
 mkdir ${outdir}
 
 #List all files ending with 'trimmed.fq' that are located within the specified sample directory and save these as the variable 'fastqs.'
-fastqs="$(ls $sample_dir/*trimmed.fq)"
+fastqs="$(ls $sample_dir/*.fq)"
 
 
 numFqFiles=$(echo $fastqs | wc -w)
@@ -51,23 +51,22 @@ outbam="${outdir}/${sample}" # no .bam, as samtools sort -f has a bug.
 #Specifies that the temporary bam output file will be stored in the output directory with the file name 'random.bam.' A temporary bam file has been created due to samtools having a bug with the bam files (Kevins hackery).
 tmpbam="${outdir}/${RANDOM}.bam"
 
-# Condition statement: Enables you to cope with both paired and single end reads, as subread will run with different settings if you have 1 or 2 files. If single end (# fastqs == 1), it will tell the subread program and so it will not look for a forward and reverse read. If paired (# fastqs == 2), it will describe which file is the forward and reverse read. If the read is not single end (1) or paired (2), it will print an error code.
-if [ ${numFqFiles} -eq 1 ]
-then
-echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
-elif [ ${numFqFiles} -eq 2 ]
-then
-fq1="$(echo $fastqs |cut -d ' ' -f 1)"
-fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-echo subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
-else
-echo "ERROR: not able to align multiple fq files per pair"
-echo "fastqs:"
-echo "${fastqs}"
-exit 1
-fi
+
+bowtie2 \
+-x "${refDir}/TAIR10_allchr" \
+--phred33 \
+--end-to-end \
+--mm \
+-a \
+-D 20 \
+-R 3 \
+-N 0 \
+-L 10 \
+-i S,1,0.50 \
+-p 22 \
+--score-min L,0,0 \
+-U ${SampleDir}/*.fq \
+-S "$outsam"
 
 echo "samtools view -S -u $outsam > ${tmpbam}
 samtools sort -m 2G ${tmpbam} $outbam
