@@ -47,7 +47,7 @@ mkdir reads_noadapt/$sample
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
-outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
+outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq"
 scythe \
 -p 0.5 \
 -a $adapterfile \
