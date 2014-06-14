@@ -37,7 +37,7 @@ outdir="align/${sample}"
 mkdir ${outdir}
 
 #List all files ending with 'trimmed.fq' that are located within the specified sample directory and save these as the variable 'fastqs.'
-fastqs="$(ls $sample_dir/*.fq)"
+fastqs="$(ls $sample_dir/*.fq*)"
 
 
 numFqFiles=$(echo $fastqs | wc -w)
@@ -65,7 +65,7 @@ bowtie2 \
 -i S,1,0.50 \
 -p 22 \
 --score-min L,0,0 \
--U ${SampleDir}/*.fq* \
+-U ${SampleDir}/$fastqs \
 -S "$outsam"
 
 echo "samtools view -S -u $outsam > ${tmpbam}

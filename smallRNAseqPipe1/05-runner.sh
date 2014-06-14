@@ -23,14 +23,14 @@ outdir=align
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./logs/${outdir}_subread.${timestamp}"
+logdir="./logs/${outdir}_bowtie2.${timestamp}"
 mkdir $logdir
 
 cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel bash $script {} \>logs/${outdir}_bowtie2.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
