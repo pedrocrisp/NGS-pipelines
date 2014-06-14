@@ -47,9 +47,9 @@ fqname="$(basename $fq)"
 outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
 cutadapt \
 -a TGGAATTCTCGGGTGCCAAGGAACTCCAGTCAC \
--m 18\
--M 25\
--O 10\
+-m 18 \
+-M 25 \
+-O 10 \
 --discard-untrimmed \
 -o $outputFile \
 $fq
