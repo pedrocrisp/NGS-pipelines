@@ -52,7 +52,6 @@ cutadapt \
 -O 10\
 --discard-untrimmed \
 -o $outputFile \
-$fq \
+$fq
 done
-
 
