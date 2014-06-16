@@ -68,6 +68,18 @@ bowtie2 \
 -U $fastqs \
 -S "$outsam"
 
+#-x bowtie index
+#--phred33
+#--end-to-end dont trim reads to enable alignment
+#--mm memory-mapped I/O to load index allow multiple processes to use index
+#-p number of threds to use
+#-U fastq file path, and specifies reads are not paired
+#-S file to write SAM alignemnts too (although default is stdout anyhow)
+#-D and -R tell bowtie to try a little harder than normal to find alignments
+#-L reduce substring length to 10 (default 22) as these are short reads
+#-i reduce substring interval? more sensitive?
+# --score-min C,0,0 would tell bowtie2 to report only exact matches in --end-to-end mode (alignment score of 0 required which is max possible in end mode)
+
 echo "samtools view -S -u $outsam > ${tmpbam}
 samtools sort -m 2G ${tmpbam} $outbam
 samtools index ${outbam}.bam
