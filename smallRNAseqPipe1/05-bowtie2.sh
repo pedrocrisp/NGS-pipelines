@@ -79,6 +79,8 @@ bowtie2 \
 #-L reduce substring length to 10 (default 22) as these are short reads
 #-i reduce substring interval? more sensitive?
 # --score-min C,0,0 would tell bowtie2 to report only exact matches in --end-to-end mode (alignment score of 0 required which is max possible in end mode)
+#-N max # mismatches in seed alignment; can be 0 or 1 (0)
+#-D give up extending after <int> failed extends in a row (15)
 
 echo "samtools view -S -u $outsam > ${tmpbam}
 samtools sort -m 2G ${tmpbam} $outbam
