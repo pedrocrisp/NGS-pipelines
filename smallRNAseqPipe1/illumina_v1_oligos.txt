@@ -1,0 +1,23 @@
+Small RNA
+
+5' RNA Adapter:
+5' -------------------- ---GUUCAGAGUUCUACAGU CCGACGAUC (-) -------------------- - 3'
+3' -------------------- -------------------- --------- (-) -------------------- - 5'
+3' RNA Adapter:
+5' -------------------- -------------------- --------- (-)pUCGUAUGCCGUCUUCUGCUU GUidT 3'
+3' -------------------- -------------------- --------- (-) -------------------- - 5'
+RT Primer:
+5' -------------------- -------------------- --------- (-) -------------------- - 3'
+3' -------------------- -------------------- --------- (-) AGCATACGGCAGAAGACGAA C 5'
+Small RNA PCR Primer 1:
+5' -------------------- -------------------- --------- (-) -------------------- - 3'
+3' -------------------- -------------------- --------- (-) AGCATACGGCAGAAGACGAA C 5'
+Small RNA PCR Primer 2:
+5' AATGATACGGCGACCACCGA CAGGTTCAGAGTTCTACAGT CCGA----- (-) -------------------- - 3'
+3' -------------------- -------------------- --------- (-) -------------------- - 5'
+Result Library:
+5' AATGATACGGCGACCACCGA CAGGTTCAGAGTTCTACAGT CCGACGATC (N) TCGTATGCCGTCTTCTGCTT G 3'
+3' TTACTATGCCGCTGGTGGCT GTCCAAGTCTCAAGATGTCA GGCTGCTAG (N) AGCATACGGCAGAAGACGAA C 5'
+Small RNA Sequencing Primer:
+5' -----------------CGA CAGGTTCAGAGTTCTACAGT CCGACGATC (-) -------------------- - 3'
+3' -------------------- -------------------- --------- (-) -------------------- - 5'
