@@ -30,6 +30,8 @@ for script in ~/<path_to_pipeline_folder>/0*runner.sh ; do echo $script ; bash $
 
 Steps 02-scythe.sh requires the file "truseq_adapters.fasta" to be in the script directory or a symbolic link to it
 
+Steps 03-cutadapt.sh requires the file "adapter.txt" to be in the working directory or a symbolic link to it
+
 Steps 05-bowtie2.sh requires a symbolic link called "bowtie2_refdir" to the folder containing the index files, those files must have the prefix "TAIR10_allchr"
 
 On the server:
