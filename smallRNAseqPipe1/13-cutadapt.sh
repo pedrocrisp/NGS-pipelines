@@ -32,21 +32,26 @@ fastqs="$(ls $sample_dir/*.fastq.gz)"
 #Creates a new directory called 'reads_noadapt' and within this a folder for the sample. This creates the directory to put the output from scythe into (next step).
 mkdir reads_noadapt/$sample
 
-#This command runs scythe. It says 'for the fastqs listed within the sample directory do the following:
+#adapter file
+adapter="$adapter.txt"
+
+#This command runs cutadapt. It says 'for the fastqs listed within the sample directory do the following:
 #1) keep the file names but remove the file extensions
 #2) Store the output files in the specified sample folder within the reads_noadapt directory. Store the file name as 'samplename.noadapt.fq.gz' 
-#3) Run the scythe function
-#4) -p: Change the prior from the default (0.3) to 0.1
-#5) -a: The adaptor sequence is located in the script directory, and is called 'truseq_adapters.fasta'
-#6) run scythe on this given fastq file.
-#7) move the output of scythe to the output file (reads_noadapt/given sample name)
+#3) Run the cutadapt function
+#4) -a: The adaptor sequence is located in the script directory, and is called 'truseq_adapters.fasta'
+#5) -m minimum read length discard reads if trimmed to smaller than m
+#6) -M max rad length to keep
+#7) -O only trimm adapter is if 10 nt match (elliminates trimming a few bases due to random matches to adapter eg the first 3)
+#8) -o output file (reads_noadapt/given sample name)
+#9) input file
 
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
 outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
 cutadapt \
--a TGGAATTCTCGGGTGCCAAGGAACTCCAGTCAC \
+-a $adapter \
 -m 7 \
 -M 34 \
 -O 10 \
