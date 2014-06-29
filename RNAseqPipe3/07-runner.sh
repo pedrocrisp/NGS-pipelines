@@ -12,7 +12,7 @@ fi
 
 #user defined variables that could be changed:
 workingdir=./
-script=$scriptdir/87-bam_to_tdf_stranded.sh
+script=$scriptdir/07-bam_to_tdf_stranded.sh
 ###
 
 function findSamples () {
