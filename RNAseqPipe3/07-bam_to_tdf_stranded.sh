@@ -2,7 +2,6 @@
 set -e
 set -x
 
-
 ###
 #code to make it work on osx and linux
 if
@@ -19,7 +18,6 @@ fi
 #reference sequence directory variable - user should create a link called TAIR10_gen_chrc.chrom.sizes in script dir that points to the TAIR10_gen_chrc.genome.sizes file, or put a copy in there (chrc means we included all 7 chromosomes).
 
 chrc_sizes=${scriptdir}/TAIR10_gen_chrc.chrom.sizes
-
 
 sample=$1
 sample_dir=align/$sample
@@ -50,19 +48,20 @@ rm $sample_dir/${sample}*.R*.bam
 ####################
 
 echo "bam to bedgraph"
-#non-stratded bedgraph
+#non-stranded bedgraph
 bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
-#forward reads stranded
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
-
+#stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
 bedtools genomecov -bg -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+#minus strand reads bedgraph
+bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 
 #make tdf
 echo "bedgraph to binary tiled data (.tdf) file"
 igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
 
-#make bigWig
+#make bigWigs
 echo "bam to bigWig"
 bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 
