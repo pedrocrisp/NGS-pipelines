@@ -8,11 +8,11 @@ For detailed descriptions of the tools implemented in this pipeline see [documen
 
 Pipeline to process RNAseq data
 
-Reads must be in a folder called reads, with subdirectories for each sample 
+Reads must be in a folder called reads, with subdirectories for each sample.  Each sample directory should contain one fasatq.gz; if there are multiple fastq files cat them together using 10-runner.sh (10-cat.sh) called as below.
 
 Scripts are called from the parent directory of the reads folder
 
-Each script and std error is printed to the logs dircetory
+Each script and std error is printed to the logs directory
 
 Each step is called in order and run in bash eg 
 
@@ -42,3 +42,5 @@ ln -s /home/pete/workspace/refseqs/TAIR10_gen/TAIR10_gen_chrc.chrom.sizes TAIR10
 ln -s /home/pete/workspace/Illumina/truseq_adapters.fasta truseq_adapters.fasta
 
 ```
+
+The default 06-featureCounts.sh assumes stranded RNAseq.  To run without stranded-ness call 17-featureCountsNosense.sh or to align to align 'anti-sense' (switch the strand of each feature) call 16-featureCountsAntisense.sh.
