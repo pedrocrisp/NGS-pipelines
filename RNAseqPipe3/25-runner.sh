@@ -30,7 +30,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} \>logs/${outdir}_subjunc.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j 3 bash $script {} \>logs/${outdir}_subjunc.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
