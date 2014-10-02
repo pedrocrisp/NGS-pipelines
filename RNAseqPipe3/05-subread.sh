@@ -55,13 +55,13 @@ tmpbam="${outdir}/${RANDOM}.bam"
 if [ ${numFqFiles} -eq 1 ]
 then
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
+subread-align -i ${refdir}/TAIR10_gen_chrc -T 8 -r $fastqs -o "$outsam"
 elif [ ${numFqFiles} -eq 2 ]
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
+subread-align -i ${refdir}/TAIR10_gen_chrc -T 8 -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
@@ -70,7 +70,7 @@ exit 1
 fi
 
 echo "samtools view -S -u $outsam > ${tmpbam}
-samtools sort -m 2G ${tmpbam} $outbam
+samtools sort ${tmpbam} $outbam
 samtools index ${outbam}.bam
 rm -v ${outsam} ${tmpbam}"
 
@@ -78,7 +78,7 @@ rm -v ${outsam} ${tmpbam}"
 samtools view -S -u $outsam > ${tmpbam}
 
 #Sort the temporary bam file by chromosomal position, and save the sorted file.
-samtools sort -m 2G ${tmpbam} $outbam
+samtools sort ${tmpbam} $outbam
 
 #Make an index of the sorted bam file
 samtools index ${outbam}.bam
