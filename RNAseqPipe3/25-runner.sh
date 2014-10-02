@@ -12,7 +12,7 @@ fi
 
 #user defined variables that could be changed:
 workingdir=./
-script=$scriptdir/05-subjunc.sh
+script=$scriptdir/25-subjunc.sh
 ###
 
 function findSamples () {
