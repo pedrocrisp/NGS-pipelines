@@ -77,12 +77,17 @@ mkdir ${outdir}
 echo "bam to exon-bedgraph"
 ##exon converage beds
 #plus strand (dont include -s flag!)
-coverageBed -abam $sample_dir/*reverse.bam -b $exonsPlusBed -d | sort -k1,1 -k2,2n > $outdir/$sample.plus.exons.bed
+#to sort pipe to | sort -k1,1 -k2,2n > out.bed but this does not seem necessary because cant make a bigWig out of it anyway...?
+coverageBed -abam $sample_dir/*reverse.bam -b $exonsPlusBed -d  > $outdir/$sample.plus.exons.bed
 
 #minus strand
-coverageBed -abam $sample_dir/*forward.bam -b $exonsMinusBed -d | sort -k1,1 -k2,2n > $outdir/$sample.minus.exons.bed
+coverageBed -abam $sample_dir/*forward.bam -b $exonsMinusBed -d > $outdir/$sample.minus.exons.bed
 
 #make bigwigs to take a look in IGV for QC of method - make sure it is stranded and exons...
-bedGraphToBigWig $outdir/*.plus.exons.bed $chrc_sizes $outdir/$sample.plus.exons.bigWig
-bedGraphToBigWig $outdir/*.minus.exons.bed $chrc_sizes $outdir/$sample.minus.exons.bigWig
+#bedGraphToBigWig $outdir/*.plus.exons.bed $chrc_sizes $outdir/$sample.plus.exons.bigWig
+#bedGraphToBigWig $outdir/*.minus.exons.bed $chrc_sizes $outdir/$sample.minus.exons.bigWig
+
+#gzip the giant bed files
+
+gzip $outdir/*.bed
 
