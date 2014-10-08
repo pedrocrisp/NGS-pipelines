@@ -12,11 +12,11 @@ fi
 
 #user defined variables that could be changed:
 workingdir=./
-script=$scriptdir/37-getSamples.R
+script=$scriptdir/37-mRNA-density.R
 ###
 
 function findSamples () {
-find exon_beds_subread/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find exon_beds_subjunc/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 outdir=exon_beds_plots
@@ -30,8 +30,8 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j 3 bash $script {} \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j 3 R -f $script --args {} \>${logdir}/{}.log 2\>\&1
 
 #To run:
-#Must be run after 27 which generate the .bed files
+#Must be run after 27 which generates the .bed.gz files
 #bash ~/path_to/37-runner.sh
