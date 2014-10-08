@@ -30,7 +30,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j 9 R -f $script --args {} \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j 3 R -f $script --args {} \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #Must be run after 27 which generates the .bed.gz files
