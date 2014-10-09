@@ -63,7 +63,7 @@ bowtie2 \
 -N 0 \
 -L 10 \
 -i S,1,0.50 \
--p 1 \
+-p 4 \
 --score-min L,0,0 \
 -U $fastqs \
 -S "$outsam"
