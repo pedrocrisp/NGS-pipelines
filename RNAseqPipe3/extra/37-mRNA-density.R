@@ -1,6 +1,10 @@
 #!/usr/bin/Rscript
 ##########
-#packages
+##### NOTES ##### 
+#Edit with caution - linked from github version, to run on server...
+
+
+##### packages ##### 
 library(fields)
 library(gplots)
 library(RColorBrewer)
@@ -12,7 +16,21 @@ library(ggplot2)
 #library(lattice)
 #library(rgl)
 
-# ##### Testing #####
+##### function #####
+mRNA.stats.bin100 <- function(x){
+  temp_bin <- stats.bin(c(1:length(x)), x, N=100, breaks=seq(1,length(x),length(x)/101))
+  (temp_bin$stats["mean",])*(100/sum(temp_bin$stats["mean",]))
+}
+
+mRNA.stats.bin10 <- function(x){
+  temp_bin <- stats.bin(c(1:length(x)), x, N=10, breaks=seq(1,length(x),length(x)/11))
+  (temp_bin$stats["mean",])*(10/sum(temp_bin$stats["mean",]))
+}
+
+
+# # ##### Testing #####
+# #sample
+# Sample <- c("Sample_WT_277_1")
 # #read data
 # datasmall=read.delim('Sample_WT_277_1.plus.exons_small.bed',head=F)
 # #add individual exon variable
@@ -21,9 +39,12 @@ library(ggplot2)
 # datasmall <- datasmall[with(datasmall, order(exon, as.numeric(V11))), ]
 # #transform counts: add 1 to allow for regions of transcript with no coverage
 # datasmall$tCounts <- datasmall$V12+1
-# head(datasmall)
-# pieces <- split(datasmall$tCounts, datasmall$V4)
-# test.bins2 <- sapply(pieces, mRNA.stats.bin)
+# #
+# data <- datasmall
+# head(data)
+# bigpieces <- split(datasmall$tCounts, datasmall$V4)
+# test.bins10 <- sapply(pieces, mRNA.stats.bin10)
+# test.bins100 <- sapply(pieces, mRNA.stats.bin100)
 
 #Sample selection #####
 Sample <- commandArgs(trailingOnly=TRUE)
@@ -52,16 +73,7 @@ head(data)
 #split data
 bigpieces <- split(data$tCounts, data$V4)
 
-### function
-mRNA.stats.bin100 <- function(x){
-    temp_bin <- stats.bin(c(1:length(x)), x, N=100, breaks=seq(1,length(x),length(x)/101))
-    (temp_bin$stats["mean",])*(100/sum(temp_bin$stats["mean",]))
-}
 
-mRNA.stats.bin10 <- function(x){
-    temp_bin <- stats.bin(c(1:length(x)), x, N=10, breaks=seq(1,length(x),length(x)/11))
-    (temp_bin$stats["mean",])*(10/sum(temp_bin$stats["mean",]))
-}
 
 #Call function
 #test.bins.massive <- sapply(bigpieces, mRNA.stats.bin)
@@ -93,7 +105,7 @@ bins <- seq(1:100)
 SD <- apply(bigpiecesFilterdf,1, sd, na.rm = TRUE)
 SE <- apply(bigpiecesFilterdf, 1, function(x) sd(x/sqrt(length(x))))
 #Quats <- apply(bigpiecesFilterdf,1, quantile, na.rm = TRUE)
-plot.this <- data.frame(bins, meansCov, SD)
+plot.this <- data.frame(SampleName = Sample, bins, meansCov, SD)
 write.csv(plot.this, paste0(outFolder, "/", Sample, "_average_mRNA_density.csv"))
 
 pdf(paste0(outFolder, "/", Sample,"_plot.pdf"))
@@ -118,6 +130,7 @@ out.transposed=t(out)
 #colnames(out.transposed)=row.names(out.transposed)
 #out.transposed=out.transposed[2:nrow(out.transposed),]
 out.transposed.log2 <- log2(out.transposed)
+#out.transposed.log2$SamlpeName <- sample
 #write.table(out.transposed,'mRNA_density_WT.txt',sep='\t',row.names=F,quote=F)
 write.csv(out.transposed.log2, paste0(outFolder, "/", Sample, '_mRNA_densities_100bins.csv'))
 
