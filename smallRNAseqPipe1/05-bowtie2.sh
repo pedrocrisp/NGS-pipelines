@@ -21,6 +21,9 @@ fi
 ###
 #User defined reference sequence directory.
 #This line specifies that the reference directory is located in the script directory in a folder called 'subread_refdir.' The user should create a link for the subread_refdir in the script dir to map to the location of the directory containing their subread indexfiles. These index files can be created by using the 'subread-buildindex' program (refer to RNAseq pipeline user guide) and MUST have the prefix "TAIR10_gen_chrc" (chrc means we included all 7 chromosomes).
+
+##code to create index 9Assuming fasta are in current folder:
+#bowtie2-build -f TAIR10_chr1.fas,TAIR10_chr3.fas,TAIR10_chr5.fas,TAIR10_chrM.fas,TAIR10_chr2.fas,TAIR10_chr4.fas,TAIR10_chrC.fas TAIR10
 refdir=$scriptdir/bowtie2_refdir
 #
 
@@ -53,7 +56,7 @@ tmpbam="${outdir}/${RANDOM}.bam"
 
 
 bowtie2 \
--x ${refdir}/TAIR10_allchr \
+-x ${refdir}/TAIR10 \
 --phred33 \
 --end-to-end \
 --mm \
