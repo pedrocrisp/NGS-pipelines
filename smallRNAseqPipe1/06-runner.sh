@@ -17,13 +17,16 @@ usage="USAGE:
 strand=$1
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ ! -r $strand ]
+if [ "$#" -lt "1" ]
 then
 echo "Must indicate stradedness of library"
 echo $usage
 exit -1
+else
+echo "featureCounts strandedness setting = $1"
 fi
 ########## Run #################
+
 
 #user defined variables that could be changed:
 workingdir=./
