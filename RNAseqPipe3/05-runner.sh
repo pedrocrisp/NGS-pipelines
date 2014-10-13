@@ -80,7 +80,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jflag bash $script {} $Pflag \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Pval \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
