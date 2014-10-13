@@ -26,6 +26,7 @@ refdir=$scriptdir/subread_refdir
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
+P=$2
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
 sample_dir=reads_noadapt_trimmed/$sample
@@ -55,13 +56,13 @@ tmpbam="${outdir}/${RANDOM}.bam"
 if [ ${numFqFiles} -eq 1 ]
 then
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
+subread-align -P $P -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
 elif [ ${numFqFiles} -eq 2 ]
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
-subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
+subread-align -i -P $P ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
@@ -69,19 +70,3 @@ echo "${fastqs}"
 exit 1
 fi
 
-echo "samtools view -S -u $outsam > ${tmpbam}
-samtools sort -m 2G ${tmpbam} $outbam
-samtools index ${outbam}.bam
-rm -v ${outsam} ${tmpbam}"
-
-#Using samtools view to convert the sam file to bam file.
-samtools view -S -u $outsam > ${tmpbam}
-
-#Sort the temporary bam file by chromosomal position, and save the sorted file.
-samtools sort -m 2G ${tmpbam} $outbam
-
-#Make an index of the sorted bam file
-samtools index ${outbam}.bam
-
-#Delete the temporary bam.
-rm -v ${outsam} ${tmpbam}
