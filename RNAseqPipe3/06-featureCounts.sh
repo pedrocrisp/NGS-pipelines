@@ -26,9 +26,10 @@ refdir=$scriptdir/subread_refdir
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
+alignFolder=$3
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'align' folder.
-sample_dir=align/$sample
+sample_dir=$alignFolder/$sample
 
 #Defines the output directory to be a folder with the sample name located within the 'featureCounts' directory. This will be used in the next step to create an output directory. 
 outdir="featureCounts/${sample}"
@@ -38,18 +39,18 @@ mkdir ${outdir}
 
 #This command runs featureCounts.  
 #-F: Specify the format for the annotated genome file you are using.
-#-p: For paired end reads only, specified fragments will be counted as opposed to reads.
-#-C: Specifies that chimeric fragments (those fragments with their two ends aligned to different chromosomes) will NOT be counted.(Used in conjunction with -p).
+# ##NOT USED## -p: For paired end reads only, specified fragments will be counted as opposed to reads.
+# ##NOT USED## -C: Specifies that chimeric fragments (those fragments with their two ends aligned to different chromosomes) will NOT be counted.(Used in conjunction with -p).
 #-s: Specifies if strand specific read counting should be performed. Three values are possible: o =unstranded, 1= stranded, 2= reversely stranded. 
 #-a: specify the filepath to your annotated genome library.
 #-o: Output directory.
 #${sample_dire}/*.bam - specifies that the input for feature counts is located in the named sample directory. 
 
+strand=$2
+
 featureCounts\
     -F SAF\
-    -p\
-    -C\
-    -s 2\
+    -s $strand\
     -a ${refdir}/TAIR10_GFF3_genes.saf\
     -o "$outdir/${sample}.counts"\
     ${sample_dir}/*.bam

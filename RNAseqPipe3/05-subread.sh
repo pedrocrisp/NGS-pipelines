@@ -33,7 +33,7 @@ aligner=$3
 sample_dir=reads_noadapt_trimmed/$sample
 
 #Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory. 
-outdir="align_${aligner}/${sample}"
+outdir="${aligner}/${sample}"
 
 #Creates an output directory to put the returned files to go into once subread has been run on the sample. In this case, the output from subread for the sample should go into a folder containing the sample's name, located within the 'align' directory.
 mkdir ${outdir}

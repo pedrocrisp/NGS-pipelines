@@ -20,7 +20,8 @@ fi
 chrc_sizes=${scriptdir}/TAIR10_gen_chrc.chrom.sizes
 
 sample=$1
-sample_dir=align/$sample
+alignFolder=$2
+sample_dir=$alignFolder/$sample
 outdir="tdf_for_igv/${sample}"
 mkdir ${outdir}
 

@@ -87,7 +87,7 @@ function findSamples () {
 find reads_noadapt_trimmed/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=align_"$aval"
+outdir="$aval"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
