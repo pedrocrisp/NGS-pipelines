@@ -15,15 +15,15 @@ usage="USAGE:
 
 ######### Setup ################
 strand=$1
+alignFolder=$2
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "1" ]
+if [ "$#" -lt "2" ]
 then
-echo "Must indicate stradedness of library"
 echo $usage
 exit -1
 else
-echo "featureCounts strandedness setting = $1"
+echo "featureCounts strandedness setting = $1\n alignment folder = $2"
 fi
 ########## Run #################
 
@@ -34,7 +34,7 @@ script=$scriptdir/06-featureCounts.sh
 ###
 
 function findSamples () {
-find align/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find ${alignFolder}/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 outdir=featureCounts
@@ -48,7 +48,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} $strand \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel bash $script {} $strand $alignFolder \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #usage:
 #bash ~/path_to/06-runner.sh <strandedness # >
