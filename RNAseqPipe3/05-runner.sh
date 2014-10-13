@@ -16,16 +16,19 @@ set -x
 unset name
 jflag=
 Pflag=
-while getopts j:P: name
+aflag=
+while getopts j:P:a: name
 do
     case $name in
         j)    jflag=1
         jval="$OPTARG";;
         P)    Pflag=1
         Pval="$OPTARG";;
-        ?)   printf "Usage: %s: [-j value] [-P value] args\n" $0
+        a)    aflag=1
+        aval="$OPTARG";;
+        ?)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
             exit 1;;
-        *)   printf "Usage: %s: [-j value] [-P value] args\n" $0
+        *)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
             exit 1;;
     esac
 done
@@ -33,21 +36,36 @@ if [ ! -z "$jflag" ]; then
     printf 'Parallel will use -j "%s" threads\n' "$jval"
 fi
 if [ ! -z "$Pflag" ]; then
-    printf 'sunbread will use -P "%s" threads\n' "$Pval"
+    printf 'subread will use -P "%s" threads\n' "$Pval"
+fi
+if [ ! -z "$aflag" ]; then
+    printf '"%s" will be used for alignment\n' "$aval"
 fi
 shift $(($OPTIND - 1))
 
 if [ -z "$jflag" ]
 then
-printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] Threads for parallel not specified\n" $0
+printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
 exit
 fi
 
 if [ -z "$Pflag" ]
 then
-printf "Threads for subread not specified\n Usage: %s: [-j value] [-P value] args\n" $0
+printf "Threads for subread not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
 exit
 fi
+
+if [  "$aval" == "subread-align" ]
+then
+printf "aligner subread-align\n"
+elif [ "$aval" == "subjunc" ]
+then
+printf "aigner subjunc\n"
+else
+printf "Aligner not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+exit
+fi
+
 
 
 ###find script directory (for purpose of locating target scripts and reference sequences
@@ -69,18 +87,18 @@ function findSamples () {
 find reads_noadapt_trimmed/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=align
+outdir=align_"$aval"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./logs/${outdir}_subread.${timestamp}"
+logdir="./logs/${outdir}.${timestamp}"
 mkdir $logdir
 
 cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jval bash $script {} $Pval \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Pval $aval \>$logdir/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh

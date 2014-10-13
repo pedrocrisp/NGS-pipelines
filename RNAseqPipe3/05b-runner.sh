@@ -15,25 +15,37 @@ set -x
 #getops
 unset name
 jflag=
-while getopts j: name
+Fflag=
+while getopts j:F: name
 do
     case $name in
         j)    jflag=1
         jval="$OPTARG";;
-        ?)   printf "Usage: %s: [-j value] [-P value] args\n" $0
+        F)    Fflag=1
+        Fval="$OPTARG";;
+        ?)   printf "Usage: %s: [-j value] [-F folder]\n" $0
         exit 1;;
-        *)   printf "Usage: %s: [-j value] [-P value] args\n" $0
+        *)   printf "Usage: %s: [-j value] [-F folder]\n" $0
         exit 1;;
     esac
 done
 if [ ! -z "$jflag" ]; then
     printf 'Parallel will use -j "%s" threads\n' "$jval"
 fi
+if [ ! -z "$Fflag" ]; then
+printf 'Folder with .sam files is "%s"\n' "$Fval"
+fi
 shift $(($OPTIND - 1))
 
 if [ -z "$jflag" ]
 then
-    printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] Threads for parallel not specified\n" $0
+    printf "Threads for parallel not specified\n Usage: %s: [-j value] [-F folder]\n" $0
+exit
+fi
+
+if [ -z "$Fflag" ]
+then
+printf "Folder with .sam files not specified\n Usage: %s: [-j value] [-F folder]\n" $0
 exit
 fi
 
@@ -55,7 +67,7 @@ script=$scriptdir/05b-samtools.sh
 ###
 
 function findSamples () {
-find align/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find $Fval/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 outdir=align
@@ -69,7 +81,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jval bash $script {} \>$logdir/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Fval \>$logdir/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05b-runner.sh

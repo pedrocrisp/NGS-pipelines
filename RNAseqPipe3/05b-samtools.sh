@@ -26,12 +26,13 @@ refdir=$scriptdir/subread_refdir
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
+sampleFolder=$2
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
-sample_dir=align/$sample
+sample_dir=${sampleFolder}/$sample
 
 #Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory. 
-outdir="align/${sample}"
+outdir="${sampleFolder}/${sample}"
 
 #Specifies that the sam output file will be placed in the output directory, and have the file name 'sample.sam'
 #outsam="${outdir}/${sample}.sam"
