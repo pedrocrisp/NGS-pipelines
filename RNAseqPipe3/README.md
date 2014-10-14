@@ -70,6 +70,8 @@ subread-buildindex -o TAIR10_gen_chrc ../chromosomes/TAIR10_chr*
 cp ...TAIR10_GFF3_genes.saf ./
 ```
 
+*NOTE: percy inexplicably cant handle more than 1 (-j 1) parallel job at once at this step, memory errors evrytime on one or 2 samples
+
 ---
 ##Step 05b-samtools.sh
 ```
