@@ -60,7 +60,15 @@ Must provide
 2. -P the number of threads subread-align/subjunc uses per sample
 3. -a whether to use subread-align or subjunc 
 
-Step 05-subread.sh also requires a folder (or symbolic link) called "subread\_refdir" to be in the same folder as the script. The "subread\_refdir" folder contains the index files, those files must have the prefix "TAIR10\_gen\_chrc"
+Step 05-subread.sh also requires a folder (or symbolic link) called "subread\_refdir" to be in the same folder as the script. The "subread\_refdir" folder contains the index files, those files must have the prefix "TAIR10\_gen\_chrc". Make sure when you build the index that the headers of the chloroplast and mitchondria fasta files agree with other reference files eg the chromosome sizes file.  I channge the headers to ChrC and ChrM (note the captials), this oversight causes days of frustration...
+
+```
+mkdir subread.v1.4.5
+cd subread.v1.4.5
+subread-buildindex -o TAIR10_gen_chrc ../chromosomes/TAIR10_chr*
+#add the .saf file to this folder
+cp ...TAIR10_GFF3_genes.saf ./
+```
 
 ---
 ##Step 05b-samtools.sh
