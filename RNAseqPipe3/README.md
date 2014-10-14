@@ -29,6 +29,7 @@ To run the whole pathway run desired scripts in order, eg the following
 5. Runs fastQC again
 6. Aligns 3 samples in parallel with subread using 2 cores per sample
 7. Compresses the sam file output of subread into sorted and indexed bam for use in IGV etc on 9 cores in the folder subread-align
+8. Summarise reads to features using featureCounts, set strandedness to 1 for stranded dUTP method (2 for Illumina stranded kit), and find the bams in the folder subread-align
 8. Makes tdf files and strand seperated bigWig files from the bams for quicker IGV loading using bams in subread-align folder
 
 ```
