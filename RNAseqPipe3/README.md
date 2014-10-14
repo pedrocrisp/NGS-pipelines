@@ -67,14 +67,18 @@ Step 05-subread.sh also requires a folder (or symbolic link) called "subread\_re
 usage:  05b-samtools.sh [-j value] [-a <aligner>]
 ```
 Must provide 
+
 1. -j the number of jobs/samples to run in parallel 
-3. -a whether to use subread-align or subjunc 
+2. -a whether to use subread-align or subjunc 
+3. 
 ---
 ##Step 06-featureCounts.sh
 ```
 usage:  06-runner.sh <strandedness> <alignment_folder>
 ```
-Step 06-featureCounts.sh require the "subread\_refdir" to also contain a TAIR10\_gen_chrc.chrom.sizes file
+
+Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10\_gen_chrc.chrom.sizes file
+
 ---
 ##Step 07-bam\_to\_tdf_stranded.sh
 ```
