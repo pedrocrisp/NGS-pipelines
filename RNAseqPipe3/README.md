@@ -70,7 +70,7 @@ Must provide
 
 1. -j the number of jobs/samples to run in parallel 
 2. -a whether to use subread-align or subjunc 
-3. 
+
 ---
 ##Step 06-featureCounts.sh
 ```
