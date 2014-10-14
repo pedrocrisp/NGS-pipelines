@@ -21,6 +21,7 @@ bash ~/path_to_01.runner.sh
 ```
 
 To run the whole pathway run desired scripts in order, eg the following 
+
 1. Cats together the 2 files that come off the seqeunce for each sample
 2. Runs fastQC
 3. Trims adapters
@@ -45,7 +46,9 @@ bash ~/gitrepos/ngs-pipelines/RNAseqPipe3/07-runner.sh subread-align
 ---
 ##Step 02-scythe.sh
 
+
 Step 02-scythe.sh requires the file "truseq_adapters.fasta" to be in the script directory or a symbolic link to it
+
 ---
 ##Step 05-subread.sh
 ```
