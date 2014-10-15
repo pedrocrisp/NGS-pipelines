@@ -53,4 +53,4 @@ featureCounts\
     -s $strand\
     -a ${refdir}/TAIR10_GFF3_genes.saf\
     -o "$outdir/${sample}.counts"\
-    ${sample_dir}/*.bam
+    "${sample_dir}/${sample}.bam"
