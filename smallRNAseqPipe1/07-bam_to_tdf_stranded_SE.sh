@@ -29,10 +29,10 @@ mkdir ${outdir}
 #http://seqanswers.com/forums/showthread.php?t=29399
 
 #R1 forward strand
-samtools view -f 99 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam
+samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam
 
 #R1 reverse strand
-samtools view -f 83 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
+samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
 
 ####################
 
