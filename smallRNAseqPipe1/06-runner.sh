@@ -11,7 +11,7 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <strandedness>"
+06-runner.sh <strandedness> <alignment folder>"
 
 ######### Setup ################
 strand=$1
@@ -23,7 +23,7 @@ then
 echo $usage
 exit -1
 else
-echo "featureCounts strandedness setting = $1\n alignment folder = $2"
+echo "featureCounts strandedness setting = $1 \n alignment folder = $2"
 fi
 ########## Run #################
 
