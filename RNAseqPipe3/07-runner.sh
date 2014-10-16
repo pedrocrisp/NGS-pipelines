@@ -11,7 +11,7 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <strandedness> <alignment folder>"
+06-runner.sh <alignment folder>"
 
 ######### Setup ################
 alignFolder=$1
