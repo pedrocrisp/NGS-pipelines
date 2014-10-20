@@ -32,7 +32,7 @@ mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
 #Within the current working directory, make a directory called 'logs'
-mkdir logs
+mkdir logs -p
 
 #Define the variable logdir, which is like making a shortcut to the path workingdir/logs/outdir and is timestamped.
 logdir="./logs/${outdir}.${timestamp}"
