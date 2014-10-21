@@ -57,13 +57,13 @@ tmpbam="${outdir}/${RANDOM}.bam"
 if [ ${numFqFiles} -eq 1 ]
 then
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
-$aligner -T $P -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
+$aligner -T $P -u -H -i ${refdir}/TAIR10_gen_chrc -r $fastqs -o "$outsam"
 elif [ ${numFqFiles} -eq 2 ]
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
 echo subread-align -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
-$aligner -T $P -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $P -u -H -i ${refdir}/TAIR10_gen_chrc -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
