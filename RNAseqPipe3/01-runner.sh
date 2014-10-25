@@ -11,6 +11,22 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 ###
 
+usage="USAGE:
+01-runner.sh <number of threads>"
+
+######### Setup ################
+threads=$1
+# kefile format: (tab seperated)
+#Ordinal Sample <factor1_name> [<factor2_name>]
+if [ "$#" -lt "1" ]
+then
+echo $usage
+exit -1
+else
+echo "featureCounts strandedness setting = $1\n alignment folder = $2"
+fi
+########## Run #################
+
 #user defined variables that can be changed if needed:
 #script directory is set to the directory where this script is stored on network/computer/github. This will obviously change between runners. By not hardcoding this variable, the script can be used and opened on any computer by any person with access.
 workingdir=./
@@ -48,7 +64,7 @@ cat $0 > "$logdir/runner.log"
 cat $script
 
 #This says 'carry out the findSamples function. Then run the bash script 01-fastqc.sh on each of these files in parallel (ie. using multiple cores on computer). Store a script of the run to the logs directory within the reads_fastqc folder. 
-findSamples | parallel bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, go to the reads directory and call:
 #bash ~/path_to/01-runner.sh
