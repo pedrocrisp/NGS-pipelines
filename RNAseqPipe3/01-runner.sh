@@ -23,7 +23,7 @@ then
 echo $usage
 exit -1
 else
-echo "featureCounts strandedness setting = $1\n alignment folder = $2"
+echo "initiating $1 parallel fastQC jobs on raw reads"
 fi
 ########## Run #################
 

@@ -10,6 +10,22 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 #
 
+usage="USAGE:
+02-runner.sh <number of threads>"
+
+######### Setup ################
+threads=$1
+# kefile format: (tab seperated)
+#Ordinal Sample <factor1_name> [<factor2_name>]
+if [ "$#" -lt "1" ]
+then
+echo $usage
+exit -1
+else
+echo "initiating $1 parallel scythe adapter removal jobs"
+fi
+########## Run #################
+
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/02-scythe.sh
@@ -30,7 +46,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, got to directory containing reads directory and call:
 #bash ~/path_to/02-runner.sh
