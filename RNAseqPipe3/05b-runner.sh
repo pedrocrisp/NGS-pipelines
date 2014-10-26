@@ -70,11 +70,11 @@ function findSamples () {
 find $Fval/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=align
+outdir=makeIndexedBams
 #mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./logs/${outdir}_subread.${timestamp}"
+logdir="./logs/${outdir}.${timestamp}"
 mkdir $logdir
 
 cat $script > "$logdir/script.log"
