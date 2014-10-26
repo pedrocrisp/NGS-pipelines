@@ -73,7 +73,7 @@ usage:  04-runner.sh <number of threads passed to parallel-j flag>
 ```
 
 ---
-##Step 05-subread.sh
+##Step 05-subread.sh -genome alignment
 ```
 usage:  06-runner.sh [-j value] [-P value] [-a <aligner>]
 ```
@@ -95,7 +95,7 @@ cp ...TAIR10_GFF3_genes.saf ./
 *NOTE: percy inexplicably cant handle more than 1 (-j 1) parallel job at once at this step, memory errors evrytime on one or 2 samples
 
 ---
-##Step 05b-samtools.sh
+##Step 05b-samtools.sh - sam to indexed, sorted bam
 ```
 usage:  05b-samtools.sh [-j value] [-a <aligner>]
 ```
@@ -105,7 +105,7 @@ Must provide
 2. -a whether to use subread-align or subjunc 
 
 ---
-##Step 06-featureCounts.sh
+##Step 06-featureCounts.sh - read sumarisation
 ```
 usage:  06-runner.sh <strandedness> <alignment_folder>
 ```
@@ -113,7 +113,7 @@ usage:  06-runner.sh <strandedness> <alignment_folder>
 Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10\_gen_chrc.chrom.sizes file
 
 ---
-##Step 07-bam\_to\_tdf_stranded.sh
+##Step 07-bam\_to\_tdf_stranded.sh - make bigWigs etc
 ```
 usage:  07-bam_to_tdf_stranded.sh <alignment_folder>
 ```
