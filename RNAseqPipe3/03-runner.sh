@@ -8,7 +8,23 @@ scriptdir="$(dirname $($readlink -f $0))"
 else
 scriptdir="$(dirname $(readlink -f $0))"
 fi
-#
+###
+
+usage="USAGE:
+03-runner.sh <number of threads>"
+
+######### Setup ################
+threads=$1
+# kefile format: (tab seperated)
+#Ordinal Sample <factor1_name> [<factor2_name>]
+if [ "$#" -lt "1" ]
+then
+echo $usage
+exit -1
+else
+echo "initiating $1 parallel quality trimming jobs using sickle"
+fi
+########## Run #################
 
 #user defined variables that could be changed:
 workingdir=./
@@ -30,7 +46,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/03-runner.sh
