@@ -45,10 +45,32 @@ bash ~/gitrepos/ngs-pipelines/RNAseqPipe3/07-runner.sh subread-align
 ```
 
 ---
-##Step 02-scythe.sh
+##Step 01-fastqc.sh
+```
+usage:  01-runner.sh <number of threads passed to parallel-j flag>
+```
 
+---
+##Step 02-scythe.sh - adapter removal
+
+```
+usage:  02-runner.sh <number of threads passed to parallel-j flag>
+```
 
 Step 02-scythe.sh requires the file "truseq_adapters.fasta" to be in the script directory or a symbolic link to it
+
+---
+##Step 03-sickle.sh -quality trimming
+```
+usage:  03-runner.sh <number of threads passed to parallel-j flag>
+```
+Trims until average quality is phred 20 in sliding window
+
+---
+##Step 04-fastqc.sh
+```
+usage:  04-runner.sh <number of threads passed to parallel-j flag>
+```
 
 ---
 ##Step 05-subread.sh
