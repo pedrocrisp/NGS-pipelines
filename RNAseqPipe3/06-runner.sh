@@ -11,19 +11,20 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <strandedness> <alignment folder>"
+06-runner.sh <strandedness> <alignment folder> <threads>"
 
 ######### Setup ################
 strand=$1
 alignFolder=$2
+threads=$3
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
 else
-echo "featureCounts strandedness setting = $1\n alignment folder = $2"
+echo "featureCounts strandedness setting = $1\n alignment folder = $2\n iniating $3 parallel featureCounts jobs"
 fi
 ########## Run #################
 
@@ -48,7 +49,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} $strand $alignFolder \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $strand $alignFolder \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #usage:
 #bash ~/path_to/06-runner.sh <strandedness # >
