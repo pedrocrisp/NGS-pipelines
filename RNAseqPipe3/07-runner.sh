@@ -11,18 +11,17 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <alignment folder>"
+06-runner.sh <alignment folder> <number of threads>"
 
 ######### Setup ################
 alignFolder=$1
-# kefile format: (tab seperated)
-#Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "1" ]
+threads=$2
+if [ "$#" -lt "2" ]
 then
 echo $usage
 exit -1
 else
-echo "alignment folder = $1"
+echo "alignment folder = $1\n initiating $2 parallel make stranded bigWig jobs"
 fi
 ########## Run #################
 
@@ -46,7 +45,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} $alignFolder \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/07-runner.sh
