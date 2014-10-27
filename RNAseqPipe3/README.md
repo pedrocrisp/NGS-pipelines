@@ -75,7 +75,7 @@ usage:  04-runner.sh <number of threads passed to parallel-j flag>
 ---
 ##Step 05-subread.sh -genome alignment
 ```
-usage:  06-runner.sh [-j value] [-P value] [-a <aligner>]
+usage:  05-runner.sh [-j value] [-P value] [-a <aligner>]
 ```
 Must provide 
 1. -j the number of jobs/samples to run in parallel 
@@ -107,7 +107,7 @@ Must provide
 ---
 ##Step 06-featureCounts.sh - read sumarisation
 ```
-usage:  06-runner.sh <strandedness> <alignment_folder>
+usage:  06-runner.sh <strandedness> <alignment_folder> <threads>
 ```
 
 Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10\_gen_chrc.chrom.sizes file
@@ -115,7 +115,7 @@ Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10
 ---
 ##Step 07-bam\_to\_tdf_stranded.sh - make bigWigs etc
 ```
-usage:  07-bam_to_tdf_stranded.sh <alignment_folder>
+usage:  07-bam_to_tdf_stranded.sh <alignment_folder> <threads>
 ```
 ---
 Link ref seq on the server:
