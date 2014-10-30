@@ -3,6 +3,7 @@
 *.DS_Store
 subread_refdir
 truseq_adapters.fasta
+TAIR*
 TAIR10_gen_chrc.chrom.sizes
 bowtie2_refdir
 TAIR10_exons_minusStrand.bed
