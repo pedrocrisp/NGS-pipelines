@@ -43,8 +43,8 @@ mRNA.stats.bin10 <- function(x){
 # data <- datasmall
 # head(data)
 # bigpieces <- split(datasmall$tCounts, datasmall$V4)
-# test.bins10 <- sapply(pieces, mRNA.stats.bin10)
-# test.bins100 <- sapply(pieces, mRNA.stats.bin100)
+# test.bins10 <- sapply(bigpieces, mRNA.stats.bin10)
+# test.bins100 <- sapply(bigpieces, mRNA.stats.bin100)
 
 #Sample selection #####
 Sample <- commandArgs(trailingOnly=TRUE)
@@ -89,8 +89,8 @@ bigpiecesFilter <- bigpiecesFilter[which(geneLengths > 500)]
 geneMax <- sapply(bigpiecesFilter, max)
 geneSums <- sapply(bigpiecesFilter, sum)
 geneLengths <- sapply(bigpiecesFilter, length)
-gene_rpkm <- sapply(bigpiecesFilter, function(x) sum(x)/length(x))
-bigpiecesFilter <- bigpiecesFilter[which(gene_rpkm > 100)]
+gene_cov_depth <- sapply(bigpiecesFilter, function(x) sum(x)/length(x))
+bigpiecesFilter <- bigpiecesFilter[which(gene_cov_depth > 100)]
 #length(which(gene_rpkm > 50))
 #length(which(geneSums > 500))
 
@@ -99,13 +99,16 @@ mRNA_coverage100 <- sapply(bigpiecesFilter, mRNA.stats.bin100)
 mRNA_coverage10 <- sapply(bigpiecesFilter, mRNA.stats.bin10)
 
 #genome average plot#####
-bigpiecesFilterdf <- as.data.frame(log2(mRNA_coverage100))
-meansCov <- rowMeans(bigpiecesFilterdf)
+bigpiecesFilterdf <- as.data.frame(mRNA_coverage100)
+linearMeansCov <- rowMeans(bigpiecesFilterdf)
+meansCov <- log2(linearMeansCov)
+# sum(linearMeansCov)
+# sum(2^meansCov)
 bins <- seq(1:100)
 SD <- apply(bigpiecesFilterdf,1, sd, na.rm = TRUE)
 SE <- apply(bigpiecesFilterdf, 1, function(x) sd(x/sqrt(length(x))))
 #Quats <- apply(bigpiecesFilterdf,1, quantile, na.rm = TRUE)
-plot.this <- data.frame(SampleName = Sample, bins, meansCov, SD)
+plot.this <- data.frame(SampleName = Sample, bins, meansCov, linearMeansCov, SD)
 write.csv(plot.this, paste0(outFolder, "/", Sample, "_average_mRNA_density.csv"))
 
 pdf(paste0(outFolder, "/", Sample,"_plot.pdf"))
