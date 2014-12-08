@@ -10,13 +10,29 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 #
 
+usage="USAGE:
+27-runner.sh <alignment folder> <threads>"
+
+######### Setup ################
+alignFolder=$1
+threads=$2
+
+if [ "$#" -lt "2" ]
+then
+echo $usage
+exit -1
+else
+echo "making exon bd files \n alignment folder = $2\n iniating $3 parallel 27-bam_to_exon_stranded jobs"
+fi
+########## Run #################
+
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/27-bam_to_exon_stranded.sh
 ###
 
 function findSamples () {
-find align/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find ${alignFolder}/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 outdir=exon_beds
@@ -30,8 +46,8 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #Must be run after 07 so that the split strand bams are created
-#bash ~/path_to/27-runner.sh
+#bash ~/path_to/27-runner.sh <alignment folder> <threads>
