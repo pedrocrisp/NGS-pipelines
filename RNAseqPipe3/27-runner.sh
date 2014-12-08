@@ -36,8 +36,7 @@ function findSamples () {
 find ${alignFolder}/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=exon_beds
-mkdir ${outdir}
+mkdir ${resultsFolder}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
 logdir="./logs/${outdir}.${timestamp}"
