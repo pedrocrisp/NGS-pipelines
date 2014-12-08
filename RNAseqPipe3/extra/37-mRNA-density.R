@@ -47,10 +47,15 @@ mRNA.stats.bin10 <- function(x){
 # test.bins100 <- sapply(bigpieces, mRNA.stats.bin100)
 
 #Sample selection #####
-Sample <- commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly=TRUE)
+print(args)
+# trailingOnly=TRUE means that only your arguments are returned
+Sample <- args[1]
+beds_folder <- args[2]
+outDir <- args[3]
 #Sample <- c("alx8_277_7")
-sPath <- paste0("exon_beds_subjunc/", Sample, "/")
-outFolder <- paste0("mRNA_coverage_results/", Sample)
+sPath <- paste0(beds_folder, "/", Sample, "/")
+outFolder <- paste0(outDir, "/", Sample)
 dir.create(outFolder, showWarnings = F, recursive = T)
 #####
 
