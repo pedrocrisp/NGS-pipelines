@@ -10,16 +10,33 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 #
 
+usage="USAGE:
+37-runner.sh <exon_beds folder> <threads>"
+
+######### Setup ################
+alignFolder=$1
+threads=$2
+
+if [ "$#" -lt "2" ]
+then
+echo $usage
+exit -1
+else
+echo "making exon bd files \n alignment folder = $2\n iniating $3 parallel 27-bam_to_exon_stranded jobs"
+fi
+########## Run #################
+
+
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/37-mRNA-density.R
 ###
 
 function findSamples () {
-find exon_beds_subjunc/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find ${alignFolder}/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=exon_beds_plots
+outdir="${alignFolder}_plots"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
@@ -30,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j 2 R -f $script --args {} \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j 2 R -f $script --args {} $outdir \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #Must be run after 27 which generates the .bed.gz files

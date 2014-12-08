@@ -11,14 +11,13 @@ fi
 #
 
 usage="USAGE:
-27-runner.sh <alignment folder> <threads> <out directory>"
+27-runner.sh <alignment folder> <threads>"
 
 ######### Setup ################
 alignFolder=$1
 threads=$2
-resultsFolder=$3
 
-if [ "$#" -lt "3" ]
+if [ "$#" -lt "2" ]
 then
 echo $usage
 exit -1
@@ -36,7 +35,8 @@ function findSamples () {
 find ${alignFolder}/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-mkdir ${resultsFolder}
+resultsFolder="${alignFolder}_exon_beds"
+mkdir $resultsFolder
 timestamp=$(date +%Y%m%d-%H%M%S)
 
 logdir="./logs/${outdir}.${timestamp}"
