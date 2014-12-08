@@ -11,13 +11,14 @@ fi
 #
 
 usage="USAGE:
-27-runner.sh <alignment folder> <threads>"
+27-runner.sh <alignment folder> <threads> <out directory>"
 
 ######### Setup ################
 alignFolder=$1
 threads=$2
+resultsFolder=$3
 
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
@@ -46,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $alignFolder \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder $resultsFolder \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #Must be run after 07 so that the split strand bams are created

@@ -46,8 +46,9 @@ exonsMinusBed=${scriptdir}/TAIR10_exons_minusStrand.bed
 
 sample=$1
 alignFolder=$2
+resultsFolder=$3
 sample_dir=$alignFolder/$sample
-outdir="exon_beds/${sample}"
+outdir=$resultsFolder/${sample}
 mkdir ${outdir}
 
 ######################
