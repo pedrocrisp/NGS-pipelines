@@ -51,8 +51,11 @@ args <- commandArgs(trailingOnly=TRUE)
 print(args)
 # trailingOnly=TRUE means that only your arguments are returned
 Sample <- args[1]
+Sample
 beds_folder <- args[2]
+beds_folder
 outDir <- args[3]
+outDir
 #Sample <- c("alx8_277_7")
 sPath <- paste0(beds_folder, "/", Sample, "/")
 outFolder <- paste0(outDir, "/", Sample)
