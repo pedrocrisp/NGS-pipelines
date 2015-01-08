@@ -56,6 +56,12 @@ beds_folder <- args[2]
 beds_folder
 outDir <- args[3]
 outDir
+minLength <- as.numeric(args[4])
+minLength
+trimLength <- as.numeric(args[5])
+trimLength
+minCoverage <- as.numeric(args[6])
+minCoverage
 #Sample <- c("alx8_277_7")
 sPath <- paste0(beds_folder, "/", Sample, "/")
 outFolder <- paste0(outDir, "/", Sample)
@@ -90,17 +96,39 @@ bigpieces <- split(data$tCounts, data$V4)
 #filter input list
 #transcripts > 300 nt
 bigpiecesFilter <- bigpieces
+print("initial total genes")
+length(bigpiecesFilter)
 #length filter
 geneLengths <- sapply(bigpiecesFilter, length)
-bigpiecesFilter <- bigpiecesFilter[which(geneLengths > 500)]
+geneLengths
+#consider length filter of 600nt ie trim 250 from each end then only keep 100 nt frags - test this empirically for goodness
+minLength
+bigpiecesFilter <- bigpiecesFilter[which(geneLengths > minLength)]
+print("genes passing filter")
+length(bigpiecesFilter)
+sapply(bigpiecesFilter, length)
+
+#trim ends
+#suggested trimLength = 250
+print("trimLength")
+trimLength
+bigpiecesFilter <- sapply(bigpiecesFilter, function(x) x[-c(1:trimLength, (length(x)-trimLength):length(x))])
+
+print("genes passing filter")
+length(bigpiecesFilter)
+
 # abundance filter
+#minCoverage = 100
 geneMax <- sapply(bigpiecesFilter, max)
 geneSums <- sapply(bigpiecesFilter, sum)
 geneLengths <- sapply(bigpiecesFilter, length)
 gene_cov_depth <- sapply(bigpiecesFilter, function(x) sum(x)/length(x))
-bigpiecesFilter <- bigpiecesFilter[which(gene_cov_depth > 100)]
+bigpiecesFilter <- bigpiecesFilter[which(gene_cov_depth > as.numeric(minCoverage))]
 #length(which(gene_rpkm > 50))
 #length(which(geneSums > 500))
+
+print("final genes passing filters")
+length(bigpiecesFilter)
 
 #make the bins
 mRNA_coverage100 <- sapply(bigpiecesFilter, mRNA.stats.bin100)
