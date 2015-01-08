@@ -39,7 +39,7 @@ resultsFolder="${alignFolder}_exon_beds"
 mkdir $resultsFolder
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./logs/${outdir}.${timestamp}"
+logdir="./logs/${resultsFolder}.${timestamp}"
 mkdir $logdir
 
 cat $script > "$logdir/script.log"
