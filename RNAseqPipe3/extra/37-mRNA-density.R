@@ -100,13 +100,13 @@ print("initial total genes")
 length(bigpiecesFilter)
 #length filter
 geneLengths <- sapply(bigpiecesFilter, length)
-geneLengths
+#geneLengths
 #consider length filter of 600nt ie trim 250 from each end then only keep 100 nt frags - test this empirically for goodness
 minLength
 bigpiecesFilter <- bigpiecesFilter[which(geneLengths > minLength)]
 print("genes passing filter")
 length(bigpiecesFilter)
-sapply(bigpiecesFilter, length)
+#sapply(bigpiecesFilter, length)
 
 #trim ends
 #suggested trimLength = 250
