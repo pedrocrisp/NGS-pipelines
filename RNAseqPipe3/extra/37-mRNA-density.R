@@ -27,6 +27,11 @@ mRNA.stats.bin10 <- function(x){
   (temp_bin$stats["mean",])*(10/sum(temp_bin$stats["mean",]))
 }
 
+mRNA.stats.bin2 <- function(x){
+  temp_bin <- stats.bin(c(1:length(x)), x, N=2, breaks=seq(1,length(x),length(x)/3))
+  (temp_bin$stats["mean",])*(2/sum(temp_bin$stats["mean",]))
+}
+
 
 # # ##### Testing #####
 # #sample
@@ -101,7 +106,8 @@ length(bigpiecesFilter)
 #length filter
 geneLengths <- sapply(bigpiecesFilter, length)
 #geneLengths
-#consider length filter of 600nt ie trim 250 from each end then only keep 100 nt frags - test this empirically for goodness
+#consider length filter of 601nt ie trim 250 from each end then only keep frags > 100 nt - test this empirically for goodness
+#length must be > trimLength x 2 + 101
 minLength
 bigpiecesFilter <- bigpiecesFilter[which(geneLengths > minLength)]
 print("genes passing filter")
@@ -133,6 +139,8 @@ length(bigpiecesFilter)
 #make the bins
 mRNA_coverage100 <- sapply(bigpiecesFilter, mRNA.stats.bin100)
 mRNA_coverage10 <- sapply(bigpiecesFilter, mRNA.stats.bin10)
+mRNA_coverage2 <- sapply(bigpiecesFilter, mRNA.stats.bin2)
+
 
 #genome average plot#####
 bigpiecesFilterdf <- as.data.frame(mRNA_coverage100)
@@ -199,7 +207,7 @@ dev.off()
 
 ##########
 
-#heatmap 100 #####
+#heatmap 10 #####
 out <- mRNA_coverage10
 #out <- out[1:100,1:5000]
 out.transposed=t(out)
@@ -233,6 +241,49 @@ cexRow=0.1
 dev.off()
 
 ##########
+
+
+##########
+
+#heatmap 2 #####
+out <- mRNA_coverage2
+#out <- out[1:100,1:5000]
+out.transposed=t(out)
+#colnames(out.transposed)=row.names(out.transposed)
+#out.transposed=out.transposed[2:nrow(out.transposed),]
+out.transposed.log2 <- log2(out.transposed)
+#write.table(out.transposed,'mRNA_density_WT.txt',sep='\t',row.names=F,quote=F)
+write.csv(out.transposed.log2, paste0(outFolder, "/",Sample, '_mRNA_densities_2bins.csv'))
+
+#sapply(out.transposed.log2, mean)
+
+#colBlueShades = c(seq(0,10,length=11))
+paletteBlueShades <- colorRampPalette(c("blue", "white", "red"))(n = 100)
+pdf(paste0(outFolder, "/", Sample,"_mRNA_density_heatmap_10bins.pdf"))
+heatmap.2(out.transposed.log2,
+          Colv=NA,
+          col=paletteBlueShades,
+          #breaks=colBlueShades,
+          density.info="none",
+          trace="none",
+          dendrogram=c("row"),
+          symm=F,
+          symkey=F,
+          key=T,
+          #keysize=1,
+          symbreaks=T,
+          scale="row",
+          cexCol=0.25,
+          cexRow=0.1
+)
+dev.off()
+
+##########
+
+
+
+
+
 
 
 
