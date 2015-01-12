@@ -199,7 +199,7 @@ symkey=F,
 key=T,
 #keysize=1,
 symbreaks=T,
-scale="row",
+scale="none",
 cexCol=0.25,
 cexRow=0.1
 )
@@ -234,9 +234,10 @@ symkey=F,
 key=T,
 #keysize=1,
 symbreaks=T,
-scale="row",
+scale="none",
 cexCol=0.25,
-cexRow=0.1
+cexRow=0.1, 
+labRow=F # no row labels
 )
 dev.off()
 
@@ -245,7 +246,7 @@ dev.off()
 
 ##########
 
-#heatmap 2 #####
+#heatmap 2 bins #####
 out <- mRNA_coverage2
 #out <- out[1:100,1:5000]
 out.transposed=t(out)
@@ -255,11 +256,13 @@ out.transposed.log2 <- log2(out.transposed)
 #write.table(out.transposed,'mRNA_density_WT.txt',sep='\t',row.names=F,quote=F)
 write.csv(out.transposed.log2, paste0(outFolder, "/",Sample, '_mRNA_densities_2bins.csv'))
 
+
+
 #sapply(out.transposed.log2, mean)
 
 #colBlueShades = c(seq(0,10,length=11))
 paletteBlueShades <- colorRampPalette(c("blue", "white", "red"))(n = 100)
-pdf(paste0(outFolder, "/", Sample,"_mRNA_density_heatmap_10bins.pdf"))
+pdf(paste0(outFolder, "/", Sample,"_mRNA_density_heatmap_2bins.pdf"))
 heatmap.2(out.transposed.log2,
           Colv=NA,
           col=paletteBlueShades,
@@ -272,11 +275,20 @@ heatmap.2(out.transposed.log2,
           key=T,
           #keysize=1,
           symbreaks=T,
-          scale="row",
+          scale="none", #dont z-scale rows
           cexCol=0.25,
-          cexRow=0.1
+          cexRow=0.1, 
+          labRow=F # no row labels
 )
 dev.off()
+
+### 2 bins csv as %
+
+out <- mRNA_coverage2
+out.transposed=t(out)
+out.transposed.percentage <- ((out.transposed)/2)*100
+#write.table(out.transposed,'mRNA_density_WT.txt',sep='\t',row.names=F,quote=F)
+write.csv(out.transposed.percentage, paste0(outFolder, "/",Sample, '_mRNA_densities_2bins_percentage.csv'))
 
 ##########
 
