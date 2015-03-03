@@ -17,14 +17,15 @@ usage="USAGE:
 strand=$1
 alignFolder=$2
 threads=$3
+reference=$4
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "3" ]
+if [ "$#" -lt "4" ]
 then
 echo $usage
 exit -1
 else
-echo "featureCounts strandedness setting = $1\n alignment folder = $2\n iniating $3 parallel featureCounts jobs"
+echo "featureCounts strandedness setting = $1\n alignment folder = $2\n iniating $3 parallel featureCounts jobs \n reference is $4"
 fi
 ########## Run #################
 
@@ -49,7 +50,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $strand $alignFolder \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $strand $alignFolder $reference \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #usage:
 #bash ~/path_to/06-runner.sh <strandedness # >
