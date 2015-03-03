@@ -11,7 +11,7 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <strandedness> <alignment folder> <threads>"
+06-runner.sh <strandedness> <alignment folder> <threads> <reference_name>"
 
 ######### Setup ################
 strand=$1
