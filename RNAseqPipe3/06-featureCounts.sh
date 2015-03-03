@@ -27,6 +27,7 @@ refdir=$scriptdir/subread_refdir
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
 alignFolder=$3
+reference=$4
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'align' folder.
 sample_dir=$alignFolder/$sample
@@ -53,6 +54,6 @@ featureCounts\
     -p\
     -C\
     -s $strand\
-    -a ${refdir}/TAIR10_GFF3_genes.saf\
+    -a ${refdir}/$reference\
     -o "$outdir/${sample}.counts"\
     "${sample_dir}/${sample}.bam"
