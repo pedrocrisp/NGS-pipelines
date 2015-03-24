@@ -21,9 +21,15 @@ chrc_sizes=${scriptdir}/TAIR10_gen_chrc.chrom.sizes
 
 sample=$1
 alignFolder=$2
+strand=$3
 sample_dir=$alignFolder/$sample
 outdir="tdf_for_igv/${sample}"
 mkdir ${outdir}
+
+# Condition statement: if library is stranded $3 == stranded and bigWigs are made for each strand.  If library is nonstranded $3 == nonstranded and nonstrandspecific bigWig is made.  If no strand info is specified, script will error
+if [ "$strand" == "stranded" ]
+then
+
 
 #split F and R reads into plus and minus strand taking into account PE
 #http://seqanswers.com/forums/showthread.php?t=29399
@@ -69,5 +75,25 @@ bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
 bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 
+elif [ "$strand" == "nonstranded" ]
+then
+
+echo "bam to bedgraph"
+#non-stranded bedgraph
+bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+
+#make tdf
+echo "bedgraph to binary tiled data (.tdf) file"
+igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
+
+#make bigWigs
+echo "bam to bigWig"
+bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
+
+else
+echo "ERROR: it has not been specificed whether library is stranded on nor"
+
+exit 1
+fi
 
 

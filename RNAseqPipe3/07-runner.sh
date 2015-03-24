@@ -11,17 +11,18 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <alignment folder> <number of threads>"
+07-runner.sh <alignment folder> <number of threads> <strandedness of library>"
 
 ######### Setup ################
 alignFolder=$1
 threads=$2
-if [ "$#" -lt "2" ]
+strand=$3
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
 else
-echo "alignment folder = $1\n initiating $2 parallel make stranded bigWig jobs"
+echo "alignment folder = $1, initiating $2 parallel make stranded bigWig jobs, library is $3"
 fi
 ########## Run #################
 
@@ -45,7 +46,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $alignFolder \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder $strand \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/07-runner.sh
