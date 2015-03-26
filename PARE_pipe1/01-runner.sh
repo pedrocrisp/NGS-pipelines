@@ -19,7 +19,7 @@ threads=$1
 reads=$2
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "1" ]
+if [ "$#" -lt "2" ]
 then
 echo $usage
 exit -1
