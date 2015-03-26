@@ -7,7 +7,7 @@ set -e
 sample=$1
 
 #Names the directory that the sample will be opened from
-sample_dir="reads/$sample"
+sample_dir="$2/$sample"
 
 #If there are no samples directories in the reads folder, tell me
 if [ ! -d "$sample_dir" ]
