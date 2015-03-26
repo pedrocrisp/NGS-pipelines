@@ -7,7 +7,7 @@ set -e
 set -x
 
 #If the number of arguments is not one, then echo "USAGE: fastqc.sh SAMPLENAME" and exit the program. Essentially, this code is checking that a sample has been provided and if not, it will exit the program.
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
 then
 echo "USAGE: fastqc.sh SAMPLENAME"
 exit
