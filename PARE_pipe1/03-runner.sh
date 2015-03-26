@@ -32,7 +32,7 @@ fi
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/03-cutadapt.sh
-outdir=reads_noadapt
+outdir=reads_noadapt_cutadapt
 ###
 
 function findSamples () {
