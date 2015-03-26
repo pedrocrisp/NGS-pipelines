@@ -27,19 +27,20 @@ fi
 ###
 
 usage="USAGE:
-cat_fastqs-runner.sh <number of threads> <reads folder>"
+cat_fastqs-runner.sh <number of threads> <reads folder> <PE or SE>"
 
 ######### Setup ################
 threads=$1
 reads=$2
+PEorSE=$3
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
 else
-echo "initiating $1 parallel cat jobs"
+echo "initiating $1 parallel cat jobs on reads in $reads folder on $PEorSE data"
 fi
 ########## Run #################
 
@@ -51,7 +52,7 @@ function findSamples () {
 find $reads/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-findSamples | parallel -j $threads bash $script {} $reads
+findSamples | parallel -j $threads bash $script {} $reads $PEorSE
 
 #To run:
 #bash ~/path_to/cat_fastqs-runner.sh
