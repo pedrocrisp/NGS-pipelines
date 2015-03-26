@@ -49,7 +49,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} $min $max \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $min $max \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, got to directory containing reads directory and call:
 #bash ~/path_to/02-runner.sh
