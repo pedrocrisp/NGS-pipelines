@@ -48,10 +48,14 @@ mkdir $outdir
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
-outputFile="$outdir/${fqname%%.*}.noadapt.fq.gz"
+outputFile="$outdir/${fqname%%.*}.noadapt.fq"
 scythe \
 -p 0.1 \
 -a $adapterfile \
 $fq \
 >$outputFile
 done
+
+#gzip fastq (differs from RNAseq pipe because fastqs are not passed to quality trimmer)
+
+gzip "$outdir/${fqname%%.*}.noadapt.fq"
