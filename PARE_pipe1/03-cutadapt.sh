@@ -35,6 +35,9 @@ fastqs="$(ls $sample_dir/*.fastq.gz)"
 
 outdir="reads_noadapt_cutadapt/$sample"
 mkdir $outdir
+outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
+mkdir $outdir_discard
+
 
 
 #This command runs cutadapt. It says 'for the fastqs listed within the sample directory do the following:
@@ -44,20 +47,30 @@ mkdir $outdir
 #4) The Bash shell will replace the $(<...) with the content of the given file. The config file contains the -a: The adaptor sequences
 #5) -m minimum read length discard reads if trimmed to smaller than m
 #6) -M max rad length to keep
-#7) -O only trimm adapter is if 10 nt match (elliminates trimming a few bases due to random matches to adapter eg the first 3)
-#8) -o output file (reads_noadapt/given sample name)
-#9) input file
+#7) -O only trimm adapter is if 5 nt match (elliminates trimming a few bases due to random matches to adapter eg the first 3)
+# --too-short-output rather than removing reads that are too short, write them to the discard folder for inspection
+# --too-long-output ditto above for too long
+# --untrimmed-output ditto if no adapt found, this is only approprite for sequencing of short fragemnts using longer read technology ie 20nt PARE tags or sRNAs using 50 nt reads.  Thus we expect an adapter to be read on the end or else something went wrong.  Not appropriate for RNAseq!
+# -o output file (reads_noadapt/given sample name)
+# input file
 
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
 outputFile="$outdir/${fqname%%.*}.noadapt.fq.gz"
+outputFile_too_short="$$outdir_discard/${fqname%%.*}.too_short.fq.gz"
+outputFile_too_long="$$outdir_discard/${fqname%%.*}.too_long.fq.gz"
+outputFile_untrimmed="$$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
+
 cutadapt \
 $(<cutadapt.conf) \
 -m $min \
 -M $max \
--O 10 \
+-O 5 \
 --discard-untrimmed \
+--too-short-output $outputFile_too_short \
+--too-long-output $outputFile_too_long \
+--untrimmed-output $outputFile_untrimmed \
 -o $outputFile \
 $fq
 done
