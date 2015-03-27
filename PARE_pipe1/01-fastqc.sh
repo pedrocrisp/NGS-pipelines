@@ -21,7 +21,7 @@ reads=$2
 sample_dir="$reads/$sample"
 
 #List all files ending with '.fastq.gz' that are located within the specified sample directory and save these as the variable 'fastqs.'
-fastqs="$(ls $sample_dir/*.fastq.gz)"
+fastqs="$(ls $sample_dir/*.f*q.gz)"
 
 #Creates a new directory called 'reads_fastqc' and puts the sample names into there. This creates the directory to put the output from fastqc into (next step).
 
