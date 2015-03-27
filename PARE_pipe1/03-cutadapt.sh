@@ -24,6 +24,8 @@ fi
 sample=$1
 min=$2
 max=$3
+error_rate=$4
+end_trim=$5
 
 #Specifies the directory that the sample will be opened from.
 sample_dir=reads/$sample
@@ -47,7 +49,7 @@ mkdir $outdir_discard
 #4) The Bash shell will replace the $(<...) with the content of the given file. The config file contains the -a: The adaptor sequences
 #5) -m minimum read length discard reads if trimmed to smaller than m
 #6) -M max rad length to keep
-#7) -O only trimm adapter is if 5 nt match (elliminates trimming a few bases due to random matches to adapter eg the first 3)
+#7) -O only trimm adapter is if 5 nt match (elliminates trimming a few bases due to random matches to adapter eg the first 3). Going for the default 3 for the moment...
 # --too-short-output rather than removing reads that are too short, write them to the discard folder for inspection
 # --too-long-output ditto above for too long
 # --untrimmed-output ditto if no adapt found, this is only approprite for sequencing of short fragemnts using longer read technology ie 20nt PARE tags or sRNAs using 50 nt reads.  Thus we expect an adapter to be read on the end or else something went wrong.  Not appropriate for RNAseq!
@@ -67,9 +69,11 @@ outputFile_untrimmed="$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
 
 cutadapt \
 $(<cutadapt.conf) \
+--cut $end_trim \
+-e $error_rate \
 -m $min \
 -M $max \
--O 5 \
+-O 3 \
 --too-short-output $outputFile_too_short \
 --too-long-output $outputFile_too_long \
 --untrimmed-output $outputFile_untrimmed \

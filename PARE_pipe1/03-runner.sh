@@ -11,12 +11,14 @@ fi
 #
 
 usage="USAGE:
-03-runner.sh <number of threads> <min length> <max length>"
+03-runner.sh <number of threads> <min length> <max length> <error rate> <3 end trim length>"
 
 ######### Setup ################
 threads=$1
 min=$2
 max=$3
+error_rate=$4
+end_trim=$5
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
 if [ "$#" -lt "3" ]
@@ -49,7 +51,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $min $max \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $min $max $error_rate $end_trim \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, got to directory containing reads directory and call:
 #bash ~/path_to/02-runner.sh
