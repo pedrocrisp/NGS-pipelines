@@ -54,6 +54,9 @@ mkdir $outdir_discard
 # -o output file (reads_noadapt/given sample name)
 # input file
 
+# not in use:
+# --discard-untrimmed \
+
 for fq in $fastqs
 do
 fqname="$(basename $fq)"
@@ -67,7 +70,6 @@ $(<cutadapt.conf) \
 -m $min \
 -M $max \
 -O 5 \
---discard-untrimmed \
 --too-short-output $outputFile_too_short \
 --too-long-output $outputFile_too_long \
 --untrimmed-output $outputFile_untrimmed \
