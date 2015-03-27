@@ -58,9 +58,9 @@ for fq in $fastqs
 do
 fqname="$(basename $fq)"
 outputFile="$outdir/${fqname%%.*}.noadapt.fq.gz"
-outputFile_too_short="$$outdir_discard/${fqname%%.*}.too_short.fq.gz"
-outputFile_too_long="$$outdir_discard/${fqname%%.*}.too_long.fq.gz"
-outputFile_untrimmed="$$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
+outputFile_too_short="$outdir_discard/${fqname%%.*}.too_short.fq.gz"
+outputFile_too_long="$outdir_discard/${fqname%%.*}.too_long.fq.gz"
+outputFile_untrimmed="$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
 
 cutadapt \
 $(<cutadapt.conf) \
