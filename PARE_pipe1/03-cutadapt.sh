@@ -17,7 +17,9 @@ scriptdir="$(dirname $(readlink -f $0))"
 fi
 #
 
-###User to ensure correct file path#
+#cutadapt
+#note the program has changed since it publication
+#https://cutadapt.readthedocs.org/en/stable/guide.html#cutadapt-s-output
 
 
 #Defines the sample that we are working with to the command line as the first token.
