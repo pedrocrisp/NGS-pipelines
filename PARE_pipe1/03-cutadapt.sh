@@ -37,8 +37,10 @@ fastqs="$(ls $sample_dir/*.fastq.gz)"
 
 outdir="reads_noadapt_cutadapt/$sample"
 mkdir $outdir
-outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
-mkdir $outdir_discard
+
+## uncomment if trying to keep reads failing length filter (this caused probelms in the past)
+#outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
+#mkdir $outdir_discard
 
 
 
@@ -61,8 +63,6 @@ mkdir $outdir_discard
 # --too-short-output $outputFile_too_short \
 # --too-long-output $outputFile_too_long \
 # --untrimmed-output $outputFile_untrimmed \
-# -m $min \
-# -M $max \
 
 for fq in $fastqs
 do
@@ -77,11 +77,17 @@ cutadapt \
 $(<cutadapt.conf) \
 --cut $end_trim \
 -e $error_rate \
+-m $min \
+-M $max \
 -O 3 \
 --info-file $infoFile \
 -o $outputFile \
 $fq
 done
+
+# histogram of read lengths (cut adapt log file isnt always informative enough... double check too)
+# adapted from http://onetipperday.blogspot.com.au/2012/05/simple-way-to-get-reads-length.html
+# textHistogram from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/textHistogram
 
 echo "read length distribution for $outputFile"
 zcat $outputFile | awk '{if(NR%4==2) print length($1)}' | textHistogram -maxBinCount=59 stdin
