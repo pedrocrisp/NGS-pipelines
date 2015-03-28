@@ -58,11 +58,11 @@ mkdir $outdir_discard
 
 # not in use:
 # --discard-untrimmed \
---too-short-output $outputFile_too_short \
---too-long-output $outputFile_too_long \
---untrimmed-output $outputFile_untrimmed \
--m $min \
--M $max \
+# --too-short-output $outputFile_too_short \
+# --too-long-output $outputFile_too_long \
+# --untrimmed-output $outputFile_untrimmed \
+# -m $min \
+# -M $max \
 
 for fq in $fastqs
 do
