@@ -45,7 +45,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script $reads {} \>logs/${outdir}_bowtie2.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $reads \>logs/${outdir}_bowtie2.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
