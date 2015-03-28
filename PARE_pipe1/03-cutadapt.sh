@@ -66,6 +66,7 @@ outputFile="$outdir/${fqname%%.*}.noadapt.fq.gz"
 outputFile_too_short="$outdir_discard/${fqname%%.*}.too_short.fq.gz"
 outputFile_too_long="$outdir_discard/${fqname%%.*}.too_long.fq.gz"
 outputFile_untrimmed="$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
+infoFile="$outdir/${fqname%%.*}.noadapt.info.txt"
 
 cutadapt \
 $(<cutadapt.conf) \
@@ -77,6 +78,7 @@ $(<cutadapt.conf) \
 --too-short-output $outputFile_too_short \
 --too-long-output $outputFile_too_long \
 --untrimmed-output $outputFile_untrimmed \
+--info-file $infoFile \
 -o $outputFile \
 $fq
 done
