@@ -30,6 +30,7 @@ refdir=$scriptdir/bowtie2_refdir
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
 reads=$2
+b_threads=$3
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
 sample_dir="$reads/$sample"
@@ -67,7 +68,7 @@ bowtie2 \
 -N 0 \
 -L 10 \
 -i S,1,0.50 \
--p 1 \
+-p $b_threads \
 --score-min L,0,0 \
 -U $fastqs \
 -S "$outsam"
