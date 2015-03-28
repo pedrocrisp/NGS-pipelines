@@ -83,3 +83,5 @@ $(<cutadapt.conf) \
 $fq
 done
 
+echo "read length distribution for $outputFile"
+zcat $outputFile | awk '{if(NR%4==2) print length($1)}' | textHistogram -maxBinCount=59 stdin
