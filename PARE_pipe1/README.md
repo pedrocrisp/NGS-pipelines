@@ -29,7 +29,7 @@ Positional args
 2. min fragment length to retain after trimming
 3. max fragment length to retain after trimming
 4. 4. error rate - default is 0.1 (10%)*match length, recommended sticking with this ie 1 error per 10 base match
-5. bases to trim from 3' end - recommended to trim back to 20 nt (31 for 50 bp run, 81 for 100 bp run)
+5. bases to trim from end, negative number indicates trim from 3' end, positive number trim 5' - recommended to trim back to 20 nt (-31 for 50 bp run, -81 for 100 bp run)
 
 cutadapt requires a file called cutadapt.conf to be in the directory that the script is called from.  The file is subsitituted as an argument to cutadapt as contains the adapter info.  For these PARE libraries the adapter is the 3' TruSeq sRNA adpater:
 
