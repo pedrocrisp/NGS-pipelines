@@ -19,12 +19,12 @@ reads=$2
 b_threads=$3
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
 else
-echo "initiating $1 parallel bowtie jobs on $reads folder"
+echo "initiating $1 parallel bowtie jobs on $reads folder, bowtie2 can use $b_threads threads"
 fi
 ########## Run #################
 
