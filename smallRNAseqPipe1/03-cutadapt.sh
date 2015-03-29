@@ -40,8 +40,8 @@ outdir="reads_noadapt_cutadapt/$sample"
 mkdir $outdir
 
 ## uncomment if trying to keep reads failing length filter (this caused probelms in the past)
-#outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
-#mkdir $outdir_discard
+outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
+mkdir $outdir_discard
 
 
 
