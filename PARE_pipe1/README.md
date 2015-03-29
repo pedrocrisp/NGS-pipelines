@@ -9,7 +9,8 @@ FastQC is used to examined fastq data.  Typically sequencing runs into the 3' ad
 This script can now be run on fastqs before and after trimming by specifying the reads folder. Also it recognises fasq.gz and fq.gz (searches for *.q.gz).
 
 usage="USAGE:
-01-runner.sh <number of threads> <reads folder>"
+
+```01-runner.sh <number of threads> <reads folder>"```
 
 Number of threads refers to parallel ie how many samples to run at once (the rest are queued)
 
@@ -19,9 +20,11 @@ Number of threads refers to parallel ie how many samples to run at once (the res
 Adapter removal can present a challenge because of the colour imbalance owing to the extremely consistent 20-21 nt fragemnt size. The approach I have settled on for the moment is to simply cut the reads back to 20 nt (21 nt reads lose a base but seemed better than including an adapter base on the 20 nt reads, this way can map 20 nt reads accepting perfect matches only). The 20 nt reads are checked for adapters, (3 nt perfect match min) but very few reads are filtered out at this stage. Using this appraoch >90% of reads should map (80% uniquely), so seems satisfactory. The distribution of read lengths is also calculated folowwing cutadapt and written into the log file.
 
 usage="USAGE:
-03-runner.sh <number of threads> <min length> <max length> <error rate> <3 end trim length>"
+
+```03-runner.sh <number of threads> <min length> <max length> <error rate> <3 end trim length>"```
 
 Positional args
+
 1. Number of threads refers to parallel ie how many samples to run at once (the rest are queued)
 2. min fragment length to retain after trimming
 3. max fragment length to retain after trimming
