@@ -39,7 +39,7 @@ cutadapt requires a file called cutadapt.conf to be in the directory that the sc
 # TTACTATGCCGCTGGTGGCTGTCCAAGTCTCAAGATGTCAGGCTGNNNNNNNNNNNNNNNNNNNNACCTTAAGAGCCCACGGTTCCTTGAGGTCAGTGNNNNNNTAGAGCATACGGCAGAAGACGAAC
 ```
 
-So this file should read:
+So this file should read ``` -a <adapter sequence>```:
 
 ```
 cat cutadapt.conf 
