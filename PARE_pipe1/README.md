@@ -17,7 +17,7 @@ Number of threads refers to parallel ie how many samples to run at once (the res
 
 ## Adapter removal -cutadapt
 
-Adapter removal can present a challenge because of the colour imbalance owing to the extremely consistent 20-21 nt fragemnt size. The approach I have settled on for the moment is to simply cut the reads back to 20 nt (21 nt reads lose a base but seemed better than including an adapter base on the 20 nt reads, this way can map 20 nt reads accepting perfect matches only). The 20 nt reads are checked for adapters, (3 nt perfect match min) but very few reads are filtered out at this stage. Using this appraoch >90% of reads should map (80% uniquely), so seems satisfactory. The distribution of read lengths is also calculated folowwing cutadapt and written into the log file.
+Adapter removal can present a challenge because of the colour imbalance owing to the extremely consistent 20-21 nt fragemnt size. The approach I have settled on for the moment is to simply cut the reads back to 20 nt (21 nt reads lose a base but seemed better than including an adapter base on the 20 nt reads, this way can map 20 nt reads accepting perfect matches only). The 20 nt reads are checked for adapters, (3 nt perfect match min) but very few reads are filtered out at this stage. Using this appraoch >90% of reads should map (80% uniquely), so seems satisfactory. The distribution of read lengths is also calculated folowwing cutadapt and written into the log file, requires [textHistogram](http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/textHistogram), module adapted from [Ono tip per day](http://onetipperday.blogspot.com.au/2012/05/simple-way-to-get-reads-length.html).
 
 usage="USAGE:
 
@@ -34,5 +34,8 @@ Positional args
 
 Note: there is a scythe script in here too but scythe kept trimming almost everything away leaving no reads, couldnt git it too work, maybe it is confused by  the low quality of reads, cutadapt worked well enough so didnt persist, although scythe may well do a better job if it could be optimized.
 
+## Alignment - bowtie2
+
+For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). 
 
 
