@@ -21,12 +21,12 @@ error_rate=$4
 end_trim=$5
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "3" ]
+if [ "$#" -lt "5" ]
 then
 echo $usage
 exit -1
 else
-echo "initiating $1 parallel cutadapt adapter removal jobs, min/max length after filtering $min, $max"
+echo "initiating $1 parallel cutadapt adapter removal jobs, min/max length after filtering $min, $max, error rate $error_rate, trim $end_trim bases from the end"
 fi
 ########## Run #################
 
