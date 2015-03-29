@@ -4,7 +4,7 @@ This Pipeline processes PARE (degradome) data from fastq, adapter removal to gen
 
 ## QC -fastqc
 
-FastQC is used to examined fastq data.  Typically sequencing runs into the 3' adapter because in this protocol 20-12 nt fragemnts are cloned yet seqeuncing is usuallt longer (50-100 bp).  Hence, data quality is often terrible beyond base 21 due to colour imbalance on the sequencer.
+FastQC is used to examine the fastq files.  Typically sequencing runs into the 3' adapter because in this protocol 20-12 nt fragemnts are cloned yet seqeuncing is usuallt longer (50-100 bp).  Hence, data quality is often terrible beyond base 21 due to colour imbalance on the sequencer.
 
 This script can now be run on fastqs before and after trimming by specifying the reads folder. Also it recognises fasq.gz and fq.gz (searches for *.q.gz).
 
