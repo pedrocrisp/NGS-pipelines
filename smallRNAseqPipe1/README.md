@@ -1,4 +1,4 @@
-#RNAseqPipe3 README
+#sRNAseqPipe1 README
 
 ---
 
