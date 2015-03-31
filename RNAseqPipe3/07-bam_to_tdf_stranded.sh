@@ -27,7 +27,7 @@ outdir="tdf_for_igv/${sample}"
 mkdir ${outdir}
 
 # Condition statement: if library is stranded $3 == stranded and bigWigs are made for each strand.  If library is nonstranded $3 == nonstranded and nonstrandspecific bigWig is made.  If no strand info is specified, script will error
-if [ "$strand" == "stranded" ]
+if [ "$strand" == "stranded_PE" ]
 then
 
 
@@ -75,6 +75,41 @@ bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
 bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 
+elif [ "$strand" == "stranded_SE" ]
+then
+
+#R1 forward strand
+samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam
+
+#R1 reverse strand
+samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
+
+####################
+
+echo "bam to bedgraph"
+#non-stranded bedgraph
+bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+
+#stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
+bedtools genomecov -bg -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+#minus strand reads bedgraph
+bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+
+#make tdf
+echo "bedgraph to binary tiled data (.tdf) file"
+igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
+
+#make bigWigs
+echo "bam to bigWig"
+bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
+
+bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
+bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
+
+
+##
+
 elif [ "$strand" == "nonstranded" ]
 then
 
@@ -91,7 +126,7 @@ echo "bam to bigWig"
 bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 
 else
-echo "ERROR: it has not been specificed whether library is stranded on nor"
+echo "ERROR: it has not been specificed whether library is stranded on not"
 
 exit 1
 fi
