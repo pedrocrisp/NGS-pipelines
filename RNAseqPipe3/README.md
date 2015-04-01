@@ -114,10 +114,13 @@ Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10
 
 ---
 ##Step 07-bam\_to\_tdf_stranded.sh - make bigWigs etc
+
 ```
 usage:  07-bam_to_tdf_stranded.sh <alignment_folder> <threads> <strandedness of library>
 ```
+
 Strandedness can be "stranded_PE", "stranded_SE" or "nonstranded".
+
 ---
 Link ref seq on the server:
 
