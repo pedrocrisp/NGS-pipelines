@@ -81,7 +81,7 @@ $(<cutadapt.conf) \
 -e $error_rate \
 -m $min \
 -M $max \
--O 10 \
+-O 3 \
 --untrimmed-output $outputFile_untrimmed \
 -o $outputFile \
 $fq
