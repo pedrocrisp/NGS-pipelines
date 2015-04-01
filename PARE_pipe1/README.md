@@ -52,4 +52,6 @@ Note: there is a scythe script in here too but scythe kept trimming almost every
 
 For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). 
 
+Steps 05-bowtie2.sh requires a symbolic link called "bowtie2_refdir" to the folder containing the index files, those files must have the prefix "TAIR10_allchr"
+
 
