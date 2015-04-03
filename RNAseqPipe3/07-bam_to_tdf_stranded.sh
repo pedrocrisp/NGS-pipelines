@@ -60,9 +60,9 @@ bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.mius.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 
 #make tdf
 echo "bedgraph to binary tiled data (.tdf) file"
@@ -140,9 +140,9 @@ bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 
 #make tdf
 echo "bedgraph to binary tiled data (.tdf) file"
