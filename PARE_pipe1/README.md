@@ -52,4 +52,52 @@ Note: there is a scythe script in here too but scythe kept trimming almost every
 
 For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). 
 
+Steps 05-bowtie2.sh requires a symbolic link called "bowtie2_refdir" to the folder containing the index files, those files must have the prefix "TAIR10_allchr"
+
+## Example:
+
+```
+########### pipeline.sh ##########i
+#This is the ultimate analysis pipeline for RRGS PARE data. All scripts called from the parent directory of the project folder, which contains a sub folder called reads, containing a folder for each sample, which in trun contains the fastq files.
+
+############ #Step 1 cat files ############
+#Step 1 cat files
+#Fastq files were provided as 2 files by the sequencing facility, denoted by an L001 and L002, these were concatinated together and renamed.
+bash ~/gitrepos/NGS-pipelines/tools/cat_fastqs-runner.sh 11 reads SE
+
+########### #Step 2 QC raw fastq ###########
+#Step 2 QC raw fastq
+#Quality control on raw reads was performed with FASTQC v.0.11.2 (Andrews 2014)
+#fastqc from RNAseq pipeline
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh 20
+#note, since i have initiated a PARE pipeline with a new fastqc script (specify read dir).
+
+########### #Step 3 trim adapters ###########
+# Step 3 trim adapters
+# Reads were trimmed using cutadapt v1.8 (Python2.7.8; \cite{martin_cutadapt_2011} however the cutadapt algorithm has change significantly since publication \href{https://cutadapt.readthedocs.org/en/stable
+# Adapters are TruSeq sRNA adapters, 3' end as per sRNA protocol, 5' slightly shorter adapter (hence the custom sequencing primer)
+# > PARE Final Product
+# AATGATACGGCGACCACCGACAGGTTCAGAGTTCTACAGTCCGACNNNNNNNNNNNNNNNNNNNNTGGAATTCTCGGGTGCCAAGGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+# TTACTATGCCGCTGGTGGCTGTCCAAGTCTCAAGATGTCAGGCTGNNNNNNNNNNNNNNNNNNNNACCTTAAGAGCCCACGGTTCCTTGAGGTCAGTGNNNNNNTAGAGCATACGGCAGAAGACGAAC
+# Strategy:
+# cut reads back to 20 nt
+# search for TGGAATTCTC using cutadapt
+# filter short reads too (keep reads 14-22 nt)
+
+bash ~/gitrepos/NGS-pipelines/PARE_pipe1/03-runner.sh 11 14 22 0.1 -31
+
+#fastqc again
+bash ~/gitrepos/NGS-pipelines/PARE_pipe1/01-runner.sh 11 reads_noadapt_cutadapt
+
+########### #Step 4 align to genome ###########
+# Reads were then aligned to the Arabidopsis genome (TAIR10) using bowtie2 v2.2.5 (\cite{langmead_fast_2012}), using the flags: -a to report all matches for multi-mapped reads; -D 20 and -R 3, increases the likelihood that bowtie2 will report the correct alignment for a read that aligns many places and -i S,1,0.50, reduces the substring interval, further increasing sensitivity; --end-to-end, preventing trimming of reads to enable alignment; -L 10 reduces substring length to 10 (default 22) as these are short reads and -N 0 requires exact match in the seed; --score-min L,0,0 reports only exact matches in --end-to-end mode (alignment score of 0 required which is max possible in end mode).
+
+bash ~/gitrepos/NGS-pipelines/PARE_pipe1/05-runner.sh 11 reads_noadapt_cutadapt_20nt 2
+
+########### #Step 4 bam to wig files ###########
+# Reads were then sorted, indexed and compressed using samtools v1.1-26-g29b0367 (\cite{li_sequence_2009}) and strand specific bigwig files were generated using bedtools genomecov v2.16.1 (\cite{quinlan_bedtools:_2010}) and the UCSC utility bedGraphToBigWig \href{http://hgdownload.cse.ucsc.edu/admin/exe/}{\textit{link}} for viewing in IGV (\cite{robinson_integrative_2011}).
+
+bash ~/gitrepos/NGS-pipelines/smallRNAseqPipe1/07-runner.sh align_bowtie2 12 stranded_SE
+
+```
 

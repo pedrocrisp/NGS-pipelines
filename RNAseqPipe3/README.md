@@ -114,9 +114,13 @@ Step 06-featureCounts.sh requires the "subread\_refdir" to also contain a TAIR10
 
 ---
 ##Step 07-bam\_to\_tdf_stranded.sh - make bigWigs etc
+
 ```
-usage:  07-bam_to_tdf_stranded.sh <alignment_folder> <threads>
+usage:  07-bam_to_tdf_stranded.sh <alignment_folder> <threads> <strandedness of library>
 ```
+
+Strandedness can be "stranded_PE", "stranded_SE" or "nonstranded".
+
 ---
 Link ref seq on the server:
 
@@ -129,3 +133,55 @@ ln -s /home/pete/workspace/Illumina/truseq_adapters.fasta truseq_adapters.fasta
 
 ```
 
+## Example
+
+```
+############
+#Quality control on raw reads was performed with FASTQC v.0.11.2 (Andrews 2014)
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh 20
+
+############
+#Adapters were removed using scythe v.0.991 with flags -p 0.01 for the prior (Buffalo 2014)
+#Contamination rate ~0.03%
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner.sh 12
+
+############
+#Reads were quality trimmed with sickle v.1.33 with flags -q 20 (quality threshold) -l 20 (minimum read length after trimming) (Najoshi 2014)
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/03-runner.sh 20
+
+############
+#Quality control on filtered reads was performed with FASTQC v.0.11.2 (Andrews 2014)
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/04-runner.sh 20
+
+
+############
+#align, use subjunc (if on Percy, one one job at a time or it dies...)
+#The trimmed and quality filtered reads were aligned to the Arabidopsis genome (TAIR10) using the subjunc v.1.4.6 aligner with -u and -H flags to report only reads with a single unambiguous best mapping location (Liao, Smyth, and Shi 2013).
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05-runner.sh -j 12 -P 1 -a subjunc
+
+############
+# Reads were then sorted, indexed and compressed using samtools v1.1-26-g29b0367 (\cite{li_sequence_2009}) 
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05b-runner.sh -j 9 -F subjunc
+
+############
+#featureCounts summarise counts reverse stranded (dUTP)
+#For standard differential gene expression testing the number of reads mapping per TAIR10 gene loci was summarised using featureCounts v. 1.4.6 with flags -p and -C to discard read pairs mapping to different chromosomes and the -s flag set to 0 for a non-strand specific library, multimapping reads and multioverlapping reads (reads mapping to overlapping regions of more than one gene loci) were not counted (Liao, Smyth, and Shi 2014). Reads were summarised to parent TAIR10 gene loci rather than individual splice variants by summarising to the genomic coordinates defined by the feature "gene" in the TAIR10_GFF3_genes.gff reference (last modified 14/10/2010 ftp://ftp.arabidopsis. org/home/tair/Genes/TAIR10_genome_release/TAIR10_gff3/TAIR10_GFF3_genes.gff).
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/06-runner.sh 0 subjunc 12 TAIR10_GFF3_genes.saf
+
+############
+#make bigWigs for fast IGV viewing
+# Strand specific bigwig files were generated using bedtools genomecov v2.16.1 (\cite{quinlan_bedtools:_2010}) and the UCSC utility bedGraphToBigWig \href{http://hgdownload.cse.ucsc.edu/admin/exe/}{\textit{link}} for viewing in IGV (\cite{robinson_integrative_2011}).
+
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/07-runner.sh subjunc 12 nonstranded
+
+############
+
+
+```
