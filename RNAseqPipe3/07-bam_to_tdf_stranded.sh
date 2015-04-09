@@ -126,8 +126,9 @@ bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 elif [ "$strand" == "stranded_SE" ]
 then
 
-#R1 forward strand
-samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam
+#R1 forward strand -f 0 does not work, all reads retained... "samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam"
+#not 100% sure we want everything that is NOT unmapped or reserse mapped, not sure what else coudl be included... of well
+samtools view -F 4 -b $sample_dir/$sample.bam | samtools view -F 16 -b - > $sample_dir/${sample}.forward.bam
 
 #R1 reverse strand
 samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
@@ -161,8 +162,9 @@ bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 elif [ "$strand" == "reverse_stranded_SE" ]
 then
 
-#R1 forward strand
-samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam
+#R1 forward strand -f 0 does not work, all reads retained... "samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam"
+#not 100% sure we want everything that is NOT unmapped or reserse mapped, not sure what else coudl be included... of well
+samtools view -F 4 -b $sample_dir/$sample.bam | samtools view -F 16 -b - > $sample_dir/${sample}.forward.bam
 
 #R1 reverse strand
 samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
