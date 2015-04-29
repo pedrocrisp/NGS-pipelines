@@ -199,6 +199,12 @@ bedtools genomecov -bg -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/$
 #minus strand reads bedgraph
 bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 
+#stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
+bedtools genomecov -d -split -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bed
+#minus strand reads bedgraph
+bedtools genomecov -d -split -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bed
+
 #make tdf
 echo "bedgraph to binary tiled data (.tdf) file"
 igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
@@ -222,9 +228,11 @@ echo "bam to bedgraph"
 #non-stranded bedgraph
 bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
-#non-stranded bed with splicing?
+
+#stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
 #could add this option to all steps above - output .bed file is about the same size as the bam ie liek 1.8 GB... quite big!
-#bedtools genomecov -d -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bed
+bedtools genomecov -d -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bed
 
 #make tdf
 echo "bedgraph to binary tiled data (.tdf) file"
