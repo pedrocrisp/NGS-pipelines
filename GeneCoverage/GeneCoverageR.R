@@ -105,7 +105,7 @@ colnames(out.table) <- c("Position", "Sense", "Antisense")
 #write.csv(out.table, 'average_coverage.csv')
 write.csv(out.table, paste0(outFolder, "/",Sample, '_average_coverage.csv'))
 
-pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot.pdf'),h=10,w=12)
+pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot_WC.pdf'),h=10,w=12)
 #pdf("test_strands.pdf",h=10,w=12)
 plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5), main=Sample)
 lines(pepb,col=1,lwd=2)
