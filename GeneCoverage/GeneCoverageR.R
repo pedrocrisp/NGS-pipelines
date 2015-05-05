@@ -92,7 +92,7 @@ meob[,2]=-meob[,2]
 
 
 
-pdf('test.pdf',h=10,w=12)
+pdf(paste0(outFolder, "/",Sample, 'gene_coverge_plot.csv'),h=10,w=12)
 plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5))
 lines(pepb,col=1,lwd=2)
 lines(peob,col=2,lwd=2)
@@ -105,6 +105,7 @@ abline(h=0,lty=1,col='grey')
 legend('topright',c('plus_primary','plus_offstrand','minus_primary','minus_offstrand'),lty=1,col=c(1,2,3,4))
 dev.off()
 
+#write.csv(out.transposed.percentage, paste0(outFolder, "/",Sample, '_mRNA_densities_2bins_percentage.csv'))
 
 
 
