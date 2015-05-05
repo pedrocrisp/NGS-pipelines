@@ -43,7 +43,7 @@ outdir="${alignFolder}_plotData"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="${outdir}/logs_${timestamp}"
+logdir=".${outdir}/logs_${timestamp}"
 mkdir $logdir
 
 cat $script > "${logdir}/script.log"
