@@ -25,6 +25,8 @@ dir.create(outFolder, showWarnings = F, recursive = T)
 #####
 
 #read in file
+#debug
+# plus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.plus.dist.1k.bed", head=F)
 plus.input=read.delim(paste0(sPath, Sample, ".plus.dist.1k.bed"),head=F)
 #develop strand directional positioning
 real.dist=matrix(ifelse(plus.input[,10]=='+',-1*plus.input[,17],plus.input[,17]),ncol=1)
@@ -57,6 +59,8 @@ peob=cbind(matrix(plus.exon.offstrand.bin$centers,ncol=1),plus.exon.offstrand.bi
 
 
 #read in file
+#debug
+# minus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.minus.dist.1k.bed", head=F)
 minus.input=read.delim(paste0(sPath, Sample, ".minus.dist.1k.bed"),head=F)
 #develop strand directional positioning
 real.dist=matrix(ifelse(minus.input[,10]=='+',-1*minus.input[,17],minus.input[,17]),ncol=1)
@@ -90,10 +94,20 @@ meob=cbind(matrix(minus.exon.offstrand.bin$centers,ncol=1),minus.exon.offstrand.
 peob[,2]=-peob[,2]
 meob[,2]=-meob[,2]
 
+sense=pepb
+sense[,2]=sense[,2]+mepb[,2]
 
+antisense=peob
+antisense[,2]=antisense[,2]+meob[,2]
+
+out.table <- cbind(sense,antisense[,2])
+col.names(out.table) <- c("Position", "Sense", "Antisense")
+#write.csv(out.table, 'average_coverage.csv')
+write.csv(out.table, paste0(outFolder, "/",Sample, '_average_coverage.csv'))
 
 pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot.pdf'),h=10,w=12)
-plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5))
+#pdf("test_strands.pdf",h=10,w=12)
+plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5), main=Sample)
 lines(pepb,col=1,lwd=2)
 lines(peob,col=2,lwd=2)
 lines(mepb,col=3,lwd=2)
@@ -103,6 +117,18 @@ abline(v=0,lty=2)
 abline(v=1000,lty=2)
 abline(h=0,lty=1,col='grey')
 legend('topright',c('plus_primary','plus_offstrand','minus_primary','minus_offstrand'),lty=1,col=c(1,2,3,4))
+dev.off()
+
+pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot.pdf'),h=10,w=12)
+#pdf("test_sense.pdf",h=10,w=12)
+plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5),main=Sample)
+lines(sense,col=1,lwd=2)
+lines(antisense,col=2,lwd=2)
+
+abline(v=0,lty=2)
+abline(v=1000,lty=2)
+abline(h=0,lty=1,col='grey')
+legend('topright',c('sense','antisense'),lty=1,col=c(1,2))
 dev.off()
 
 #write.csv(out.transposed.percentage, paste0(outFolder, "/",Sample, '_mRNA_densities_2bins_percentage.csv'))
