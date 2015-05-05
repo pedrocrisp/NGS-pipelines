@@ -11,7 +11,9 @@ fi
 #
 
 usage="USAGE:
-MakeGeneCoverageBeds-runner.sh <alignment folder> <number of threads> <reference>"
+MakeGeneCoverageBeds-runner.sh <alignment folder> <number of threads> <reference>
+Reference might be ~/ws/refseqs/TAIR10/TAIR10_crisp_gene_primary.bed
+"
 
 ######### Setup ################
 alignFolder=$1
@@ -35,11 +37,11 @@ function findSamples () {
 find $alignFolder/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=${alignFolder}_coverage_beds
+outdir="${alignFolder}_coverage_beds"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./outdir/${logs}_${timestamp}"
+logdir="./${outdir}/logs_${timestamp}"
 mkdir $logdir
 
 cat $script > "$logdir/script.log"
