@@ -26,6 +26,7 @@ dir.create(outFolder, showWarnings = F, recursive = T)
 
 #read in file
 #debug
+# Sample="Sample_alx8_277_9"
 # plus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.plus.dist.1k.bed", head=F)
 plus.input=read.delim(paste0(sPath, Sample, ".plus.dist.1k.bed"),head=F)
 #develop strand directional positioning
@@ -100,8 +101,10 @@ sense[,2]=sense[,2]+mepb[,2]
 antisense=peob
 antisense[,2]=antisense[,2]+meob[,2]
 
-out.table <- cbind(sense,antisense[,2])
+out.table <- data.frame(cbind(sense,antisense[,2]))
 colnames(out.table) <- c("Position", "Sense", "Antisense")
+out.table$SampleName <- Sample
+
 #write.csv(out.table, 'average_coverage.csv')
 write.csv(out.table, paste0(outFolder, "/",Sample, '_average_coverage.csv'))
 
