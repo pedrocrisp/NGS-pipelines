@@ -92,7 +92,7 @@ meob[,2]=-meob[,2]
 
 
 
-pdf(paste0(outFolder, "/",Sample, 'gene_coverge_plot.csv'),h=10,w=12)
+pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot.pdf'),h=10,w=12)
 plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5))
 lines(pepb,col=1,lwd=2)
 lines(peob,col=2,lwd=2)
