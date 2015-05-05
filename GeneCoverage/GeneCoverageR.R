@@ -101,7 +101,7 @@ antisense=peob
 antisense[,2]=antisense[,2]+meob[,2]
 
 out.table <- cbind(sense,antisense[,2])
-col.names(out.table) <- c("Position", "Sense", "Antisense")
+colnames(out.table) <- c("Position", "Sense", "Antisense")
 #write.csv(out.table, 'average_coverage.csv')
 write.csv(out.table, paste0(outFolder, "/",Sample, '_average_coverage.csv'))
 
