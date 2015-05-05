@@ -25,7 +25,7 @@ then
 echo $usage
 exit -1
 else
-echo "making Gene Coverage plots \n alignment folder = $1\n iniating $2 parallel jobs
+echo "making Gene Coverage plots \n alignment folder = $1\n iniating $2 parallel jobs"
 fi
 ########## Run #################
 
@@ -43,11 +43,11 @@ outdir="${alignFolder}_plotData"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
-logdir="./${outdir}/logs_${timestamp}"
+logdir="${outdir}/logs_${timestamp}"
 mkdir $logdir
 
-cat $script > "$logdir/script.log"
-cat $0 > "$logdir/runner.log"
+cat $script > "${logdir}/script.log"
+cat $0 > "${logdir}/runner.log"
 cat $script
 
 findSamples | parallel -j $threads R -f $script --args {} $alignFolder $outdir \>${logdir}/{}.log 2\>\&1
