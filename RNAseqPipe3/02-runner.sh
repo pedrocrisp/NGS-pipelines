@@ -11,18 +11,19 @@ fi
 #
 
 usage="USAGE:
-02-runner.sh <number of threads>"
+02-runner.sh <number of threads> <prior>"
 
 ######### Setup ################
 threads=$1
+prior=$2
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "1" ]
+if [ "$#" -lt "2" ]
 then
 echo $usage
 exit -1
 else
-echo "initiating $1 parallel scythe adapter removal jobs"
+echo "initiating $1 parallel scythe adapter removal jobs, prior $2"
 fi
 ########## Run #################
 
@@ -46,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $prior \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, got to directory containing reads directory and call:
 #bash ~/path_to/02-runner.sh

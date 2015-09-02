@@ -25,6 +25,7 @@ adapterfile="$scriptdir/truseq_adapters.fasta"
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
+prior=$2
 
 #Specifies the directory that the sample will be opened from.
 sample_dir=reads/$sample
@@ -49,7 +50,7 @@ do
 fqname="$(basename $fq)"
 outputFile="reads_noadapt/$sample/${fqname%%.*}.noadapt.fq.gz"
 scythe \
--p 0.1 \
+-p $prior \
 -a $adapterfile \
 $fq \
 >$outputFile
