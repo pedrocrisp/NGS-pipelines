@@ -10,11 +10,11 @@ FastQC is a java based program designed to perform a quality control analysis on
 
 **Use:** 
 
-Fast QC can be used to perform simple quality control analysis on your raw data, and can also be used after various steps in this pipeline (eg. removal of adapter sequences) to see if these programs have improved read quality.
+FastQC can be used to perform simple quality control analysis on your raw data, and can also be used after various steps in this pipeline (eg. removal of adapter sequences) to see if these programs have improved read quality.
 
 **Limitations:**
 
-The FastQC program provides a useful glimse of the data quality and flags potential issues, ultimately data qualiy should be assessed once reads have been filtered and aligned to a genome.  FastQC is also a relatively slow program to run, although this unlikely to be an issue of a decent server. 
+The FastQC program provides a useful glimse of the data quality and flags potential issues, ultimately data qualiy should be assessed once reads have been filtered and aligned to a genome.  
 
 **Requirements:**
 
@@ -30,7 +30,7 @@ Fast QC can read files encoded as:
 
 **Evaluation of results:**
 
-* Once you have run Fast-QC, the results report will be available as a html file. The report should open in your browser when you click on the file.
+* Once you have run Fast-QC, the results report will be available as an html file. The report should open in your browser when you click on the file.
 * You will see that the analysis is segmented into a series of modules, with a summary of the module outcomes provided on the left hand side. Ratings for each module include: normal (green tick), slightly abnormal (orange exclamation mark) and very abnormal (red cross). 
 * Here is an example of a [good quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [poor quality](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) library. A brief description of the purpose of each module included within a FastQC report is provided below. 
 
