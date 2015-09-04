@@ -30,13 +30,13 @@ mkdir "${outDir}/$sample"
 forward_fqname="$(basename $forward_fq)"
 
 #Define forward_fq_outputfile path to be "reads_noadapt_trimmed/sample/forward_fqname.trimmed.fq'
-forward_fq_outputFile="${outDir}/$sample/${forward_fqname%%.*}.trimmed.fq"
+forward_fq_outputFile="${outDir}/$sample/${forward_fqname%%.*}.trimmed.fq.gz"
 
 #Define the reverse_fqname to be the name of the basic name of the reverse_fq file (so get the name of the file rather than its full path). 
 reverse_fqname="$(basename $reverse_fq)"
 
 #Define reverse_fq_outputfile path to be "reads_noadapt_trimmed/sample/reverse_fqname.trimmed.fq'
-reverse_fq_outputFile="${outDir}/$sample/${reverse_fqname%%.*}.trimmed.fq"
+reverse_fq_outputFile="${outDir}/$sample/${reverse_fqname%%.*}.trimmed.fq.gz"
 
 #Run the sickle program. 
 #-f: specify forward read file for sample
@@ -48,12 +48,13 @@ reverse_fq_outputFile="${outDir}/$sample/${reverse_fqname%%.*}.trimmed.fq"
 #-q: Set quality control. An averagq quality below 20 will be trimmed.  
 #-l: Set length threshold in bp. Lengths below threshold are discarded. 
 sickle pe \
+-g \
 -f $forward_fq \
 -r $reverse_fq \
 -t sanger \
 -o $forward_fq_outputFile \
 -p $reverse_fq_outputFile \
--s "${outDir}/$sample/${sample}.trimmed.singles.fq" \
+-s "${outDir}/$sample/${sample}.trimmed.singles.fq.gz" \
 -q 20 \
 -l 20
 
