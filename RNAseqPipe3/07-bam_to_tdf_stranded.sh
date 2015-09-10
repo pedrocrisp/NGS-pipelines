@@ -132,8 +132,8 @@ igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
 echo "bam to bigWig"
 bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 
-bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
-bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
+bedGraphToBigWig $outdir/*.plus.bed $chrc_sizes $outdir/$sample.plus.bigWig
+bedGraphToBigWig $outdir/*.minus.bed $chrc_sizes $outdir/$sample.minus.bigWig
 
 elif [ "$strand" == "stranded_SE" ]
 then
