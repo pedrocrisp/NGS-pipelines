@@ -114,9 +114,9 @@ bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bga -split -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bga -split -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 
 #stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
@@ -132,8 +132,8 @@ igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
 echo "bam to bigWig"
 bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 
-bedGraphToBigWig $outdir/*.plus.bed $chrc_sizes $outdir/$sample.plus.bigWig
-bedGraphToBigWig $outdir/*.minus.bed $chrc_sizes $outdir/$sample.minus.bigWig
+bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
+bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 
 elif [ "$strand" == "stranded_SE" ]
 then
