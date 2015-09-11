@@ -56,13 +56,13 @@ rm $sample_dir/${sample}*.R*.bam
 
 echo "bam to bedgraph"
 #non-stranded bedgraph
-bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bga -split -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bga -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 
 #stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
@@ -110,7 +110,7 @@ rm $sample_dir/${sample}*.R*.bam
 
 echo "bam to bedgraph"
 #non-stranded bedgraph
-bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
@@ -149,13 +149,13 @@ samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse
 
 echo "bam to bedgraph"
 #non-stranded bedgraph
-bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bga -split -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bga -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 
 #stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
@@ -191,13 +191,13 @@ samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse
 
 echo "bam to bedgraph"
 #non-stranded bedgraph
-bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
 #stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
-bedtools genomecov -bg -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+bedtools genomecov -bga -split -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
 #minus strand reads bedgraph
-bedtools genomecov -bg -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+bedtools genomecov -bga -split -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
 
 #stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
 #plus strand reads bedgraph
@@ -226,7 +226,7 @@ then
 
 echo "bam to bedgraph"
 #non-stranded bedgraph
-bedtools genomecov -bg -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
 
 
 #stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
