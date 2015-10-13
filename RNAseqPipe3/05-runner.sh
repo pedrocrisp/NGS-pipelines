@@ -17,7 +17,8 @@ unset name
 jflag=
 Pflag=
 aflag=
-while getopts j:P:a: name
+iflag=
+while getopts j:P:a:i: name
 do
     case $name in
         j)    jflag=1
@@ -26,9 +27,11 @@ do
         Pval="$OPTARG";;
         a)    aflag=1
         aval="$OPTARG";;
-        ?)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+        i)    iflag=1
+        ival="$OPTARG";;
+        ?)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
             exit 1;;
-        *)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+        *)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
             exit 1;;
     esac
 done
@@ -41,17 +44,20 @@ fi
 if [ ! -z "$aflag" ]; then
     printf '"%s" will be used for alignment\n' "$aval"
 fi
+if [ ! -z "$iflag" ]; then
+    printf '"%s" will be used for reference index\n' "$ival"
+fi
 shift $(($OPTIND - 1))
 
 if [ -z "$jflag" ]
 then
-printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
 exit
 fi
 
 if [ -z "$Pflag" ]
 then
-printf "Threads for subread not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+printf "Threads for subread not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
 exit
 fi
 
@@ -63,6 +69,12 @@ then
 printf "aigner subjunc\n"
 else
 printf "Aligner not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>]\n" $0
+exit
+fi
+
+if [ -z "$iflag" ]
+then
+printf "Refernec index for subread not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
 exit
 fi
 
@@ -98,7 +110,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jval bash $script {} $Pval $aval \>$logdir/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Pval $aval $ival \>$logdir/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
