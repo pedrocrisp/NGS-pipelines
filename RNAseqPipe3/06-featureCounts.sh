@@ -21,7 +21,7 @@ fi
 ###
 #User defined reference sequence directory.
 #This line specifies that the reference directory is located in the script directory in a folder called 'subread_refdir.' The user should create a link for the subread_refdir in the script dir to map to the location of the directory containing their subread saf file. The subread saf file must be called "TAIR10_GFF3_genes.saf"
-refdir=$scriptdir/subread_refdir
+#refdir=$scriptdir/subread_refdir
 #
 
 #Defines the sample that we are working with to the command line as the first token.
@@ -54,6 +54,6 @@ featureCounts\
     -p\
     -C\
     -s $strand\
-    -a ${refdir}/$reference\
+    -a $reference\
     -o "$outdir/${sample}.counts"\
     "${sample_dir}/${sample}.bam"
