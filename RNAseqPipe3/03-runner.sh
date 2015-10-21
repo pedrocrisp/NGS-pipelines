@@ -11,18 +11,19 @@ fi
 ###
 
 usage="USAGE:
-03-runner.sh <number of threads>"
+03-runner.sh <encoding> <number of threads>"
 
 ######### Setup ################
-threads=$1
+encoding=$1
+threads=$2
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "1" ]
+if [ "$#" -lt "2" ]
 then
 echo $usage
 exit -1
 else
-echo "initiating $1 parallel quality trimming jobs using sickle"
+echo "initiating $1 parallel quality trimming jobs using sickle, $2 encoding"
 fi
 ########## Run #################
 
@@ -46,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $encoding \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/03-runner.sh

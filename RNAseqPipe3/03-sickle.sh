@@ -7,6 +7,7 @@ set -x
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
+encoding=$2
 
 #Specifies the directory in which the samples are located. 
 inputDir=reads_noadapt
@@ -51,7 +52,7 @@ sickle pe \
 -g \
 -f $forward_fq \
 -r $reverse_fq \
--t sanger \
+-t $encoding \
 -o $forward_fq_outputFile \
 -p $reverse_fq_outputFile \
 -s "${outDir}/$sample/${sample}.trimmed.singles.fq.gz" \
