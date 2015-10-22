@@ -15,31 +15,34 @@ set -x
 #getops
 unset name
 jflag=
-Pflag=
+Tflag=
 aflag=
 iflag=
-while getopts j:P:a:i: name
+Pflag=
+while getopts j:T:a:i:P: name
 do
     case $name in
         j)    jflag=1
         jval="$OPTARG";;
-        P)    Pflag=1
-        Pval="$OPTARG";;
+        T)    Pflag=1
+        Tval="$OPTARG";;
         a)    aflag=1
         aval="$OPTARG";;
         i)    iflag=1
         ival="$OPTARG";;
-        ?)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
+        P)    Pflag=1
+        Pval="$OPTARG";;
+        ?)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
             exit 1;;
-        *)   printf "Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
+        *)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
             exit 1;;
     esac
 done
 if [ ! -z "$jflag" ]; then
     printf 'Parallel will use -j "%s" threads\n' "$jval"
 fi
-if [ ! -z "$Pflag" ]; then
-    printf 'subread will use -P "%s" threads\n' "$Pval"
+if [ ! -z "$Tflag" ]; then
+    printf 'subread will use -T "%s" threads\n' "$Pval"
 fi
 if [ ! -z "$aflag" ]; then
     printf '"%s" will be used for alignment\n' "$aval"
@@ -47,17 +50,20 @@ fi
 if [ ! -z "$iflag" ]; then
     printf '"%s" will be used for reference index\n' "$ival"
 fi
+if [ ! -z "$Pflag" ]; then
+printf 'subread will assume -P "%s" encoding\n' "$Pval"
+fi
 shift $(($OPTIND - 1))
 
 if [ -z "$jflag" ]
 then
-printf "Threads for parallel not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
+printf "Threads for parallel not specified\n Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
 exit
 fi
 
 if [ -z "$Pflag" ]
 then
-printf "Threads for subread not specified\n Usage: %s: [-j value] [-P value] [-a <aligner>] [-i <reference>]\n" $0
+printf "Threads for subread not specified\n Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
 exit
 fi
 
@@ -78,6 +84,11 @@ printf "Refernec index for subread not specified\n Usage: %s: [-j value] [-P val
 exit
 fi
 
+if [ -z "$Pflag" ]
+then
+printf "Encoding of fastQ not specified\n Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
+exit
+fi
 
 
 ###find script directory (for purpose of locating target scripts and reference sequences
@@ -110,7 +121,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jval bash $script {} $Pval $aval $ival \>$logdir/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Tval $aval $ival $Pval \>$logdir/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh

@@ -26,9 +26,10 @@ refdir=$scriptdir/subread_refdir
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
-P=$2
+T=$2
 aligner=$3
 index=$4
+P=$5
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
 sample_dir=reads_noadapt_trimmed/$sample
@@ -57,14 +58,12 @@ tmpbam="${outdir}/${RANDOM}.bam"
 # Condition statement: Enables you to cope with both paired and single end reads, as subread will run with different settings if you have 1 or 2 files. If single end (# fastqs == 1), it will tell the subread program and so it will not look for a forward and reverse read. If paired (# fastqs == 2), it will describe which file is the forward and reverse read. If the read is not single end (1) or paired (2), it will print an error code.
 if [ ${numFqFiles} -eq 1 ]
 then
-echo subread-align -i $index -r $fastqs -o "$outsam"
-$aligner -T $P -u -H -i $index --gzFASTQinput -r $fastqs -o "$outsam"
+$aligner -T $T -u -H -i $index -P $P --gzFASTQinput -r $fastqs -o "$outsam"
 elif [ ${numFqFiles} -eq 2 ]
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-echo subread-align -i $index -r ${fq1} -R ${fq2} -o "$outsam"
-$aligner -T $P -u -H -i $index --gzFASTQinput -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $T -u -H -i $index -P $P --gzFASTQinput -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
