@@ -18,7 +18,7 @@ fastQ="$(ls $sample_dir/*.fq.gz)"
 
 #Make output directory
 outputDir="${outdir}/$sample"
-mkdir $outputDir
+#mkdir $outputDir
 
 #Run Shortstack, default settings, give bowtie some more memory to play with
 ShortStack \
