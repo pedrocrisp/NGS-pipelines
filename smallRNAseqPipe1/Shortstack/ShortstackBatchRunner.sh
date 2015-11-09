@@ -11,7 +11,7 @@ fi
 ###
 
 usage="USAGE:
-03-runner.sh <number of threads to parallel> <fastq folder>"
+ShortstackBatchRunner.sh <number of threads to parallel> <fastq folder>"
 
 ######### Setup ################
 threads=$1
