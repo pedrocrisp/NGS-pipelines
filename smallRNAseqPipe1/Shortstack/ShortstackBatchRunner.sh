@@ -11,13 +11,14 @@ fi
 ###
 
 usage="USAGE:
-ShortstackBatchRunner.sh <number of threads to parallel> <fastq folder>"
+ShortstackBatchRunner.sh <number of threads to parallel> <fastq folder> <min coverage>"
 
 ######### Setup ################
 threads=$1
 fastqFolder=$2
+coverage=$3
 
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
@@ -46,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $fastqFolder $outdir \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $fastqFolder $outdir $coverage \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/03-runner.sh

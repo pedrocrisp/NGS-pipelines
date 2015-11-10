@@ -9,6 +9,7 @@ set -x
 sample=$1
 inputDir=$2
 outdir=$3
+coverage=$4
 
 #Specifies the directory that the sample will be opened from.
 sample_dir="${inputDir}/$sample"
@@ -24,6 +25,7 @@ outputDir="${outdir}/$sample"
 ShortStack \
 --readfile $fastQ \
 --sort_mem 4G \
+--mincov $coverage \
 --genomefile ~/ws/refseqs/TAIR10/chromosomes/TAIR10.fa \
 --outdir $outputDir
 
