@@ -54,6 +54,6 @@ featureCounts\
     -p\
     -C\
     -s $strand\
-    -a ${refdir}/$reference\
+    -a $reference\
     -o "$outdir/${sample}.counts"\
     "${sample_dir}/${sample}.bam"
