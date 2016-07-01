@@ -95,7 +95,6 @@ sickle se \
 -f $forward_fq \
 -t $encoding \
 -o $forward_fq_outputFile \
--s "${outDir}/$sample/${sample}.trimmed.singles.fq.gz" \
 -q 20 \
 -l 20
 
