@@ -20,7 +20,7 @@ sample_dir="${inputDir}/$sample"
 outDir=reads_noadapt_trimmed
 
 # Condition statement: if library is paired-end $3 == PE and trimming is done for both files.  If library is single end $3 == SE and single file is analysed.  If no  info is specified, script will error
-if [ "read_ends" == "PE" ]
+if [ "$read_ends" == "PE" ]
 then
 
 #List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
@@ -65,7 +65,7 @@ sickle pe \
 -q 20 \
 -l 20
 
-if [ "read_ends" == "SE" ]
+if [ "$read_ends" == "SE" ]
 then
 
 #List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
