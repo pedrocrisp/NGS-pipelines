@@ -65,7 +65,7 @@ sickle pe \
 -q 20 \
 -l 20
 
-if [ "$read_ends" == "SE" ]
+elif [ "$read_ends" == "SE" ]
 then
 
 #List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
