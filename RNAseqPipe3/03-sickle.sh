@@ -8,6 +8,7 @@ set -x
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
 encoding=$2
+read_ends=$3
 
 #Specifies the directory in which the samples are located. 
 inputDir=reads_noadapt
@@ -17,6 +18,10 @@ sample_dir="${inputDir}/$sample"
 
 #Defines the name of the output directory as 'reads_noadapt_trimmed'
 outDir=reads_noadapt_trimmed
+
+# Condition statement: if library is paired-end $3 == PE and trimming is done for both files.  If library is single end $3 == SE and single file is analysed.  If no  info is specified, script will error
+if [ "read_ends" == "PE" ]
+then
 
 #List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
 forward_fq="$(ls $sample_dir/*R1*.noadapt.fq.gz)"
@@ -48,6 +53,7 @@ reverse_fq_outputFile="${outDir}/$sample/${reverse_fqname%%.*}.trimmed.fq.gz"
 #-s: specifies location of output file for unpaired reads.
 #-q: Set quality control. An averagq quality below 20 will be trimmed.  
 #-l: Set length threshold in bp. Lengths below threshold are discarded. 
+#-g for .gz input/output i suppose?
 sickle pe \
 -g \
 -f $forward_fq \
@@ -59,4 +65,42 @@ sickle pe \
 -q 20 \
 -l 20
 
+if [ "read_ends" == "SE" ]
+then
 
+#List all files ending with 'R1.noadapt.fq.gz' that are located within the specified sample directory and save these as the variable 'forward_fq.'
+forward_fq="$(ls $sample_dir/*.noadapt.fq.gz)"
+
+#Create the output directory and within this folder create a directory for the given sample. 
+mkdir "${outDir}/$sample"
+
+#Define the forward_fqname to be the name of the basic name of the forward_fq file (so get the name of the file rather than its full path). 
+forward_fqname="$(basename $forward_fq)"
+
+#Define forward_fq_outputfile path to be "reads_noadapt_trimmed/sample/forward_fqname.trimmed.fq'
+forward_fq_outputFile="${outDir}/$sample/${forward_fqname%%.*}.trimmed.fq.gz"
+
+#Run the sickle program. 
+#-f: specify forward read file for sample
+#-r: specify reverse read file for sample
+#-t: type of sequencing instrument
+#-o: specifies location of output file for forward reads.
+#-p: specifies location of output file for reverse reads. 
+#-s: specifies location of output file for unpaired reads.
+#-q: Set quality control. An averagq quality below 20 will be trimmed.  
+#-l: Set length threshold in bp. Lengths below threshold are discarded. 
+#-g for .gz input/output i suppose?
+sickle se \
+-g \
+-f $forward_fq \
+-t $encoding \
+-o $forward_fq_outputFile \
+-s "${outDir}/$sample/${sample}.trimmed.singles.fq.gz" \
+-q 20 \
+-l 20
+
+else
+echo "ERROR: SE or PE has not been specificed"
+
+exit 1
+fi
