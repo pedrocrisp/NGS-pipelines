@@ -38,8 +38,8 @@ awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.plus.dist.bed > $outFolde
 awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.minus.dist.bed > $outFolder/$sample.minus.dist.1k.bed
 
 # Then remove any files absolutely required from making the plot, Just keep the dist.1k.bed
-rm -rv $outFolder/*/*dist.bed
-rm -rv $outFolder/*/*real.bed
+rm -rv $outFolder/*dist.bed
+rm -rv $outFolder/*real.bed
 
 
 
