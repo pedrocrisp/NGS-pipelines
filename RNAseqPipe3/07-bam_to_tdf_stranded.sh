@@ -17,7 +17,7 @@ fi
 ###
 #reference sequence directory variable - user should create a link called TAIR10_gen_chrc.chrom.sizes in script dir that points to the TAIR10_gen_chrc.genome.sizes file, or put a copy in there (chrc means we included all 7 chromosomes).
 
-chrc_sizes=${scriptdir}/TAIR10_gen_chrc.chrom.sizes
+chrc_sizes=$4
 
 sample=$1
 alignFolder=$2
