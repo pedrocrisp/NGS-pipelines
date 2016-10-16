@@ -11,12 +11,13 @@ fi
 #
 
 usage="USAGE:
-07-runner.sh <alignment folder> <number of threads> <strandedness of library>"
+07-runner.sh <alignment folder> <number of threads> <strandedness of library> <chromosome.sizes file>"
 
 ######### Setup ################
 alignFolder=$1
 threads=$2
 strand=$3
+chromoSizes=$4
 if [ "$#" -lt "3" ]
 then
 echo $usage
@@ -46,7 +47,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $alignFolder $strand \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder $strand $chromoSizes \>logs/${outdir}_subread.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/07-runner.sh
