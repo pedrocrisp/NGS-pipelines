@@ -174,6 +174,22 @@ bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
 bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 
+############ TBC
+###5' analysis
+#stranded bedgraphs coverage of 5' position only
+bedtools genomecov -5 -d -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus5.bed
+#minus strand reads bedgraph
+bedtools genomecov -5 -d -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus5.bed
+
+#stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
+bedtools genomecov -5 -bga -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus5.bg
+#minus strand reads bedgraph
+bedtools genomecov -5 -bga -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus5.bg
+
+bedGraphToBigWig $outdir/*.plus5.bg $chrc_sizes $outdir/$sample.plus5.bigWig
+bedGraphToBigWig $outdir/*.minus5.bg $chrc_sizes $outdir/$sample.minus5.bigWig
+###########
 
 ##
 
