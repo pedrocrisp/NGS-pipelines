@@ -20,13 +20,28 @@ sample=$1
 alignFolder=$2
 reference=$3
 outdir=$4
+coverage=$5
+
 sample_dir=$alignFolder/$sample
 outFolder="${outdir}/${sample}"
 mkdir ${outFolder}
 
+if [ "$coverage" == "5prime" ]
+then
+#make a real bed file by adding chromosome edn co-ordinates (same as start because nt resolution)
+awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.plus5.bed > $outFolder/$sample.plus.real.bed
+awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.minus5.bed > $outFolder/$sample.minus.real.bed
+
+elif [ "$coverage" == "full" ]
+then
 #make a real bed file by adding chromosome edn co-ordinates (same as start because nt resolution)
 awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.plus.bed > $outFolder/$sample.plus.real.bed
 awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.minus.bed > $outFolder/$sample.minus.real.bed
+
+else
+echo "ERROR: coverage type has not been specificed select 5prime or full"
+exit 1
+fi
 
 #sort
 sort -k1,1 -k2,2n $outFolder/$sample.plus.real.bed > $outFolder/$sample.plus.real.bed
