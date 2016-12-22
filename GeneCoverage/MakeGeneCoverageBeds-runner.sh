@@ -38,7 +38,7 @@ function findSamples () {
 find $alignFolder/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir="${alignFolder}_coverage_beds"
+outdir="${alignFolder}_coverage_beds_${coverage}"
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
