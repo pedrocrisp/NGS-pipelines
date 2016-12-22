@@ -28,6 +28,10 @@ mkdir ${outFolder}
 awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.plus.bed > $outFolder/$sample.plus.real.bed
 awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.minus.bed > $outFolder/$sample.minus.real.bed
 
+#sort
+sort -k1,1 -k2,2n $outFolder/$sample.plus.real.bed > $outFolder/$sample.plus.real.bed
+sort -k1,1 -k2,2n $outFolder/$sample.minus.real.bed > $outFolder/$sample.minus.real.bed
+
 #get distance measures
 #reference is TAIR10_crisp_gene_primary.bed - fancy exon bed file prepared by SRE
 closestBed -D "ref" -a $outFolder/$sample.plus.real.bed -b $reference > $outFolder/$sample.plus.dist.bed
