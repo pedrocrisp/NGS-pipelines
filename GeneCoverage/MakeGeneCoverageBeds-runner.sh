@@ -19,12 +19,13 @@ Reference might be ~/ws/refseqs/TAIR10/TAIR10_crisp_gene_primary.bed
 alignFolder=$1
 threads=$2
 reference=$3
+coverage=$4
 if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
 else
-echo "alignment folder = $1, initiating $2 parallel MakeGeneCoverageBeds jobs, reference is $3"
+echo "alignment folder = $1, initiating $2 parallel MakeGeneCoverageBeds jobs, reference is $3, coverage type $4"
 fi
 ########## Run #################
 
@@ -48,7 +49,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $alignFolder $reference $outdir \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $alignFolder $reference $outdir $coverage \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/MakeGeneCoverageBeds-runner.sh
