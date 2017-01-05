@@ -24,13 +24,13 @@ fi
 
 ##code to create index 9Assuming fasta are in current folder:
 #bowtie2-build -f TAIR10_chr1.fas,TAIR10_chr3.fas,TAIR10_chr5.fas,TAIR10_chrM.fas,TAIR10_chr2.fas,TAIR10_chr4.fas,TAIR10_chrC.fas TAIR10
-refdir=$scriptdir/bowtie2_refdir
-#
+reference=$4
 
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
 reads=$2
 b_threads=$3
+
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
 sample_dir="$reads/$sample"
@@ -58,7 +58,7 @@ tmpbam="${outdir}/${RANDOM}.bam"
 
 
 bowtie2 \
--x ${refdir}/TAIR10 \
+-x $reference \
 --phred33 \
 --end-to-end \
 --mm \
