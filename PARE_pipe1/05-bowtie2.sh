@@ -87,19 +87,14 @@ bowtie2 \
 #-N max # mismatches in seed alignment; can be 0 or 1 (0)
 #-D give up extending after <int> failed extends in a row (15)
 
-echo "samtools view -S -u $outsam > ${tmpbam}
-samtools sort -m 2G ${tmpbam} $outbam
-samtools index ${outbam}.bam
-rm -v ${outsam} ${tmpbam}"
-
 #Using samtools view to convert the sam file to bam file.
 samtools view -S -u $outsam > ${tmpbam}
 
 #Sort the temporary bam file by chromosomal position, and save the sorted file.
-samtools sort -m 2G ${tmpbam} $outbam
+samtools sort -m 2G -o $outbam ${tmpbam}
 
 #Make an index of the sorted bam file
-samtools index ${outbam}.bam
+samtools index ${outbam}
 
 #Delete the temporary bam.
 rm -v ${outsam} ${tmpbam}
