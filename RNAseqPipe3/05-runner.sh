@@ -32,9 +32,11 @@ do
         ival="$OPTARG";;
         P)    Pflag=1
         Pval="$OPTARG";;
-        ?)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
+        F)    Pflag=1
+        Fval="$OPTARG";;
+        ?)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value] [-F fastq folder]\n" $0
             exit 1;;
-        *)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
+        *)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value] [-F fastq folder]\n" $0
             exit 1;;
     esac
 done
@@ -90,6 +92,12 @@ printf "Encoding of fastQ not specified\n Usage: %s: [-j value] [-T value] [-a <
 exit
 fi
 
+if [ -z "$Fflag" ]
+then
+printf "Folder containing fastQs not specified\n Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value]\n" $0
+exit
+fi
+
 
 ###find script directory (for purpose of locating target scripts and reference sequences
 #code to make it work on osx and linux
@@ -107,7 +115,7 @@ script=$scriptdir/05-subread.sh
 ###
 
 function findSamples () {
-find reads_noadapt_trimmed/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find $Fval/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
 outdir="$aval"
@@ -121,7 +129,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $jval bash $script {} $Tval $aval $ival $Pval \>$logdir/{}.log 2\>\&1
+findSamples | parallel -j $jval bash $script {} $Tval $aval $ival $Pval $Fval \>$logdir/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
