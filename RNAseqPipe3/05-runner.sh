@@ -19,7 +19,8 @@ Tflag=
 aflag=
 iflag=
 Pflag=
-while getopts j:T:a:i:P: name
+Fflag=
+while getopts j:T:a:i:P:F: name
 do
     case $name in
         j)    jflag=1
