@@ -30,9 +30,10 @@ T=$2
 aligner=$3
 index=$4
 P=$5
+folder=$6
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
-sample_dir=reads_noadapt_trimmed/$sample
+sample_dir=${folder}/$sample
 
 #Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory. 
 outdir="${aligner}/${sample}"
@@ -40,9 +41,8 @@ outdir="${aligner}/${sample}"
 #Creates an output directory to put the returned files to go into once subread has been run on the sample. In this case, the output from subread for the sample should go into a folder containing the sample's name, located within the 'align' directory.
 mkdir ${outdir}
 
-#List all files ending with 'trimmed.fq' that are located within the specified sample directory and save these as the variable 'fastqs.'
-fastqs="$(ls $sample_dir/*trimmed.fq.gz)"
-
+#List all files ending with 'q.gz' (hack way of acpturing .fq.gz and fastq.gz) that are located within the specified sample directory and save these as the variable 'fastqs.'
+fastqs="$(ls $sample_dir/*q.gz)"
 
 numFqFiles=$(echo $fastqs | wc -w)
 
