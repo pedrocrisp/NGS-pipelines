@@ -33,7 +33,7 @@ do
         ival="$OPTARG";;
         P)    Pflag=1
         Pval="$OPTARG";;
-        F)    Pflag=1
+        F)    Fflag=1
         Fval="$OPTARG";;
         ?)   printf "Usage: %s: [-j value] [-T value] [-a <aligner>] [-i <reference>] [-P value] [-F fastq folder]\n" $0
             exit 1;;
