@@ -30,6 +30,7 @@ reference=$4
 sample=$1
 reads=$2
 b_threads=$3
+multimapping=$5
 
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
@@ -56,6 +57,8 @@ outbam="${outdir}/${sample}.bam" # no .bam, as samtools sort -f has a bug.
 #Specifies that the temporary bam output file will be stored in the output directory with the file name 'random.bam.' A temporary bam file has been created due to samtools having a bug with the bam files (Kevins hackery).
 tmpbam="${outdir}/${RANDOM}.bam"
 
+if [ "$multimapping" == "all" ]
+then
 
 bowtie2 \
 -x $reference \
@@ -73,6 +76,7 @@ bowtie2 \
 -U $fastqs \
 -S "$outsam"
 
+#-a report all mapping locations
 #-x bowtie index
 #--phred33
 #--end-to-end dont trim reads to enable alignment
@@ -86,6 +90,32 @@ bowtie2 \
 # --score-min C,0,0 would tell bowtie2 to report only exact matches in --end-to-end mode (alignment score of 0 required which is max possible in end mode)
 #-N max # mismatches in seed alignment; can be 0 or 1 (0)
 #-D give up extending after <int> failed extends in a row (15)
+
+else
+
+bowtie2 \
+-x $reference \
+--phred33 \
+--end-to-end \
+--mm \
+-k $multimapping \
+-D 20 \
+-R 3 \
+-N 0 \
+-L 10 \
+-i S,1,0.50 \
+-p $b_threads \
+--score-min L,0,0 \
+-U $fastqs \
+-S "$outsam"
+
+# -k report N mapping locations
+#Bowtie 2 does not "find" alignments in any specific order, 
+#so for reads that have more than N distinct, valid alignments, 
+#Bowtie 2 does not guarantee that the N alignments reported are the best possible in terms of alignment score. 
+#Still, this mode can be effective and fast in situations where the user cares more about whether a read aligns 
+#(or aligns a certain number of times) than where exactly it originated.
+fi 
 
 #Using samtools view to convert the sam file to bam file.
 samtools view -S -u $outsam > ${tmpbam}
