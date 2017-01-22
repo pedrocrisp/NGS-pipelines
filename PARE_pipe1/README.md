@@ -50,9 +50,9 @@ Note: there is a scythe script in here too but scythe kept trimming almost every
 
 ## Alignment - bowtie2
 
-For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). 
+For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). For `number of mapping locations to report` use `all` to report all or any other integer. Note that the default is 1, even if `-k` isnt specified the default is really `-k 1`.
 
-`05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference>`
+`05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference> <number of mapping locations to report>`
 
 ## Example:
 
