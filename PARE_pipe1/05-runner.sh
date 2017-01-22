@@ -11,13 +11,14 @@ fi
 #
 
 usage="USAGE:
-05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference>"
+05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference> <number of mapping locations to report>"
 
 ######### Setup ################
 threads=$1
 reads=$2
 b_threads=$3
 reference=$4
+multimapping=$5
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
 if [ "$#" -lt "3" ]
@@ -47,7 +48,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $reads $b_threads $reference \>logs/${outdir}_bowtie2.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $reads $b_threads $reference $multimapping \>logs/${outdir}_bowtie2.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/05-runner.sh
