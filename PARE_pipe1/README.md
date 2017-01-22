@@ -52,7 +52,7 @@ Note: there is a scythe script in here too but scythe kept trimming almost every
 
 For alignment bowtie2 is used to map to the TAIR10 genome, requiring perfect match (because these are short reads...). 
 
-05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference>
+`05-runner.sh <number of threads> <reads folder> <bowtie threads per job> <reference>`
 
 ## Example:
 
