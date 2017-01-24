@@ -28,7 +28,7 @@ echo "initiating $1 parallel bowtie jobs on $reads folder, bowtie2 can use $b_th
 fi
 ########## Run #################
 
-script=$scriptdir/05-bowtie2.sh
+script=$scriptdir/08-parestahp.sh
 ###
 
 function findSamples () {
