@@ -11,15 +11,16 @@ fi
 #
 
 usage="USAGE:
-05-runner.sh <number of threads> <bam folder> <gff reference> <genelist to subset gff>"
+05-runner.sh <number of threads> <bam folder> <gff reference> <genelist to subset gff> <name of genelist to subset gff>"
 
 ######### Setup ################
 threads=$1
 bam_folder=$2
 gff_ref=$3
 genelist=$4
+genelistName=$5
 
-if [ "$#" -lt "3" ]
+if [ "$#" -lt "5" ]
 then
 echo $usage
 exit -1
@@ -35,7 +36,7 @@ function findSamples () {
 find $bam_folder/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-outdir=${bam_folder}_parestahp
+outdir=${bam_folder}_parestahp_${genelistName}
 mkdir ${outdir}
 timestamp=$(date +%Y%m%d-%H%M%S)
 
