@@ -34,7 +34,7 @@ sample_bam="$sample_dir/${sample}.bam"
 #Create sample output directory. 
 outdir="$outfolder/${sample}"
 mkdir ${outdir}
-results_table="$outdir/${sample}_parestahp.tab"
+results_table="$outdir/${sample}_parestahp.tsv"
 
 #Run parestahp
 #USAGE: parestahp [options] -g GFF_FILE BAMFILE
@@ -49,5 +49,6 @@ results_table="$outdir/${sample}_parestahp.tab"
 parestahp \
 -g $gff_ref \
 -l $genelist \
+-P \
 $sample_bam \
 > $results_table
