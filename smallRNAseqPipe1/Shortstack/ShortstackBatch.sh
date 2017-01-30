@@ -15,7 +15,7 @@ coverage=$4
 sample_dir="${inputDir}/$sample"
 
 #Find fastQ file
-fastQ="$(ls $sample_dir/*.fq.gz)"
+fastQ="$(ls $sample_dir/*q.gz)"
 
 #Make output directory
 outputDir="${outdir}/$sample"
