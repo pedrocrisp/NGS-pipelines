@@ -10,6 +10,7 @@ sample=$1
 inputDir=$2
 outdir=$3
 coverage=$4
+reference=$5
 
 #Specifies the directory that the sample will be opened from.
 sample_dir="${inputDir}/$sample"
@@ -26,9 +27,10 @@ ShortStack \
 --readfile $fastQ \
 --sort_mem 4G \
 --mincov $coverage \
---genomefile ~/ws/refseqs/TAIR10/chromosomes/TAIR10.fa \
+--genomefile $reference \
 --outdir $outputDir
 
-
-
-
+# --readfile a fastq note that must end .fq.gz (not .trimmed.fq.gz - this will break shortstack)
+# --sort_mem give samtools more memory (default is 768M.)
+# --mincov Deafult: 20 (raw reads) can modify to specify rpm - I have used 5rpm has previously
+# --genomefile path to reference genome in .fasta or .fa format. If the bowtie reference is already present this will save time.
