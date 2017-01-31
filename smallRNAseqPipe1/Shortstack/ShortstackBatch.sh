@@ -16,8 +16,8 @@ reference=$5
 sample_dir="${inputDir}/$sample"
 
 #Find fastQ file
-#fastQ="$(ls $sample_dir/*q.gz)"
-fastQ="$(ls $sample_dir/*.fastq)"
+fastQ="$(ls $sample_dir/*q.gz)"
+#fastQ="$(ls $sample_dir/*.fastq)"
 #Cant get multiple expression to work...
 #fastQ="$(ls {${sample_dir}/*q.gz,${sample_dir}/*.fq, ${sample_dir}/*.fastq})"
 
