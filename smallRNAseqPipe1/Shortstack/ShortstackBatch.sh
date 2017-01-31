@@ -37,3 +37,6 @@ ShortStack \
 # --sort_mem give samtools more memory (default is 768M.)
 # --mincov Deafult: 20 (raw reads) can modify to specify rpm - I have used 5rpm has previously
 # --genomefile path to reference genome in .fasta or .fa format. If the bowtie reference is already present this will save time.
+
+#index output bam
+samtools index ${outputDir}/${sample}.bam
