@@ -39,4 +39,4 @@ ShortStack \
 # --genomefile path to reference genome in .fasta or .fa format. If the bowtie reference is already present this will save time.
 
 #index output bam
-samtools index ${outputDir}/${sample}.bam
+samtools index ${outputDir}/${sample}*.bam
