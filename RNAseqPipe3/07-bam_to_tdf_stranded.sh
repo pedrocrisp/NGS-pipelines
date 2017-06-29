@@ -163,9 +163,10 @@ bedtools genomecov -d -split -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_s
 #minus strand reads bedgraph
 bedtools genomecov -d -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bed
 
+#commented out becasue of issue on MSI, dont use these files anyway
 #make tdf
-echo "bedgraph to binary tiled data (.tdf) file"
-igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
+#echo "bedgraph to binary tiled data (.tdf) file"
+#igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
 
 #make bigWigs
 echo "bam to bigWig"
