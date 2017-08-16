@@ -92,7 +92,7 @@ bowtie2 \
 #-D give up extending after <int> failed extends in a row (15)
 ## this combo of -DRNLi is the same as the preset --very-sensitive except L is shorter
 
-if [ "$multimapping" == "groseq_multi_1" ]
+if [ "$multimapping" == "groseq_multi_2" ]
 then
 
 bowtie2 \
