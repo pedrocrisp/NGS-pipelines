@@ -17,6 +17,7 @@ ShortstackBatchRunner.sh <number of threads to parallel> <fastq folder> <min cov
 threads=$1
 fastqFolder=$2
 coverage=$3
+reference=$4
 
 if [ "$#" -lt "3" ]
 then
@@ -30,7 +31,7 @@ fi
 #user defined variables that could be changed:
 workingdir=./
 script=$scriptdir/ShortstackBatch.sh
-outdir=shortstacked
+outdir=${fastqFolder}_shortstacked
 ###
 
 function findSamples () {
@@ -47,7 +48,7 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel -j $threads bash $script {} $fastqFolder $outdir $coverage \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel -j $threads bash $script {} $fastqFolder $outdir $coverage $reference \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run:
 #bash ~/path_to/03-runner.sh
