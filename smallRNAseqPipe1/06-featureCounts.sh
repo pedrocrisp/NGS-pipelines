@@ -27,7 +27,7 @@ refdir=$scriptdir/subread_refdir
 #Defines the sample that we are working with to the command line as the first token.
 sample=$1
 alignFolder=$3
-SAF=$3
+SAF=$4
 
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'align' folder.
 sample_dir=$alignFolder/$sample
