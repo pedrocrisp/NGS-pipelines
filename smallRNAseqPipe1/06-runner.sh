@@ -11,14 +11,15 @@ fi
 #
 
 usage="USAGE:
-06-runner.sh <strandedness> <alignment folder>"
+06-runner.sh <strandedness> <alignment folder> <SAF>"
 
 ######### Setup ################
 strand=$1
 alignFolder=$2
+SAF=$3
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
@@ -48,9 +49,8 @@ cat $script > "$logdir/script.log"
 cat $0 > "$logdir/runner.log"
 cat $script
 
-findSamples | parallel bash $script {} $strand $alignFolder \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
+findSamples | parallel bash $script {} $strand $alignFolder $SAF \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #usage:
 #bash ~/path_to/06-runner.sh <strandedness # >
 #for featureCounts three values are possible: o =unstranded, 1= stranded, 2= reversely stranded.
-
