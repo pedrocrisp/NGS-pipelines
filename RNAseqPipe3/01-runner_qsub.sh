@@ -17,6 +17,8 @@ echo changing to PBS_O_WORKDIR
 cd "$PBS_O_WORKDIR"
 echo working dir is now $PWD
 
+mkdir -p logs
+
 ######################
 
 # Quality control on raw reads was performed with FASTQC v.0.11.5 (Andrews 2014)
@@ -29,4 +31,4 @@ module load fastqc
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh 12 reads
 
 # to run
-# bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh
+# qsub ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner_qsub.sh
