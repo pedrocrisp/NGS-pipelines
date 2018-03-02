@@ -29,4 +29,4 @@ module load fastqc
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh 12 reads
 
 # to run
-# bash bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh
+# bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh
