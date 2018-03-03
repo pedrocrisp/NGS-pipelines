@@ -1,5 +1,5 @@
 ###
-#code to make runner work on both osx and linux. Essentially, it creates a file path to the script directory and saves this path as $0. In detail: 'if the operating system type is darwin (a mac), then use the greadlink function when the readlink function is called. Then use the greadlink function to find the script file named. In doing so, find the path of the script files directory and save as 'scriptdir'. This change is made for Macs because readlink doesn't run properly, but greadlink does. If the OS is not mac (eg. Linux), find the script file using the readlink function and save the path to the script file directory as 'scriptdir.' By using readlink to find where the scripts are, it means if this pipeline is copied onto another computer, the files can still be found. 
+#code to make runner work on both osx and linux. Essentially, it creates a file path to the script directory and saves this path as $0. In detail: 'if the operating system type is darwin (a mac), then use the greadlink function when the readlink function is called. Then use the greadlink function to find the script file named. In doing so, find the path of the script files directory and save as 'scriptdir'. This change is made for Macs because readlink doesn't run properly, but greadlink does. If the OS is not mac (eg. Linux), find the script file using the readlink function and save the path to the script file directory as 'scriptdir.' By using readlink to find where the scripts are, it means if this pipeline is copied onto another computer, the files can still be found.
 
 if
 [[ $OSTYPE == darwin* ]]
@@ -16,6 +16,7 @@ usage="USAGE:
 
 ######### Setup ################
 threads=$1
+reads_dir=$2
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
 if [ "$#" -lt "1" ]
@@ -38,10 +39,10 @@ outdir=reads_fastqc
 
 #Defines the function 'findSamples' into the commandline, but does not run the function. The function 'findSamples' looks in the reads directory to find the sample directory names.
 function findSamples () {
-find reads/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
+find $reads_dir/ -mindepth 1 -maxdepth 1 -type d  -exec basename {} \;| tr ' ' '\n'
 }
 
-#make a file called 'reads_fastqc.' This will be created in the currently open working directory. 
+#make a file called 'reads_fastqc.' This will be created in the currently open working directory.
 mkdir ${outdir}
 
 #Create a timestamp including the date, with the order year, month, day, hrs, mins, seconds.
@@ -63,7 +64,7 @@ cat $0 > "$logdir/runner.log"
 #Prints the fastqc script on the screen.
 cat $script
 
-#This says 'carry out the findSamples function. Then run the bash script 01-fastqc.sh on each of these files in parallel (ie. using multiple cores on computer). Store a script of the run to the logs directory within the reads_fastqc folder. 
+#This says 'carry out the findSamples function. Then run the bash script 01-fastqc.sh on each of these files in parallel (ie. using multiple cores on computer). Store a script of the run to the logs directory within the reads_fastqc folder.
 findSamples | parallel -j $threads bash $script {} \>logs/${outdir}.${timestamp}/{}.log 2\>\&1
 
 #To run, go to the reads directory and call:
