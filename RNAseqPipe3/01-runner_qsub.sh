@@ -4,8 +4,6 @@
 #PBS -r n
 #PBS -m abe
 #PBS -M pcrisp@umn.edu
-#PBS -o logs/
-#PBS -e logs/
 
 ######################
 set -xeuo pipefail
