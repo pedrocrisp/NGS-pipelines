@@ -1,5 +1,4 @@
 #!/bin/bash -l
-#PBS -l walltime=6:00:00,nodes=1:ppn=12,mem=10gb
 #PBS -N 01-fastqc
 #PBS -r n
 #PBS -m abe
@@ -26,7 +25,7 @@ mkdir -p logs
 module load parallel
 module load fastqc
 
-bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh 12 reads
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner.sh $threads $reads_dir
 
 # to run
 # qsub ~/gitrepos/NGS-pipelines/RNAseqPipe3/01-runner_qsub.sh
