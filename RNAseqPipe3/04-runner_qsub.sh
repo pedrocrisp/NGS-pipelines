@@ -20,6 +20,7 @@ mkdir -p logs
 # fastqc post triming
 
 module load parallel
+module load fastqc/0.11.5
 
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/04-runner.sh $threads
 
