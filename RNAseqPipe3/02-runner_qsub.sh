@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/bash
 #PBS -N 02-scythe
 #PBS -r n
 #PBS -m abe
