@@ -1,5 +1,4 @@
 #!/bin/bash -l
-#PBS -l walltime=6:00:00,nodes=1:ppn=12,mem=40gb
 #PBS -N 02-scythe
 #PBS -r n
 #PBS -m abe
