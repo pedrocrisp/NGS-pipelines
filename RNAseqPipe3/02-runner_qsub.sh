@@ -25,8 +25,11 @@ mkdir -p logs
 
 module load parallel
 
-bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner.sh $1 $2
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner.sh $threads $prior
 
 # to run
 # qsub ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner_qsub.sh <number of threads> <prior>
-# qsub ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner_qsub.sh 12 0.01
+
+# qsub -l walltime=6:00:00,nodes=1:ppn=12,mem=40gb \
+# -v threads=12,prior=0.01 \
+# ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner_qsub.sh
