@@ -17,7 +17,7 @@ echo working dir is now $PWD
 mkdir -p logs
 
 ######################
-# scythe
+# sickle
 
 module load parallel
 
