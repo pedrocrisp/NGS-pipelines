@@ -27,6 +27,8 @@ bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner.sh $threads $prior
 ######################
 # to run eg
 
-# qsub -l walltime=6:00:00,nodes=1:ppn=12,mem=40gb \
-# -v threads=12,prior=0.01 \
-# ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner_qsub.sh
+# qsub -l walltime=6:00:00,nodes=1:ppn=18,mem=40gb \
+# -v threads=18,prior=0.01 \
+# -o logs \
+# -e logs \
+#  ~/gitrepos/NGS-pipelines/RNAseqPipe3/02-runner_qsub.sh
