@@ -3,7 +3,7 @@
 #Set -e as an option, it tells the command line to exit the script immediately if it registers an error.
 set -e
 
-#Set -x as an option, it tells the computer to echo back each step before it is completed and the output is produced. 
+#Set -x as an option, it tells the computer to echo back each step before it is completed and the output is produced.
 set -x
 
 ###
@@ -35,7 +35,7 @@ folder=$6
 #Specifies the directory that the sample will be opened from. In this case, it is opening a sample folder located in the 'reads_noadapt_trimmed' folder.
 sample_dir=${folder}/$sample
 
-#Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory. 
+#Defines the output directory to be a folder with the sample name located within the 'align' directory. This will be used in the next step to create an output directory.
 outdir="${aligner}/${sample}"
 
 #Creates an output directory to put the returned files to go into once subread has been run on the sample. In this case, the output from subread for the sample should go into a folder containing the sample's name, located within the 'align' directory.
@@ -49,7 +49,7 @@ numFqFiles=$(echo $fastqs | wc -w)
 #Specifies that the sam output file will be placed in the output directory, and have the file name 'sample.sam'
 outsam="${outdir}/${sample}.sam"
 
-#Specifies that the bam output file will be stored in the output directory, with the file name 'sample.''.bam' has not been added as samtools sort -f currently (29/4/14) has a bug. 
+#Specifies that the bam output file will be stored in the output directory, with the file name 'sample.''.bam' has not been added as samtools sort -f currently (29/4/14) has a bug.
 outbam="${outdir}/${sample}" # no .bam, as samtools sort -f has a bug.
 
 #Specifies that the temporary bam output file will be stored in the output directory with the file name 'random.bam.' A temporary bam file has been created due to samtools having a bug with the bam files (Kevins hackery).
@@ -58,24 +58,23 @@ tmpbam="${outdir}/${RANDOM}.bam"
 # Condition statement: Enables you to cope with both paired and single end reads, as subread will run with different settings if you have 1 or 2 files. If single end (# fastqs == 1), it will tell the subread program and so it will not look for a forward and reverse read. If paired (# fastqs == 2), it will describe which file is the forward and reverse read. If the read is not single end (1) or paired (2), it will print an error code.
 if ([ ${numFqFiles} -eq 1 ] && [ ${aligner} == "subread-align" ])
 then
-$aligner -T $T -t 1 -u -H -i $index -P $P --gzFASTQinput -r $fastqs -o "$outsam"
+$aligner -T $T -t 0 -i $index -P $P -r $fastqs -o "$outsam"
 elif ([ ${numFqFiles} -eq 2 ] && [ ${aligner} == "subread-align" ])
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-$aligner -T $T -t 1 -u -H -i $index -P $P --gzFASTQinput -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $T -t 0 -i $index -P $P -r ${fq1} -R ${fq2} -o "$outsam"
 elif ([ ${numFqFiles} -eq 1 ] && [ ${aligner} == "subjunc" ])
 then
-$aligner -T $T -u -H -i $index -P $P --gzFASTQinput -r $fastqs -o "$outsam"
+$aligner -T $T -i $index -P $P -r $fastqs -o "$outsam"
 elif ([ ${numFqFiles} -eq 2 ] && [ ${aligner} == "subjunc" ])
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-$aligner -T $T -u -H -i $index -P $P --gzFASTQinput -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $T -i $index -P $P -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
 echo "${fastqs}"
 exit 1
 fi
-
