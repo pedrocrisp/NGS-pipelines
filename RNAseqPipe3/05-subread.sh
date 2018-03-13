@@ -58,20 +58,20 @@ tmpbam="${outdir}/${RANDOM}.bam"
 # Condition statement: Enables you to cope with both paired and single end reads, as subread will run with different settings if you have 1 or 2 files. If single end (# fastqs == 1), it will tell the subread program and so it will not look for a forward and reverse read. If paired (# fastqs == 2), it will describe which file is the forward and reverse read. If the read is not single end (1) or paired (2), it will print an error code.
 if ([ ${numFqFiles} -eq 1 ] && [ ${aligner} == "subread-align" ])
 then
-$aligner -T $T -t 0 -i $index -P $P -r $fastqs -o "$outsam"
+$aligner -T $T -t 0 -i $index -P $P --SAMoutput -r $fastqs -o "$outsam"
 elif ([ ${numFqFiles} -eq 2 ] && [ ${aligner} == "subread-align" ])
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-$aligner -T $T -t 0 -i $index -P $P -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $T -t 0 -i $index -P $P --SAMoutput -r ${fq1} -R ${fq2} -o "$outsam"
 elif ([ ${numFqFiles} -eq 1 ] && [ ${aligner} == "subjunc" ])
 then
-$aligner -T $T -i $index -P $P -r $fastqs -o "$outsam"
+$aligner -T $T -i $index -P $P --SAMoutput -r $fastqs -o "$outsam"
 elif ([ ${numFqFiles} -eq 2 ] && [ ${aligner} == "subjunc" ])
 then
 fq1="$(echo $fastqs |cut -d ' ' -f 1)"
 fq2="$(echo $fastqs |cut -d ' ' -f 2)"
-$aligner -T $T -i $index -P $P -r ${fq1} -R ${fq2} -o "$outsam"
+$aligner -T $T -i $index -P $P --SAMoutput -r ${fq1} -R ${fq2} -o "$outsam"
 else
 echo "ERROR: not able to align multiple fq files per pair"
 echo "fastqs:"
