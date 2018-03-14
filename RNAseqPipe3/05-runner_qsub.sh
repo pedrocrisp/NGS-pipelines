@@ -28,7 +28,7 @@ bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05-runner.sh -j $threads -T $T -P $P -
 # to run eg
 # 4 samples at once on 6 cores each (24 total)
 
-# qsub -l walltime=2:00:00,nodes=1:ppn=24,mem=40gb \
+# qsub -l walltime=12:00:00,nodes=1:ppn=24,mem=50gb \
 # -v threads=4,T=6,P=3,aligner=subjunc,index=~/ws/refseqs/maize/subread_v1.6.0/Zea_mays.AGPv4,folder=reads_noadapt_trimmed \
 # -o logs \
 # -e logs \
