@@ -21,7 +21,7 @@ mkdir -p logs
 
 module load parallel
 
-bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/03-runner.sh $strand $alignFolder $threads $reference
+bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/06-runner.sh $strand $alignFolder $threads $reference
 
 ######################
 # to run eg
