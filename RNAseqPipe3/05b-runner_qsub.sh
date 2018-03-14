@@ -17,10 +17,9 @@ echo working dir is now $PWD
 mkdir -p logs
 
 ######################
-# fastqc post triming
 
 module load parallel
-module load samtools/0.1.18
+module load samtools/1.3
 
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05b-runner.sh -j $threads -F $folder
 
