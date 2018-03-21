@@ -92,7 +92,7 @@ rm -rv $outFolder/*real.bed
 closestBed -D "ref" -a $outFolder/$sample.sorted.bed -b $reference > $outFolder/$sample.dist.bed
 
 #remove intermediate file
-rm -rv $outFolder/*_sorted.bed
+rm -rv $outFolder/*sorted.bed
 
 #subset to 1kb
 awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.dist.bed > $outFolder/$sample.dist.1k.bed
