@@ -180,6 +180,55 @@ bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
 
 bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
 bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
+###########
+
+##
+
+elif [ "$strand" == "stranded_SE_5prime" ]
+then
+
+#R1 forward strand -f 0 does not work, all reads retained... "samtools view -f 0 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.forward.bam"
+#not 100% sure we want everything that is NOT unmapped or reserse mapped, not sure what else coudl be included... of well
+samtools view -F 4 -b $sample_dir/$sample.bam | samtools view -F 16 -b - > $sample_dir/${sample}.forward.bam
+
+#R1 reverse strand
+samtools view -f 16 -b $sample_dir/$sample.bam   > $sample_dir/${sample}.reverse.bam
+
+####################
+
+echo "bam to bedgraph"
+#non-stranded bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $outdir/${sample}.bedgraph
+# sort
+bedSort $outdir/${sample}.bedgraph $outdir/${sample}.bedgraph
+
+#stranded bedgraphs - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
+bedtools genomecov -bga -split -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bg
+# sort
+bedSort $outdir/${sample}.minus.bg $outdir/${sample}.minus.bg
+#minus strand reads bedgraph
+bedtools genomecov -bga -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bg
+# sort
+bedSort $outdir/${sample}.plus.bg $outdir/${sample}.plus.bg
+
+#stranded bedgraphs with splicing and nt resolution - not using the '-strand +' flag because accounting for PE reads
+#plus strand reads bedgraph
+bedtools genomecov -d -split -scale -1 -ibam $sample_dir/*reverse.bam -g $chrc_sizes > $outdir/${sample}.minus.bed
+#minus strand reads bedgraph
+bedtools genomecov -d -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $outdir/${sample}.plus.bed
+
+#commented out becasue of issue on MSI, dont use these files anyway
+#make tdf
+#echo "bedgraph to binary tiled data (.tdf) file"
+#igvtools toTDF $outdir/*.bedgraph $outdir/$sample.tdf $chrc_sizes
+
+#make bigWigs
+echo "bam to bigWig"
+bedGraphToBigWig $outdir/*.bedgraph $chrc_sizes $outdir/$sample.bigWig
+
+bedGraphToBigWig $outdir/*.plus.bg $chrc_sizes $outdir/$sample.plus.bigWig
+bedGraphToBigWig $outdir/*.minus.bg $chrc_sizes $outdir/$sample.minus.bigWig
 
 ### 5' analysis
 ### Note consider adding this to other sections, alternatively leaving it here will probably mean it only gets run for PARE data (single end stranded)
