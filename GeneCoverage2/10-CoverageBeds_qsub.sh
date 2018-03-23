@@ -8,7 +8,7 @@ bash 10-CoverageBeds_qsub.sh <sample_list.txt> <alignFolder> <reference>
 #eg /home/springer/pcrisp/ws/refseqs/maize/Zea_mays.AGPv4.dna.toplevel.fa
 
 #define stepo in the pipeline - should be the same name as the script
-step=01-CoverageBeds
+step=10-CoverageBeds
 
 ######### Setup ################
 sample_list=$1
