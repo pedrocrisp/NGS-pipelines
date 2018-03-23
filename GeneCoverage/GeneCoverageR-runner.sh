@@ -16,6 +16,7 @@ GeneCoverageR-runner.R <distance beds folder> <threads>"
 ######### Setup ################
 alignFolder=$1
 threads=$2
+library_layout=$3
 #minLength=$3
 #trimLength=$4
 #minCoverage=$5
@@ -50,7 +51,7 @@ cat $script > "${logdir}/script.log"
 cat $0 > "${logdir}/runner.log"
 cat $script
 
-findSamples | parallel -j $threads R -f $script --args {} $alignFolder $outdir \>${logdir}/{}.log 2\>\&1
+findSamples | parallel -j $threads R -f $script --args {} $alignFolder $outdir $library_layout \>${logdir}/{}.log 2\>\&1
 
 #To run:
 #bash ~/gitrepos/NGS-pipelines/GeneCoverage/GeneCoverageR-runner.sh tdf_for_igv_coverage_beds 1
