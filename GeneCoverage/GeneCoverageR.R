@@ -13,6 +13,7 @@ beds_folder
 outDir <- args[3]
 outDir
 library_layout <- args[4]
+library_layout
 #minLength <- as.numeric(args[4])
 #minLength
 #trimLength <- as.numeric(args[5])
