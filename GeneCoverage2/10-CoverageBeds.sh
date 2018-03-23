@@ -42,7 +42,8 @@ module load bedtools/2.25.0
 ID="$(/bin/sed -n ${PBS_ARRAYID}p ${LIST})"
 
 echo sample being mapped is $ID
-
+# set sample = ID (could update all "samples" to be "ID" but this hack is shorter...)
+sample=$ID
 ########## Run #################
 
 sample_dir=$alignFolder/$sample
