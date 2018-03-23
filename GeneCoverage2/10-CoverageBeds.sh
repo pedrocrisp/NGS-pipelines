@@ -54,8 +54,8 @@ mkdir ${outFolder}
 if [ "$coverage" == "5prime" ]
 then
 #make a real bed file by adding chromosome end co-ordinates (same as start because nt resolution)
-awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.plus5.bed > $outFolder/$sample.plus.real.bed
-awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.minus5.bed > $outFolder/$sample.minus.real.bed
+awk -F$"\\t" 'BEGIN { OFS = FS } { $2=$2 "\\t" $2 } 1' $sample_dir/$sample.plus5.bed > $outFolder/$sample.plus.real.bed
+awk -F$"\\t" 'BEGIN { OFS = FS } { $2=$2 "\\t" $2 } 1' $sample_dir/$sample.minus5.bed > $outFolder/$sample.minus.real.bed
 
 #sort
 sort -k1,1 -k2,2n $outFolder/$sample.plus.real.bed > $outFolder/$sample.plus_sorted.bed
@@ -102,7 +102,7 @@ awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.minus.dist.bed > $outFold
 elif [ "$coverage" == "nonstranded" ]
 then
 #make a real bed file by adding chromosome end co-ordinates (same as start because nt resolution)
-awk 'BEGIN { FS="\t"; OFS="\t" } { $2=$2 "\t" $2 } 1' $sample_dir/$sample.bed > $outFolder/$sample.real.bed
+awk -F$"\\t" 'BEGIN { OFS = FS } { $2=$2 "\\t" $2 } 1' $sample_dir/$sample.bed > $outFolder/$sample.real.bed
 
 #sort
 sort -k1,1 -k2,2n $outFolder/$sample.real.bed > $outFolder/$sample.sorted.bed
