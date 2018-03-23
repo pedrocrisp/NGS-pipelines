@@ -21,7 +21,7 @@ mkdir -p logs
 module load parallel
 module load R/3.3.2
 
-bash ~/gitrepos/NGS-pipelines/GeneCoverage/MakeGeneCoverageBeds-runner.sh $alignFolder $threads $library_layout
+bash ~/gitrepos/NGS-pipelines/GeneCoverage/GeneCoverageR-runner.sh $alignFolder $threads $library_layout
 
 ######################
 # to run eg
