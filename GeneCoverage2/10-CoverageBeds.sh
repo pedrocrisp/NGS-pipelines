@@ -71,8 +71,8 @@ closestBed -D "ref" -a $outFolder/$sample.minus_sorted.bed -b $reference > $outF
 rm -rv $outFolder/*_sorted.bed
 
 #subset to 1kb
-awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.plus.dist.bed > $outFolder/$sample.plus.dist.1k.bed
-awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.minus.dist.bed > $outFolder/$sample.minus.dist.1k.bed
+awk -F$"\\t" '$NF<1000 && $NF>-1000' $outFolder/$sample.plus.dist.bed > $outFolder/$sample.plus.dist.1k.bed
+awk -F$"\\t" '$NF<1000 && $NF>-1000' $outFolder/$sample.minus.dist.bed > $outFolder/$sample.minus.dist.1k.bed
 
 elif [ "$coverage" == "full" ]
 then
@@ -124,7 +124,7 @@ closestBed -D "ref" -a $outFolder/$sample.sorted.bed -b $reference > $outFolder/
 rm -rv $outFolder/*sorted.bed
 
 #subset to 1kb
-awk -F$'\t' '$NF<1000 && $NF>-1000' $outFolder/$sample.dist.bed > $outFolder/$sample.dist.1k.bed
+awk -F$"\\t" '$NF<1000 && $NF>-1000' $outFolder/$sample.dist.bed > $outFolder/$sample.dist.1k.bed
 
 else
 echo "ERROR: coverage type has not been specificed select 5prime or full"
