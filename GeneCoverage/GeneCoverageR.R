@@ -63,6 +63,7 @@ if (library_layout == "nonstranded") {
 
   peob[,2]=-peob[,2]
 
+# i think this bit is wrong...
   sense=pepb
   sense[,2]=sense[,2]+peob[,2]
 
