@@ -10,17 +10,31 @@ GeneCoverage_bined <- function(Sample,
                                outDir = "GeneCoverage_bined"){
 ##########
 # debug
-# Sample = "test"
-# beds_folder = "test_stranded_cov_beds"
+Sample = "test"
+beds_folder = "test_stranded_cov_beds"
 # # Sample = "Salt_heat_2"
 # # beds_folder = "tdf_for_igv_coverage_beds_nonstranded"
+outDir = "test_GeneCoverage_bined"
+
+# Sample = "Sample_BJP_277_1"
 # outDir = "GeneCoverage_bined"
+# beds_folder = "tdf_for_igv_coverage_beds_full"
 
   print(Sample)
 
 sPath <- paste0(beds_folder, "/", Sample, "/")
-outFolder <- paste0(outDir, "/", Sample)
-dir.create(outFolder, showWarnings = F, recursive = T)
+
+#meta plots out
+dir.create(outDir, showWarnings = F, recursive = T)
+
+outFolder_plots <- paste0(outDir, "/meta_plots")
+dir.create(outFolder_plots, showWarnings = F, recursive = T)
+#meta tables out
+outFolder_meta_tables <- paste0(outDir, "/meta_table")
+dir.create(outFolder_meta_tables, showWarnings = F, recursive = T)
+# per_gene_tables out
+outFolder_per_gene_tables <- paste0(outDir, "/per_gene_tables")
+dir.create(outFolder_per_gene_tables, showWarnings = F, recursive = T)
 
 ##########
 
@@ -80,37 +94,58 @@ coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
 ####### + strand genes
 
  # bin data per locus
-print("bin data per locus plus strand")
+print("bin data per locus + strand")
 per_gene_bin_cov_plus <- coverage_file_plus %>%
   filter(feature == "exon") %>% # remove introns
   mutate(real_dist = Distance, side = "Sense") %>%
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
-  filter(!n() < 100) %>% # remove any gene with total exon length < 300
+  filter(!gene %in% short_genes) %>% # remove any gene with total exon length < 300
   mutate(exon_position = row_number()) %>% # add numerical order number
   mutate(bin100 =
-           ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
+           ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F, include.lowest = T),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
   group_by(gene, gene_cat, bin100, side) %>%
+  # filter(gene_cat =="genic")
   summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
   ungroup()
+
+per_gene_bin_cov_plus %>% filter(sum_bin_coverage > 0)
+per_gene_bin_cov_plus %>% filter(sum_bin_coverage < 0)
+per_gene_bin_cov_plus %>% filter(sum_bin_coverage == 0)
+per_gene_bin_cov_plus
+
+# bin_cov_summary <- per_gene_bin_cov_plus %>%
+#   group_by(gene_cat, bin100, side) %>%
+#   summarise(meta_sum_bin_coverage = sum(sum_bin_coverage)) %>%
+#   ungroup() %>%
+#   left_join(bin_key, by = c("gene_cat", "bin100")) %>%
+#   arrange(side, bin_name_fct) %>%
+#   group_by(side) %>%
+#   mutate(position = row_number(),
+#          log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
+#                           ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
+#                                  ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
+# 
+# g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage)) +
+#   geom_line() +
+#   theme_classic()
+# print(g)
 
 ####### - strand genes
 
  # bin data per locus
-print("bin data per locus minus strand")
+print("bin data per locus - strand")
 per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
-  mutate(real_dist = ifelse(strand=='+',-1*Distance,Distance),
-         side = "Antisense",
-         coverage = coverage*-1) %>% # Correct bedtools distance for strand of gene
+  mutate(real_dist = ifelse(strand=='-',-1*Distance,Distance), side = "Antisense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
-  filter(!n() < 100) %>% # remove any gene with total exon length < 300
+  filter(!gene %in% short_genes) %>% # remove any gene with total exon length < 300
   mutate(exon_position = row_number()) %>% # add numerical order number
   mutate(bin100 =
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
@@ -120,8 +155,31 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
   summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
   ungroup()
 
+per_gene_bin_cov_minus %>% filter(sum_bin_coverage > 0)
+per_gene_bin_cov_minus %>% filter(sum_bin_coverage < 0)
+
 ####### combine + and -
 per_gene_bin_cov_plus_bed <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_minus)
+
+##############
+
+# bin_cov_summary <- per_gene_bin_cov_plus_bed %>%
+#   group_by(gene_cat, bin100, side) %>%
+#   summarise(meta_sum_bin_coverage = sum(sum_bin_coverage)) %>%
+#   ungroup() %>%
+#   left_join(bin_key, by = c("gene_cat", "bin100")) %>%
+#   arrange(side, bin_name_fct) %>%
+#   group_by(side) %>%
+#   mutate(position = row_number(),
+#          log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
+#                           ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
+#                                  ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
+# 
+# g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage, colour = side)) +
+#   geom_line() +
+#   theme_classic()
+# print(g)
+
 
 ############################## minus bed
 print("process minus bed")
@@ -158,15 +216,14 @@ coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
 ####### + strand genes
 
  # bin data per locus
-print("bin data per locus plus strand")
+print("bin data per locus + strand")
 per_gene_bin_cov_plus <- coverage_file_plus %>%
   filter(feature == "exon") %>% # remove introns
-  mutate(real_dist = Distance, side = "Antisense",
-         coverage = coverage*-1) %>%
+  mutate(real_dist = Distance, side = "Antisense") %>%
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
-  filter(!n() < 100) %>% # remove any gene with total exon length < 300
+  filter(!gene %in% short_genes) %>% # remove any gene with total exon length < 300
   mutate(exon_position = row_number()) %>% # add numerical order number
   mutate(bin100 =
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
@@ -175,20 +232,22 @@ per_gene_bin_cov_plus <- coverage_file_plus %>%
   group_by(gene, gene_cat, bin100, side) %>%
   summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
   ungroup()
+
+per_gene_bin_cov_plus %>% filter(sum_bin_coverage < 0)
+per_gene_bin_cov_plus %>% filter(sum_bin_coverage > 0)
 
 ####### - strand genes
 
  # bin data per locus
-print("bin data per locus minus strand")
+print("bin data per locus - strand")
 per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
-  mutate(real_dist = ifelse(strand=='+',-1*Distance,Distance),
-         side = "Sense") %>% # Correct bedtools distance for strand of gene
+  mutate(real_dist = ifelse(strand=='-',-1*Distance,Distance), side = "Sense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
-  filter(!n() < 100) %>% # remove any gene with total exon length < 300
+  filter(!gene %in% short_genes) %>% # remove any gene with total exon length < 300
   mutate(exon_position = row_number()) %>% # add numerical order number
   mutate(bin100 =
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
@@ -197,6 +256,8 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
   group_by(gene, gene_cat, bin100, side) %>%
   summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
   ungroup()
+
+per_gene_bin_cov_minus %>% filter(sum_bin_coverage > 0)
 
 ####### combine + and -
 per_gene_bin_cov_minus_bed <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_minus)
@@ -207,7 +268,7 @@ per_gene_bin_cov_minus_bed <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_
 print("recombine summarise and write files")
 per_gene_bin_cov <- bind_rows(per_gene_bin_cov_plus_bed, per_gene_bin_cov_minus_bed)
 
-write_csv(per_gene_bin_cov, paste0(outFolder, "/", Sample, "_gene_cov_bin100.csv"))
+write_csv(per_gene_bin_cov, paste0(outFolder_per_gene_tables, "/", Sample, "_gene_cov_bin100.csv"))
 
 
 
@@ -217,21 +278,26 @@ bin_cov_summary <- per_gene_bin_cov %>%
   group_by(gene_cat, bin100, side) %>%
   summarise(meta_sum_bin_coverage = sum(sum_bin_coverage)) %>%
   ungroup() %>%
+  left_join(bin_key, by = c("gene_cat", "bin100")) %>%
+  arrange(side, bin_name_fct) %>%
+  group_by(side) %>%
   mutate(position = row_number(),
-         log_cov = ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
-                          ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0)))
+         log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
+                          ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
+                          ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
+  
 
-write_csv(bin_cov_summary, paste0(outFolder, "/", Sample, "_gene_cov_bin100_meta.csv"))
+write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov_bin100_meta.csv"))
 
 # metaplot
-pdf(paste0(outFolder, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
+pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
 g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage, colour = side)) +
   geom_line() +
   theme_classic()
 print(g)
 dev.off()
 
-pdf(paste0(outFolder, "/", Sample, "_gene_cov_bin100_metaplot_log.pdf"))
+pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot_log.pdf"))
 g <- ggplot(bin_cov_summary, aes(x = position, y = log_cov, colour = side)) +
   geom_line() +
   theme_classic()
@@ -317,7 +383,7 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
 print("recombine summarise and write files")
 per_gene_bin_cov <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_minus)
 
-write_csv(per_gene_bin_cov, paste0(outFolder, "/", Sample, "_gene_cov_bin100.csv"))
+write_csv(per_gene_bin_cov, paste0(outFolder_gene_tables, "/", Sample, "_gene_cov_bin100.csv"))
 
 
 
@@ -329,10 +395,10 @@ bin_cov_summary <- per_gene_bin_cov %>%
   ungroup() %>%
   mutate(position = row_number())
 
-write_csv(bin_cov_summary, paste0(outFolder, "/", Sample, "_gene_cov_bin100_meta.csv"))
+write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov_bin100_meta.csv"))
 
 # metaplot
-pdf(paste0(outFolder, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
+pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
 g <- ggplot(bin_cov_summary, aes(x = position, y = log10(meta_sum_bin_coverage))) +
   geom_line() +
   theme_classic()
