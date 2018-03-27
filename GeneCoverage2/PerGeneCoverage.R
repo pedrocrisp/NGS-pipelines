@@ -7,14 +7,14 @@
 GeneCoverage_bined <- function(Sample,
                                library_layout = "nonstranded",
                                beds_folder = "tdf_for_igv_coverage_beds_nonstranded",
-                               outDir = "GeneCoverage_bined"){
+                               outDir = "PerGeneCoverage_bined"){
 ##########
 # debug
-Sample = "test"
-beds_folder = "test_stranded_cov_beds"
+# Sample = "test"
+# beds_folder = "test_stranded_cov_beds"
 # # Sample = "Salt_heat_2"
 # # beds_folder = "tdf_for_igv_coverage_beds_nonstranded"
-outDir = "test_GeneCoverage_bined"
+# outDir = "test_GeneCoverage_bined"
 
 # Sample = "Sample_BJP_277_1"
 # outDir = "GeneCoverage_bined"
@@ -128,7 +128,7 @@ per_gene_bin_cov_plus
 #          log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
 #                           ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
 #                                  ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
-# 
+#
 # g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage)) +
 #   geom_line() +
 #   theme_classic()
@@ -174,7 +174,7 @@ per_gene_bin_cov_plus_bed <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_m
 #          log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
 #                           ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
 #                                  ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
-# 
+#
 # g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage, colour = side)) +
 #   geom_line() +
 #   theme_classic()
@@ -285,7 +285,7 @@ bin_cov_summary <- per_gene_bin_cov %>%
          log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
                           ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
                           ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
-  
+
 
 write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov_bin100_meta.csv"))
 
