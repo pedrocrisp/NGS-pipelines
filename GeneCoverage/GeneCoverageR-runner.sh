@@ -21,7 +21,7 @@ library_layout=$3
 #trimLength=$4
 #minCoverage=$5
 
-if [ "$#" -lt "2" ]
+if [ "$#" -lt "3" ]
 then
 echo $usage
 exit -1
