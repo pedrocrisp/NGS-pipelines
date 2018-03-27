@@ -115,6 +115,8 @@ if (library_layout == "nonstranded") {
 # plus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.plus.dist.1k.bed", head=F)
 print("analysing plus bed")
 plus.input=read.delim(paste0(sPath, Sample, ".plus.dist.1k.bed"),head=F)
+
+print("adjust distance measures")
 #develop strand directional positioning
 real.dist=matrix(ifelse(plus.input[,10]=='+',-1*plus.input[,17],plus.input[,17]),ncol=1)
 plus.input=cbind(plus.input,real.dist)
@@ -137,6 +139,7 @@ plus.exon=subset(plus.input,plus.input$V12=='exon')
 plus.exon.primary=subset(plus.exon,plus.exon$V10=='+')
 plus.exon.offstrand=subset(plus.exon,plus.exon$V10=='-')
 
+print("bin data summaries (stats.bin)")
 #stats bin in 300 bins for both promary and offstrand
 plus.exon.primary.bin=stats.bin(plus.exon.primary$rel.dist,log(abs(plus.exon.primary[,4])+1),N=300)
 pepb=cbind(matrix(plus.exon.primary.bin$centers,ncol=1),plus.exon.primary.bin$stats["mean",])
@@ -150,6 +153,8 @@ peob=cbind(matrix(plus.exon.offstrand.bin$centers,ncol=1),plus.exon.offstrand.bi
 # minus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.minus.dist.1k.bed", head=F)
 print("analysing minus bed")
 minus.input=read.delim(paste0(sPath, Sample, ".minus.dist.1k.bed"),head=F)
+
+print("adjust distance measures")
 #develop strand directional positioning
 real.dist=matrix(ifelse(minus.input[,10]=='+',-1*minus.input[,17],minus.input[,17]),ncol=1)
 minus.input=cbind(minus.input,real.dist)
@@ -172,6 +177,7 @@ minus.exon=subset(minus.input,minus.input$V12=='exon')
 minus.exon.primary=subset(minus.exon,minus.exon$V10=='-')
 minus.exon.offstrand=subset(minus.exon,minus.exon$V10=='+')
 
+print("bin data summaries (stats.bin)")
 #stats bin in 300 bins for both promary and offstrand using log transformed values
 minus.exon.primary.bin=stats.bin(minus.exon.primary$rel.dist,log(abs(minus.exon.primary[,4])+1),N=300)
 mepb=cbind(matrix(minus.exon.primary.bin$centers,ncol=1),minus.exon.primary.bin$stats["mean",])
@@ -179,6 +185,7 @@ mepb=cbind(matrix(minus.exon.primary.bin$centers,ncol=1),minus.exon.primary.bin$
 minus.exon.offstrand.bin=stats.bin(minus.exon.offstrand$rel.dist,log(abs(minus.exon.offstrand[,4])+1),N=300)
 meob=cbind(matrix(minus.exon.offstrand.bin$centers,ncol=1),minus.exon.offstrand.bin$stats["mean",])
 
+print("combine and write output tables")
 peob[,2]=-peob[,2]
 meob[,2]=-meob[,2]
 
@@ -195,6 +202,7 @@ out.table$SampleName <- Sample
 #write.csv(out.table, 'average_coverage.csv')
 write.csv(out.table, paste0(outFolder, "/",Sample, '_average_coverage.csv'))
 
+print("make some plots")
 pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot_WC.pdf'),h=10,w=12)
 #pdf("test_strands.pdf",h=10,w=12)
 plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5), main=Sample)
