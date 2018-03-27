@@ -184,7 +184,7 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
   mutate(real_dist = ifelse(strand=='+',-1*Distance,Distance),
-         side = "sense") %>% # Correct bedtools distance for strand of gene
+         side = "Sense") %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
