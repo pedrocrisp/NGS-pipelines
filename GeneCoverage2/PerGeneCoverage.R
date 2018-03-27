@@ -7,7 +7,7 @@
 GeneCoverage_bined <- function(Sample,
                                library_layout = "nonstranded",
                                beds_folder = "tdf_for_igv_coverage_beds_nonstranded",
-                               outDir = "PerGeneCoverage_bined"){
+                               outDir = "PerGeneCoverageBinned"){
 ##########
 # debug
 # Sample = "test"
