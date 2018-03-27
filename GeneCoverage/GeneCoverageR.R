@@ -27,6 +27,8 @@ dir.create(outFolder, showWarnings = F, recursive = T)
 #####
 
 if (library_layout == "nonstranded") {
+
+  print("analysing nonstranded library")
   #read in file
   #debug
   # Sample="Sample_alx8_277_9"
@@ -105,10 +107,13 @@ if (library_layout == "nonstranded") {
 
 }else{
 
+  print("analysing stranded library")
+
 #read in file
 #debug
 # Sample="Sample_alx8_277_9"
 # plus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.plus.dist.1k.bed", head=F)
+print("analysing plus bed")
 plus.input=read.delim(paste0(sPath, Sample, ".plus.dist.1k.bed"),head=F)
 #develop strand directional positioning
 real.dist=matrix(ifelse(plus.input[,10]=='+',-1*plus.input[,17],plus.input[,17]),ncol=1)
@@ -143,6 +148,7 @@ peob=cbind(matrix(plus.exon.offstrand.bin$centers,ncol=1),plus.exon.offstrand.bi
 #read in file
 #debug
 # minus.input=read.delim("Sample_alx8_277_9/Sample_alx8_277_9.minus.dist.1k.bed", head=F)
+print("analysing minus bed")
 minus.input=read.delim(paste0(sPath, Sample, ".minus.dist.1k.bed"),head=F)
 #develop strand directional positioning
 real.dist=matrix(ifelse(minus.input[,10]=='+',-1*minus.input[,17],minus.input[,17]),ncol=1)
