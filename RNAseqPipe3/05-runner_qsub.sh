@@ -20,7 +20,7 @@ mkdir -p logs
 # fastqc post triming
 
 module load parallel
-module load samtools/0.1.18
+# module load samtools/0.1.18
 
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05-runner.sh -j $threads -T $T -P $P -a $aligner -i $index -F $folder
 
