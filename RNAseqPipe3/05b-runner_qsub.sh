@@ -19,6 +19,7 @@ mkdir -p logs
 ######################
 
 module load parallel
+# new modules
 module load samtools/1.3_gcc-4.9.2_haswell
 
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/05b-runner.sh -j $threads -F $folder
