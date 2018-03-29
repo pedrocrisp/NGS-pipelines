@@ -215,7 +215,7 @@ print("get IDs for genes shorter than 300 bp of exon")
    pull(gene)
 
 ########## split + and -
-print("split + and -")
+print("split + and -, remove short genes and organelles")
 coverage_file_plus <- coverage_file %>% filter(strand == "+") %>%
   filter(!gene %in% short_genes) %>% #remove short gene
   filter(!Chr %in% c("ChrC", "ChrM")) %>%
@@ -345,6 +345,7 @@ print("get IDs for genes shorter than 300 bp of exon")
    pull(gene)
 
 ########## split + and -
+print("split + and -, remove short genes and organelles")
 coverage_file_plus <- coverage_file %>% filter(strand == "+") %>%
   filter(!gene %in% short_genes) %>% #remove short gene
   filter(!Chr %in% c("ChrC", "ChrM")) %>%
