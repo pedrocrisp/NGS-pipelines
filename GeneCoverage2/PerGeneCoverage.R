@@ -69,7 +69,8 @@ print("process plus bed")
 coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".plus.dist.1k.bed"),
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
-                              coverage = col_integer(),
+                              Chr = col_character(),
+                              coverage = is.double(),
                               gene = col_character(),
                               strand = col_character(),
                               feature = col_character(),
@@ -87,11 +88,15 @@ print("get IDs for genes shorter than 300 bp of exon")
    pull(gene)
 
 ########## split + and -
-print("split + and -")
+print("split + and -, remove short genes and organelles")
 coverage_file_plus <- coverage_file %>% filter(strand == "+") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 
 ######## bin genic region and upstream and downstream
 
@@ -191,7 +196,8 @@ print("process minus bed")
 coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".minus.dist.1k.bed"),
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
-                              coverage = col_integer(),
+                              Chr = col_character(),
+                              coverage = is.double(),
                               gene = col_character(),
                               strand = col_character(),
                               feature = col_character(),
@@ -211,9 +217,13 @@ print("get IDs for genes shorter than 300 bp of exon")
 ########## split + and -
 print("split + and -")
 coverage_file_plus <- coverage_file %>% filter(strand == "+") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 
 ######## bin genic region and upstream and downstream
 
@@ -316,6 +326,7 @@ dev.off()
 coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".dist.1k.bed"),
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
+                              Chr = col_character(),
                               coverage = col_integer(),
                               gene = col_character(),
                               strand = col_character(),
@@ -334,11 +345,14 @@ print("get IDs for genes shorter than 300 bp of exon")
    pull(gene)
 
 ########## split + and -
-print("split + and -")
 coverage_file_plus <- coverage_file %>% filter(strand == "+") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
-  filter(!gene %in% short_genes) #remove short gene
+  filter(!gene %in% short_genes) %>% #remove short gene
+  filter(!Chr %in% c("ChrC", "ChrM")) %>%
+  select(-Chr)
 
 ######## bin genic region and upstream and downstream
 
