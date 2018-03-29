@@ -70,7 +70,7 @@ coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".plus.d
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
                               Chr = col_character(),
-                              coverage = is.double(),
+                              coverage = col_double(),
                               gene = col_character(),
                               strand = col_character(),
                               feature = col_character(),
@@ -197,7 +197,7 @@ coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".minus.
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
                               Chr = col_character(),
-                              coverage = is.double(),
+                              coverage = col_double(),
                               gene = col_character(),
                               strand = col_character(),
                               feature = col_character(),
@@ -327,7 +327,7 @@ coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".dist.1
                           col_names = c("Chr",	"start",	"stop",	"coverage",	"feature_Chr",	"feature_start",	"feature_stop",	"gene",	"score",	"strand",	"annotation",	"feature",	"feature_number",	"gene_start",	"gene_stop",	"Gene_model_number",	"Distance"),
                           cols_only(
                               Chr = col_character(),
-                              coverage = col_integer(),
+                              coverage = col_double(),
                               gene = col_character(),
                               strand = col_character(),
                               feature = col_character(),
