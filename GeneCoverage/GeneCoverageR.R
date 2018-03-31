@@ -63,17 +63,19 @@ if (library_layout == "nonstranded") {
   plus.exon.offstrand.bin=stats.bin(plus.exon.offstrand$rel.dist,log(abs(plus.exon.offstrand[,4])+1),N=300)
   peob=cbind(matrix(plus.exon.offstrand.bin$centers,ncol=1),plus.exon.offstrand.bin$stats["mean",])
 
-  peob[,2]=-peob[,2]
+  #peob[,2]=-peob[,2]
 
 # i think this bit is wrong...
   sense=pepb
   sense[,2]=sense[,2]+peob[,2]
 
-  antisense=peob
-  antisense[,2]=antisense[,2]+pepb[,2]
+  #antisense=peob
+  #antisense[,2]=antisense[,2]+pepb[,2]
 
-  out.table <- data.frame(cbind(sense,antisense[,2]))
-  colnames(out.table) <- c("Position", "Sense", "Antisense")
+  #out.table <- data.frame(cbind(sense,antisense[,2]))
+  out.table <- data.frame(sense)
+  #colnames(out.table) <- c("Position", "Sense", "Antisense")
+  colnames(out.table) <- c("Position", "Sense")
   out.table$SampleName <- Sample
 
   #write.csv(out.table, 'average_coverage.csv')
@@ -84,25 +86,25 @@ if (library_layout == "nonstranded") {
   plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5), main=Sample)
   lines(pepb,col=1,lwd=2)
   lines(peob,col=2,lwd=2)
-  lines(mepb,col=3,lwd=2)
-  lines(meob,col=4,lwd=2)
+  #lines(mepb,col=3,lwd=2)
+  #lines(meob,col=4,lwd=2)
 
   abline(v=0,lty=2)
   abline(v=1000,lty=2)
   abline(h=0,lty=1,col='grey')
-  legend('topright',c('plus_primary','plus_offstrand','minus_primary','minus_offstrand'),lty=1,col=c(1,2,3,4))
+  legend('topright',c('plus', 'minus'),lty=1,col=c(1,2))
   dev.off()
 
   pdf(paste0(outFolder, "/",Sample, '_gene_coverge_plot.pdf'),h=10,w=12)
   #pdf("test_sense.pdf",h=10,w=12)
   plot(x=NULL,y=NULL,xlim=c(-1000,2000),ylim=c(-5,5),main=Sample)
   lines(sense,col=1,lwd=2)
-  lines(antisense,col=2,lwd=2)
+  #lines(antisense,col=2,lwd=2)
 
   abline(v=0,lty=2)
   abline(v=1000,lty=2)
   abline(h=0,lty=1,col='grey')
-  legend('topright',c('sense','antisense'),lty=1,col=c(1,2))
+  legend('topright',c('sense'),lty=1,col=c(1))
   dev.off()
 
 }else{
