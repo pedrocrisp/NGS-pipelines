@@ -8,17 +8,10 @@
 old.scipen <- getOption("scipen")
 options(scipen=999)
 
-
-args <- commandArgs(trailingOnly=TRUE)
-print(args)
-# trailingOnly=TRUE means that only your arguments are returned
-Sample <- args[1]
-Sample
-beds_folder <- args[2]
-beds_folder
-library_layout <- args[3]
-library_layout
-
+GeneCoverage_bined <- function(Sample,
+                               library_layout = "nonstranded",
+                               beds_folder = "tdf_for_igv_coverage_beds_nonstranded",
+                               outDir = "PerGeneCoverageBinned"){
 ##########
 # debug
 # Sample = "test"
@@ -467,5 +460,6 @@ dev.off()
 
   }else{
   print("strandedness not specified")
+}
 }
 }
