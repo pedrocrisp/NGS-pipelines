@@ -41,8 +41,8 @@ module load R/3.3.2
 ID="$(/bin/sed -n ${PBS_ARRAYID}p ${LIST})"
 
 echo sample being mapped is $ID
-echo data folder is $data_folder
-echo coverage filter is $coverage_filter
+echo data folder is $beds_folder
+echo library layout is $library_layout
 
 ########## Run #################
 
