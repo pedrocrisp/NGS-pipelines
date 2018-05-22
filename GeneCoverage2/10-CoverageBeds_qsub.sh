@@ -58,7 +58,7 @@ mkdir $log_folder
 
 # make out folder
 outdir="${alignFolder}_coverage_beds_${coverage}"
-mkdir ${outdir}
+mkdir -p ${outdir}
 
 #script path and cat a record of what was run
 script_to_qsub=${scriptdir}/${step}.sh
