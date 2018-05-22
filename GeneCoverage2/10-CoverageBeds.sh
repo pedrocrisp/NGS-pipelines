@@ -48,7 +48,7 @@ sample=$ID
 
 sample_dir=$alignFolder/$sample
 outFolder="${outdir}/${sample}"
-mkdir ${outFolder}
+mkdir -p ${outFolder}
 
 ####### stranded module
 if [ "$coverage" == "5prime" ]
