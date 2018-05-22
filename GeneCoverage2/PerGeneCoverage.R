@@ -150,7 +150,7 @@ print("bin data per locus - strand")
 per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
-  mutate(real_dist = Distance), side = "Antisense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
+  mutate(real_dist = Distance, side = "Antisense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
@@ -257,7 +257,7 @@ print("bin data per locus - strand")
 per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
-  mutate(real_dist = Distance), side = "Sense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
+  mutate(real_dist = Distance, side = "Sense", coverage = coverage *-1) %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
