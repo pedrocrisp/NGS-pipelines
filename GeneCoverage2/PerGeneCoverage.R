@@ -9,6 +9,9 @@ old.scipen <- getOption("scipen")
 options(scipen=999)
 library(tidyverse)
 
+# outDir
+outDir = "PerGeneCoverageBinned"
+
 args <- commandArgs(trailingOnly=TRUE)
 print(args)
 # trailingOnly=TRUE means that only your arguments are returned
