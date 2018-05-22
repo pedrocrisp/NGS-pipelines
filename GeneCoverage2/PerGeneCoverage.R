@@ -20,7 +20,7 @@ GeneCoverage_bined <- function(Sample,
 # # beds_folder = "tdf_for_igv_coverage_beds_nonstranded"
 # outDir = "test_GeneCoverage_bined"
 
-# Sample = "Sample_BJP_277_1"
+# Sample = "Sample_alx8_277_9"
 # outDir = "GeneCoverage_bined"
 # beds_folder = "tdf_for_igv_coverage_beds_full"
 
@@ -116,9 +116,11 @@ per_gene_bin_cov_plus <- coverage_file_plus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F, include.lowest = T),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+  mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100, side) %>%
   # filter(gene_cat =="genic")
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum and mean coverage for each bin
   ungroup()
 
 per_gene_bin_cov_plus %>% filter(sum_bin_coverage > 0)
@@ -160,8 +162,10 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+  mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100, side) %>%
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum coverage for each bin
   ungroup()
 
 per_gene_bin_cov_minus %>% filter(sum_bin_coverage > 0)
@@ -243,8 +247,10 @@ per_gene_bin_cov_plus <- coverage_file_plus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100, side) %>%
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum coverage for each bin
   ungroup()
 
 per_gene_bin_cov_plus %>% filter(sum_bin_coverage < 0)
@@ -267,8 +273,10 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+  mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100, side) %>%
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum coverage for each bin
   ungroup()
 
 per_gene_bin_cov_minus %>% filter(sum_bin_coverage > 0)
@@ -290,7 +298,8 @@ write_csv(per_gene_bin_cov, paste0(outFolder_per_gene_tables, "/", Sample, "_gen
 
 bin_cov_summary <- per_gene_bin_cov %>%
   group_by(gene_cat, bin100, side) %>%
-  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage)) %>%
+  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage),
+  meta_mean_bin_coverage = mean(mean_bin_coverage)) %>%
   ungroup() %>%
   left_join(bin_key, by = c("gene_cat", "bin100")) %>%
   arrange(side, bin_name_fct) %>%
@@ -303,7 +312,7 @@ bin_cov_summary <- per_gene_bin_cov %>%
 
 write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov_bin100_meta.csv"))
 
-# metaplot
+# metaplot sum
 pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
 g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage, colour = side)) +
   geom_line() +
@@ -311,8 +320,17 @@ g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage, colour
 print(g)
 dev.off()
 
+# metaplot sum then log
 pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot_log.pdf"))
 g <- ggplot(bin_cov_summary, aes(x = position, y = log_cov, colour = side)) +
+  geom_line() +
+  theme_classic()
+print(g)
+dev.off()
+
+# metaplot mean(mean(log))
+pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot_mean_log.pdf"))
+g <- ggplot(bin_cov_summary, aes(x = position, y = meta_mean_bin_coverage, colour = side)) +
   geom_line() +
   theme_classic()
 print(g)
@@ -321,6 +339,9 @@ dev.off()
 }else{
   if(library_layout == "nonstranded"){
   print("library_layout = nonstranded")
+
+  #UPDATE TO INCLUDE NEW CODE FOR MEAN LOG IN STRANDED CODE ABOVE!!!
+  # This has been added but is untested - use with caution and make sure to QC
 
   # read in required columns
 coverage_file <- read_tsv(paste0(beds_folder, "/", Sample, "/", Sample, ".dist.1k.bed"),
@@ -373,8 +394,10 @@ per_gene_bin_cov_plus <- coverage_file_plus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+  mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100) %>%
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum coverage for each bin
   ungroup()
 
 ####### minus
@@ -394,8 +417,10 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
            ifelse(gene_cat == "genic", cut(exon_position, breaks = 100, labels = F),
            ifelse(gene_cat == "up", cut(real_dist, breaks = breaks_up, labels = F),
            ifelse(gene_cat == "down", cut(real_dist, breaks = breaks_down, labels = F), 0)))) %>% # bin the data
+  mutate(log_cov = ifelse(coverage == 0, coverage, log(abs(coverage)))) %>%
   group_by(gene, gene_cat, bin100) %>%
-  summarise(sum_bin_coverage = sum(coverage)) %>% # sum coverage for each bin
+  summarise(sum_bin_coverage = sum(coverage),
+  mean_bin_coverage = mean(log_cov, na.rm = T)) %>% # sum coverage for each bin
   ungroup()
 
 ####### combine + and -
@@ -410,7 +435,8 @@ write_csv(per_gene_bin_cov, paste0(outFolder_gene_tables, "/", Sample, "_gene_co
 
 bin_cov_summary <- per_gene_bin_cov %>%
   group_by(gene_cat, bin100) %>%
-  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage)) %>%
+  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage),
+  meta_mean_bin_coverage = mean(mean_bin_coverage)) %>%
   ungroup() %>%
   mutate(position = row_number())
 
@@ -423,6 +449,15 @@ g <- ggplot(bin_cov_summary, aes(x = position, y = log10(meta_sum_bin_coverage))
   theme_classic()
 print(g)
 dev.off()
+
+# metaplot mean(mean(log))
+pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot_mean_log.pdf"))
+g <- ggplot(bin_cov_summary, aes(x = position, y = meta_mean_bin_coverage, colour = side)) +
+  geom_line() +
+  theme_classic()
+print(g)
+dev.off()
+
   }else{
   print("strandedness not specified")
 }
