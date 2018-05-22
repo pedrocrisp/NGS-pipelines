@@ -7,7 +7,7 @@
 # disable scientific notation
 old.scipen <- getOption("scipen")
 options(scipen=999)
-
+library(tidyverse)
 
 args <- commandArgs(trailingOnly=TRUE)
 print(args)
