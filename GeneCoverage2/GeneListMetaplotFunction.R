@@ -17,6 +17,8 @@
   gene_list_path <- args[4]
   gene_list_path
 
+library(tidyverse)
+
 ###### Args
 # Sample = "Sample_alx8_277_9"
 # dataFolder = "PerGeneCoverageBinned/per_gene_tables"
