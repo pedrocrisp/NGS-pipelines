@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#PBS -l walltime=1:00:00,nodes=1:ppn=2,mem=20gb
+#PBS -l walltime=1:00:00,nodes=1:ppn=2,mem=10gb
 #PBS -N GeneListMetaplotFunction
 #PBS -r n
 #PBS -m abe
