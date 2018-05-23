@@ -394,7 +394,7 @@ coverage_file_minus <- coverage_file %>% filter(strand == "-") %>%
 print("bin data per locus plus strand")
 per_gene_bin_cov_plus <- coverage_file_plus %>%
   filter(feature == "exon") %>% # remove introns
-  mutate(real_dist = Distance) %>%
+  mutate(real_dist = -1*Distance) %>%
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
@@ -417,7 +417,7 @@ print("bin data per locus minus strand")
 per_gene_bin_cov_minus <- coverage_file_minus %>%
   filter(feature == "exon") %>% # remove introns
   arrange(-row_number()) %>%
-  mutate(real_dist = ifelse(strand=='+',-1*Distance,Distance)) %>% # Correct bedtools distance for strand of gene
+  mutate(real_dist = Distance) %>% # Correct bedtools distance for strand of gene
   mutate(gene_cat = ifelse(real_dist < 0, "up", ifelse(real_dist == 0, "genic", "down"))) %>%
   mutate(gene_cat = factor(gene_cat, levels = c("up", "genic", "down"))) %>%
   group_by(gene, gene_cat) %>% # group
@@ -454,7 +454,7 @@ write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov
 
 # metaplot
 pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot.pdf"))
-g <- ggplot(bin_cov_summary, aes(x = position, y = log10(meta_sum_bin_coverage))) +
+g <- ggplot(bin_cov_summary, aes(x = position, y = meta_sum_bin_coverage)) +
   geom_line() +
   theme_classic()
 print(g)
@@ -462,7 +462,7 @@ dev.off()
 
 # metaplot mean(mean(log))
 pdf(paste0(outFolder_plots, "/", Sample, "_gene_cov_bin100_metaplot_mean_log.pdf"))
-g <- ggplot(bin_cov_summary, aes(x = position, y = meta_mean_bin_coverage, colour = side)) +
+g <- ggplot(bin_cov_summary, aes(x = position, y = meta_mean_bin_coverage)) +
   geom_line() +
   theme_classic()
 print(g)
