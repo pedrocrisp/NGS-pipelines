@@ -1,8 +1,21 @@
 ####### metaplot function
 
-Gene_list_meta_plot_PerGeneCoverageBinned <- function(Sample, dataFolder, filter_list_name, gene_list_path){
+# Gene_list_meta_plot_PerGeneCoverageBinned <- function(Sample, dataFolder, filter_list_name, gene_list_path){
 
   # This function requires thet the gene list has a column called "Gene_ID" with TAIR ATGs with no trailing "." isoform numbers
+  # This function should be run from the folder containing the folder "PerGeneCoverageBinned"
+
+  args <- commandArgs(trailingOnly=TRUE)
+  print(args)
+  # trailingOnly=TRUE means that only your arguments are returned
+  Sample <- args[1]
+  Sample
+  dataFolder <- args[2]
+  dataFolder
+  filter_list_name <- args[3]
+  filter_list_name
+  gene_list_path <- args[4]
+  gene_list_path
 
 ###### Args
 # Sample = "Sample_alx8_277_9"
@@ -86,4 +99,5 @@ g <- ggplot(bin_cov_summary, aes(x = position, y = meta_mean_bin_coverage, colou
   theme_classic()
 print(g)
 dev.off()
-}
+
+#}
