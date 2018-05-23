@@ -19,7 +19,7 @@ mkdir -p logs
 ######################
 
 module load parallel
-module load samtools/1.3
+module load samtools/1.5
 module load bedtools/2.25.0
 
 bash ~/gitrepos/NGS-pipelines/RNAseqPipe3/07-runner.sh $folder $threads $strand $chromoSizes
