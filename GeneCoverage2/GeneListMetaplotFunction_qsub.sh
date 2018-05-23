@@ -69,6 +69,6 @@ qsub -t $qsub_t \
 $script_to_qsub
 
 # to run
-# bash /home/springer/pcrisp/gitrepos/ngs-pipelines/GeneCoverage2/PerGeneCoverage_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path>
+# bash /home/springer/pcrisp/gitrepos/ngs-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path>
 # eg
-# bash /home/springer/pcrisp/gitrepos/ngs-pipelines/GeneCoverage2/PerGeneCoverage_qsub.sh samples.txt PerGeneCoverageBinned/per_gene_tables mRNAseq_RTLs ~/ws/refseqs/TAIR10/mRNAseq_RTLs.csv
+# bash /home/springer/pcrisp/gitrepos/ngs-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh samples.txt PerGeneCoverageBinned/per_gene_tables mRNAseq_RTLs ~/ws/refseqs/TAIR10/mRNAseq_RTLs.csv
