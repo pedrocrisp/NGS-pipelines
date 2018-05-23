@@ -41,7 +41,7 @@ module load R/3.3.2
 ID="$(/bin/sed -n ${PBS_ARRAYID}p ${LIST})"
 
 echo sample being mapped is $ID
-echo data folder is $beds_folder
+echo data folder is $dataFolder
 echo descriptive name of gene list $filter_list_name
 echo path to gene list $gene_list_path
 
