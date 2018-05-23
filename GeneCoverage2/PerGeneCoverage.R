@@ -437,8 +437,7 @@ per_gene_bin_cov_minus <- coverage_file_minus %>%
 print("recombine summarise and write files")
 per_gene_bin_cov <- bind_rows(per_gene_bin_cov_plus, per_gene_bin_cov_minus)
 
-write_csv(per_gene_bin_cov, paste0(outFolder_gene_tables, "/", Sample, "_gene_cov_bin100.csv"))
-
+write_csv(per_gene_bin_cov, paste0(outFolder_per_gene_tables, "/", Sample, "_gene_cov_bin100.csv"))
 
 
 ####### summarise for metaplot
