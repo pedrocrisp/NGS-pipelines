@@ -50,6 +50,6 @@ echo path to gene list $gene_list_path
         #Run R moudle to:
         # Make coverage files
         R -f ~/gitrepos/NGS-pipelines/GeneCoverage2/GeneListMetaplotFunction.R \
-        --args ${ID} $dataFolder $filter_list_name $gene_list_path
+        --args ${ID} $dataFolder $filter_list_name $gene_list_path $library_layout
 
 echo finished makign metaplots
