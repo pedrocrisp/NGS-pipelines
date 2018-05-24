@@ -3,7 +3,7 @@
 set -xeuo pipefail
 
 usage="USAGE:
-bash PerGeneCoverage_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path>"
+bash PerGeneCoverage_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path> <library_layout>"
 
 #define stepo in the pipeline - should be the same name as the script
 step=GeneListMetaplotFunction
@@ -13,7 +13,8 @@ sample_list=$1
 dataFolder=$2
 filter_list_name=$3
 gene_list_path=$4
-if [ "$#" -lt "4" ]
+library_layout=$5
+if [ "$#" -lt "5" ]
 then
 echo $usage
 exit -1
@@ -65,10 +66,10 @@ cat $0 > ${log_folder}/qsub_runner.log
 qsub -t $qsub_t \
 -o ${log_folder}/${step}_o \
 -e ${log_folder}/${step}_e \
--v LIST=${sample_list},dataFolder=$dataFolder,filter_list_name=$filter_list_name,gene_list_path=$gene_list_path \
+-v LIST=${sample_list},dataFolder=$dataFolder,filter_list_name=$filter_list_name,gene_list_path=$gene_list_path,library_layout=$library_layout \
 $script_to_qsub
 
 # to run
-# bash /home/springer/pcrisp/gitrepos/NGS-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path>
+# bash /home/springer/pcrisp/gitrepos/NGS-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh <sample_list.txt> <dataFolder> <filter_list_name> <gene_list_path> <library_layout>
 # eg
-# bash /home/springer/pcrisp/gitrepos/NGS-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh samples.txt PerGeneCoverageBinned/per_gene_tables mRNAseq_RTLs ~/ws/refseqs/TAIR10/mRNAseq_RTLs.csv
+# bash /home/springer/pcrisp/gitrepos/NGS-pipelines/GeneCoverage2/GeneListMetaplotFunction_qsub.sh samples.txt PerGeneCoverageBinned/per_gene_tables mRNAseq_RTLs ~/ws/refseqs/TAIR10/mRNAseq_RTLs.csv stranded
