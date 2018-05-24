@@ -442,12 +442,24 @@ write_csv(per_gene_bin_cov, paste0(outFolder_per_gene_tables, "/", Sample, "_gen
 
 ####### summarise for metaplot
 
-bin_cov_summary <- per_gene_bin_cov %>%
-  group_by(gene_cat, bin100) %>%
-  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage),
-  meta_mean_bin_coverage = mean(mean_bin_coverage)) %>%
-  ungroup() %>%
-  mutate(position = row_number())
+#bin_cov_summary <- per_gene_bin_cov %>%
+#  group_by(gene_cat, bin100) %>%
+#  summarise(meta_sum_bin_coverage = sum(sum_bin_coverage),
+#  meta_mean_bin_coverage = mean(mean_bin_coverage)) %>%
+#  ungroup() %>%
+#  mutate(position = row_number())
+
+  bin_cov_summary <- per_gene_bin_cov %>%
+    group_by(gene_cat, bin100) %>%
+    summarise(meta_sum_bin_coverage = sum(sum_bin_coverage),
+    meta_mean_bin_coverage = mean(mean_bin_coverage)) %>%
+    ungroup() %>%
+    left_join(bin_key, by = c("gene_cat", "bin100")) %>%
+    arrange(bin_name_fct) %>%
+    mutate(position = row_number(),
+           log_cov = ifelse(meta_sum_bin_coverage == 0, 0,
+                            ifelse(meta_sum_bin_coverage > 0, log(meta_sum_bin_coverage),
+                            ifelse(meta_sum_bin_coverage < 0, (log(abs(meta_sum_bin_coverage)))*-1, 0))))
 
 write_csv(bin_cov_summary, paste0(outFolder_meta_tables, "/", Sample, "_gene_cov_bin100_meta.csv"))
 
