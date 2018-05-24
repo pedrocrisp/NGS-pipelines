@@ -168,6 +168,9 @@ dev.off()
   print(g)
   dev.off()
 
-}
+  }else{
+  print("strandedness not specified")
+  }
+  }
 
 #}
