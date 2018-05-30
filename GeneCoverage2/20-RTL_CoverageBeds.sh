@@ -1,6 +1,6 @@
 #!/bin/bash -l
 #PBS -l walltime=6:00:00,nodes=1:ppn=1,mem=50gb
-#PBS -N MakeGeneCoverageBeds_RTL
+#PBS -N Beds_RTL
 #PBS -r n
 #PBS -m abe
 #PBS -M pcrisp@umn.edu
