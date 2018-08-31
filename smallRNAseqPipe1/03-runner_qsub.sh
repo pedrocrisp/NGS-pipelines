@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -N 03-sickle
+#PBS -N 03-cutadapt
 #PBS -r n
 #PBS -m abe
 #PBS -M pcrisp@umn.edu
