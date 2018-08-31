@@ -2,7 +2,7 @@
 #Set -e as an option, it tells the command line to exit the script immediately if it registers an error.
 set -e
 
-#Set -x as an option, it tells the computer to echo back each step before it is completed and the output is produced. 
+#Set -x as an option, it tells the computer to echo back each step before it is completed and the output is produced.
 set -x
 
 ###
@@ -40,14 +40,14 @@ outdir="reads_noadapt_cutadapt/$sample"
 mkdir $outdir
 
 ## uncomment if trying to keep reads failing length filter (this caused probelms in the past)
-outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
-mkdir $outdir_discard
+#outdir_discard="reads_noadapt_cutadapt/${sample}/discard"
+#mkdir $outdir_discard
 
 
 
 #This command runs cutadapt. It says 'for the fastqs listed within the sample directory do the following:
 #1) keep the file names but remove the file extensions
-#2) Store the output files in the specified sample folder within the reads_noadapt directory. Store the file name as 'samplename.noadapt.fq.gz' 
+#2) Store the output files in the specified sample folder within the reads_noadapt directory. Store the file name as 'samplename.noadapt.fq.gz'
 #3) Run the cutadapt function
 #4) The Bash shell will replace the $(<...) with the content of the given file. The config file contains the -a: The adaptor sequences
 #5) -m minimum read length discard reads if trimmed to smaller than m
@@ -73,8 +73,8 @@ fqname="$(basename $fq)"
 outputFile="$outdir/${fqname%%.*}.noadapt.fq.gz"
 #outputFile_too_short="$outdir_discard/${fqname%%.*}.too_short.fq.gz"
 #outputFile_too_long="$outdir_discard/${fqname%%.*}.too_long.fq.gz"
-outputFile_untrimmed="$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
-#infoFile="$outdir/${fqname%%.*}.noadapt.info.txt"
+#outputFile_untrimmed="$outdir_discard/${fqname%%.*}.no_adapt_found.fq.gz"
+infoFile="$outdir/${fqname%%.*}.noadapt.info.txt"
 
 cutadapt \
 $(<cutadapt.conf) \
@@ -82,7 +82,7 @@ $(<cutadapt.conf) \
 -m $min \
 -M $max \
 -O 3 \
---untrimmed-output $outputFile_untrimmed \
+--info-file $infoFile \
 -o $outputFile \
 $fq
 done
@@ -94,5 +94,5 @@ done
 echo "read length distribution for $outputFile"
 zcat $outputFile | awk '{if(NR%4==2) print length($1)}' | textHistogram -maxBinCount=59 stdin
 
-echo "read length distribution for $outputFile_untrimmed"
-zcat $outputFile_untrimmed | awk '{if(NR%4==2) print length($1)}' | textHistogram -maxBinCount=59 stdin
+#echo "read length distribution for $outputFile_untrimmed"
+#zcat $outputFile_untrimmed | awk '{if(NR%4==2) print length($1)}' | textHistogram -maxBinCount=59 stdin
