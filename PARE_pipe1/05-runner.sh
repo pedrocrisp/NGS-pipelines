@@ -21,7 +21,7 @@ reference=$4
 multimapping=$5
 # kefile format: (tab seperated)
 #Ordinal Sample <factor1_name> [<factor2_name>]
-if [ "$#" -lt "3" ]
+if [ "$#" -lt "5" ]
 then
 echo $usage
 exit -1
