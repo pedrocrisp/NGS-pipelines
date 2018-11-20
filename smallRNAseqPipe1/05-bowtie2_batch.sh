@@ -53,8 +53,8 @@ mkdir -p ${outdir}
 
 # output structure
 outsam="${outdir}/${ID}.sam"
-tmpbam="${outdir}/${RANDOM}.bam"
-outbam="${outdir}/${ID}.bam"
+tmpbam="${outdir}/${ID}.bam"
+outbam="${outdir}/${ID}_sorted.bam"
 
 ########## Run #################
 
