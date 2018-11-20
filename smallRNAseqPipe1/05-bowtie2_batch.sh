@@ -47,13 +47,14 @@ sample_dir="${reads_folder}/${ID}"
 
 fastqs="$(find $sample_dir -name '*.fq*')"
 
-outsam="${outdir}/${sample}.sam"
-tmpbam="${outdir}/${RANDOM}.bam"
-outbam="${outdir}/${sample}.bam"
-
 #make adaligned folder bowtie2 (caution this will not fail if dir already exists)
 outdir="align_bowtie2"
 mkdir -p ${outdir}
+
+# output structure
+outsam="${outdir}/${sample}.sam"
+tmpbam="${outdir}/${RANDOM}.bam"
+outbam="${outdir}/${sample}.bam"
 
 ########## Run #################
 
