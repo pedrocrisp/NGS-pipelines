@@ -78,17 +78,17 @@ outbam="${outdir}/${ID}.bam"
 # (or aligns a certain number of times) than where exactly it originated.
 
 bowtie2 \
--x $reference \
+-x $bt2_genome \
 --phred33 \
 --end-to-end \
 --mm \
--k $multimapping \
+-k $multimapping_rate \
 -D 20 \
 -R 3 \
 -N 0 \
 -L 10 \
 -i S,1,0.50 \
--p $b_threads \
+-p $bt2_threads \
 --score-min L,0,0 \
 -U $fastqs \
 -S "$outsam"
