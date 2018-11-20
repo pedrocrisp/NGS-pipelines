@@ -52,9 +52,9 @@ outdir="align_bowtie2"
 mkdir -p ${outdir}
 
 # output structure
-outsam="${outdir}/${sample}.sam"
+outsam="${outdir}/${ID}.sam"
 tmpbam="${outdir}/${RANDOM}.bam"
-outbam="${outdir}/${sample}.bam"
+outbam="${outdir}/${ID}.bam"
 
 ########## Run #################
 
