@@ -20,7 +20,7 @@ then
 echo $usage
 exit -1
 else
-echo "initiating bowtie jobs on $reads_folder folder, bowtie2 can use $b_threads threads"
+echo "initiating bowtie jobs on $reads_folder folder, bowtie2 can use $bt2_threads threads"
 cat $sample_list
 echo genome reference is $bt2_genome
 fi
@@ -72,6 +72,6 @@ qsub -t $qsub_t \
 $script_to_qsub
 
 # to run
-# bash /home/springer/pcrisp/gitrepos/springerlab_methylation/SeqCap/02-bsmap_qsub.sh <sample_list.txt> <genome_reference.fa>
+# bash /home/springer/pcrisp/gitrepos/NGS-pipelines/smallRNAseqPipe1/05-bowtie2_batch_qsub.sh <sample_list.txt> <reads_folder> <bt2_threads> <bt2_genome.fa> <multimapping_rate>
 # eg
 # bash /home/springer/pcrisp/gitrepos/springerlab_methylation/SeqCap/02-bsmap_qsub.sh samples.txt /home/springer/pcrisp/ws/refseqs/maize/Zea_mays.AGPv4.dna.toplevel.fa
