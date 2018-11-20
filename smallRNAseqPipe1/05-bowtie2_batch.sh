@@ -98,7 +98,7 @@ bowtie2 \
 samtools view -u $outsam > ${tmpbam}
 
 #Sort the temporary bam file by chromosomal position, and save the sorted file.
-samtools sort -m 20 -o $outbam ${tmpbam}
+samtools sort -m 20G -o $outbam ${tmpbam}
 
 #Make an index of the sorted bam file
 samtools index ${outbam}
