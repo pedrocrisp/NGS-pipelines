@@ -43,9 +43,10 @@ module load samtools/1.3_gcc-4.9.2_haswell
 ID="$(/bin/sed -n ${PBS_ARRAYID}p ${LIST})"
 
 echo sample being mapped is $ID
-sample_dir="${reads_folder}/${ID}"
+#sample_dir="${reads_folder}/${ID}"
 
-fastqs="$(find $sample_dir -name '*.fq*')"
+# I just changed this bit to deal with nested and non-nested folder structures - it may break old analyses?...
+fastqs="$(find $reads_folder -type f -name ${ID}*.fq*)"
 
 #make adaligned folder bowtie2 (caution this will not fail if dir already exists)
 outdir="align_bowtie2"
