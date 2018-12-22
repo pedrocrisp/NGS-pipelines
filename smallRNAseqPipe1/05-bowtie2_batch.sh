@@ -47,6 +47,8 @@ echo sample being mapped is $ID
 
 # I just changed this bit to deal with nested and non-nested folder structures - it may break old analyses?...
 fastqs="$(find $reads_folder -type f -name ${ID}*.fq*)"
+# convert to array to count elements
+fastqs_count=($fastqs)
 
 #make adaligned folder bowtie2 (caution this will not fail if dir already exists)
 outdir="align_bowtie2"
@@ -78,7 +80,7 @@ outbam="${outdir}/${ID}_sorted.bam"
 # Still, this mode can be effective and fast in situations where the user cares more about whether a read aligns
 # (or aligns a certain number of times) than where exactly it originated.
 
-if (( "${#fastqs[@]}" >= 2 )); then
+if (( "${#fastqs_count[@]}" == 2 )); then
 
 echo "paired reads"
 
