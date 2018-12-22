@@ -78,6 +78,34 @@ outbam="${outdir}/${ID}_sorted.bam"
 # Still, this mode can be effective and fast in situations where the user cares more about whether a read aligns
 # (or aligns a certain number of times) than where exactly it originated.
 
+if (( "${#fastqs[@]}" >= 2 )); then
+
+echo "paired reads"
+
+# this is pretty non generic but I need a quick fix...
+fq_1="${reads_folder}/${ID}_R1_001_val_1.fq"
+fq_2="${reads_folder}/${ID}_R2_001_val_2.fq"
+
+bowtie2 \
+-x $bt2_genome \
+--phred33 \
+--end-to-end \
+--mm \
+-k $multimapping_rate \
+-D 20 \
+-R 3 \
+-N 0 \
+-L 10 \
+-i S,1,0.50 \
+-p $bt2_threads \
+--score-min L,0,0 \
+-1 $fq_1 \
+-2 $fq_2 \
+-S "$outsam"
+
+else
+echo "assuming single end"
+
 bowtie2 \
 -x $bt2_genome \
 --phred33 \
@@ -93,6 +121,9 @@ bowtie2 \
 --score-min L,0,0 \
 -U $fastqs \
 -S "$outsam"
+
+fi
+
 
 ###### sort and index
 #Using samtools view to convert the sam file to bam file.
