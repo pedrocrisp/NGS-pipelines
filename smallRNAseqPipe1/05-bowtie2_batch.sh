@@ -83,6 +83,7 @@ if (( "${#fastqs[@]}" >= 2 )); then
 echo "paired reads"
 
 # this is pretty non generic but I need a quick fix...
+# this will only work if the suffix is consistent with trimmgalore output
 fq_1="${reads_folder}/${ID}_R1_001_val_1.fq"
 fq_2="${reads_folder}/${ID}_R2_001_val_2.fq"
 
