@@ -36,6 +36,7 @@ options(scipen=999)
 
 # There are probably better ways to parse amd filter a sam but oh well
 # I am be horribly mangling the sam format...
+# this probably looses the headders - consider copying from the original files
 
 ##### 21 nt
 sam_in <- read_tsv(paste0(data_folder, "/", sample, "/",  sample, "_q10_21.sam"), col_names = F)
@@ -48,7 +49,7 @@ out_sam_summary
 write_tsv(out_sam_summary, paste0(results_folder, "/", sample, "_q10_21_summary.tsv"))
 
 # filter out reads multimapping over the specified limit (multi_filter)
-out_sam <- out_sam %>% select(-n) %>% 
+out_sam <- out_sam %>% select(-n) %>%
 write_tsv(out_sam, paste0(results_folder, "/", sample, "/", sample, "_q10_21_filtered.sam"), , col_names=F)
 
 ##### 22 nt
