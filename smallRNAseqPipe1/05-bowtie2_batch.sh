@@ -74,6 +74,7 @@ outbam="${outdir}/${ID}_sorted.bam"
 #-N max # mismatches in seed alignment; can be 0 or 1 (0)
 #-D give up extending after <int> failed extends in a row (15)
 # -k report N mapping locations
+# --score-min L,0,0 sets formular for min aln score for alignment to be reported, readleangth * 0 + 0 = min 0; this means only report exact matches
 # Bowtie 2 does not "find" alignments in any specific order,
 # so for reads that have more than N distinct, valid alignments,
 # Bowtie 2 does not guarantee that the N alignments reported are the best possible in terms of alignment score.
