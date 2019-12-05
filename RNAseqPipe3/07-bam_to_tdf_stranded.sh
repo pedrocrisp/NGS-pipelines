@@ -77,7 +77,7 @@ bedtools genomecov -d -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $ou
 #make bigWigs
 echo "bam to bigWig"
 sort -k1,1 -k2,2n $outdir/*.bedgraph > $outdir/*.sorted.bedgraph
-bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bigWig
+bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bw
 
 sort -k1,1 -k2,2n $outdir/*.plus.bg > $outdir/*.sorted.plus.bg
 bedGraphToBigWig $outdir/*.sorted.plus.bg $chrc_sizes $outdir/$sample.plus.bw
@@ -135,7 +135,7 @@ bedtools genomecov -d -split -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_s
 #make bigWigs
 echo "bam to bigWig"
 sort -k1,1 -k2,2n $outdir/*.bedgraph > $outdir/*.sorted.bedgraph
-bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bigWig
+bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bw
 
 sort -k1,1 -k2,2n $outdir/*.plus.bg > $outdir/*.sorted.plus.bg
 bedGraphToBigWig $outdir/*.sorted.plus.bg $chrc_sizes $outdir/$sample.plus.bw
@@ -186,7 +186,7 @@ bedtools genomecov -d -split -ibam $sample_dir/*forward.bam -g $chrc_sizes > $ou
 echo "bam to bigWig"
 
 sort -k1,1 -k2,2n $outdir/*.bedgraph > $outdir/*.sorted.bedgraph
-bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bigWig
+bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bw
 
 sort -k1,1 -k2,2n $outdir/*.plus.bg > $outdir/*.sorted.plus.bg
 bedGraphToBigWig $outdir/*.sorted.plus.bg $chrc_sizes $outdir/$sample.plus.bw
@@ -301,7 +301,7 @@ bedtools genomecov -d -split -scale -1 -ibam $sample_dir/*forward.bam -g $chrc_s
 #make bigWigs
 echo "bam to bigWig"
 sort -k1,1 -k2,2n $outdir/*.bedgraph > $outdir/*.sorted.bedgraph
-bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bigWig
+bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bw
 
 sort -k1,1 -k2,2n $outdir/*.plus.bg > $outdir/*.sorted.plus.bg
 bedGraphToBigWig $outdir/*.sorted.plus.bg $chrc_sizes $outdir/$sample.plus.bw
@@ -334,7 +334,7 @@ bedtools genomecov -d -split -ibam $sample_dir/$sample.bam -g $chrc_sizes > $out
 #make bigWigs
 echo "bam to bigWig"
 sort -k1,1 -k2,2n $outdir/*.bedgraph > $outdir/*.sorted.bedgraph
-bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bigWig
+bedGraphToBigWig $outdir/*.sorted.bedgraph $chrc_sizes $outdir/$sample.bw
 
 else
 echo "ERROR: it has not been specificed whether library is stranded on not"
